@@ -3,7 +3,7 @@ const path = require('path');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 let config = {
-  entry: './client/src/index.js',
+  entry: './client/src/index.jsx',
   output: {
     path: path.resolve(__dirname, './client/dist'),
     filename: 'output.js'
