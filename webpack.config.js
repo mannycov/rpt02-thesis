@@ -16,10 +16,9 @@ let config = {
         loader: "babel-loader" // use this (babel-core) loader
       },
       {
-        test: /\.scss$/,
-        use: ExtractTextWebpackPlugin.extract({
-         use: ['css-loader', 'sass-loader'],
-         fallback: 'style-loader'
+        test: /.scss$/,
+          use: ExtractTextWebpackPlugin.extract({fallback: 'style-loader',
+          use: ["css-loader", "sass-loader"]
         })
       }
     ]
