@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// require('./styles.scss');
 
 import App from './components/App.jsx'
 
@@ -10,4 +9,4 @@ const Root = () => (
   </div>
 )
 
-ReactDOM.render(<Root />, document.getElementById('app'));
+ReactDOM.render(<Root />, document.getElementById('app'))

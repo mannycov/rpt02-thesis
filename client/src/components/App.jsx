@@ -1,12 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
   }
 
-  render() {
+  render () {
     return (
       <div>
         <h1>Hello Universe</h1>
@@ -15,4 +14,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default App
