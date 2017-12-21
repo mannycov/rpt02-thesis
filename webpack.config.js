@@ -15,7 +15,7 @@ const config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.scss$/, // files ending with .js
+        test: /\.scss$/,
         use: ExtractTextWebpackPlugin.extract({
           use: ['css-loader', 'sass-loader'],
           fallback: 'style-loader'
