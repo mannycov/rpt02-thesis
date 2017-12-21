@@ -1,15 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class Main extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Hello World</h1>
-      </div>
-    )
-  }
-}
+import App from './components/App.jsx'
 
-const app = document.getElementById('app')
-ReactDOM.render(<Main />, app)
+const Root = () => (
+  <div>
+    <App />
+  </div>
+)
+
+ReactDOM.render(<Root />, document.getElementById('app'))

@@ -1,8 +1,7 @@
-const webpack = require('webpack');
-const path = require('path');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
-let config = {
+const config = {
   entry: './client/src/index.jsx',
   output: {
     path: path.resolve(__dirname, './client/dist'),
@@ -11,15 +10,15 @@ let config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, // files ending with .js
-        exclude: /node_modules/, // exclude the node_modules directory
-        loader: "babel-loader" // use this (babel-core) loader
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       },
       {
-        test: /\.scss$/,
+        test: /\.scss$/, // files ending with .js
         use: ExtractTextWebpackPlugin.extract({
-         use: ['css-loader', 'sass-loader'],
-         fallback: 'style-loader'
+          use: ['css-loader', 'sass-loader'],
+          fallback: 'style-loader'
         })
       }
     ]
@@ -36,4 +35,4 @@ let config = {
   devtool: 'eval-source-map'
 }
 
-module.exports = config;
+module.exports = config
