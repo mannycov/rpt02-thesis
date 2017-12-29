@@ -15,8 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 
-app.get('/testendpoint', (req, res) => {
-  res.send('Hello homeboyz')
+app.get('/testendpoints', (req, res) => {
+  res.send('Hello homeboy g money')
 })
 
 app.get('*', (req, res) => {
@@ -30,7 +30,7 @@ app.get('*', (req, res) => {
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">
-        <link rel='stylesheet' href='client.css'>
+        <link rel="stylesheet" type="text/css" href="/client/.dist/styles.css">
       </head>
       <body>
         <div id="root">${application}</div>
