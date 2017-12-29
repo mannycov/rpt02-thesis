@@ -1,22 +1,14 @@
-const bodyParser = require('body-parser')
-const express = require('express')
-const expressLogging = require('express-logging')
-const logger = require('logops')
+import http from 'http'
+import app from './server'
 
-const app = express()
+const server = http.createServer(app)
+let currentApp = app
+server.listen(3000)
 
-app.use(expressLogging(logger))
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
-app.use(express.static('./client/dist'))
-
-app.get('/testendpoint', function (req, res) {
-  console.log('hello homies')
-  res.send('hello dudettes?')
-})
-
-app.listen(3000, () => {
-  console.log('Listening on port 3000!');
-});
+if (module.hot) {
+  module.hot.accept('./server', () => {
+    server.removeListener('request', currentApp)
+    server.on('request', app)
+    currentApp = app
+  })
+}
