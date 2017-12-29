@@ -1,3 +1,4 @@
+const qs = require('querystring')
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
@@ -20,6 +21,30 @@ module.exports = {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              alias: {
+                '../fonts/bootstrap': 'bootstrap-sass/assets/fonts/bootstrap'
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [
+                path.resolve('./node_modules/bootstrap-sass/assets/stylesheets')
+              ]
+            }
+          }
+        ]
       }
     ]
   },
@@ -28,9 +53,10 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin({ filename: 'styles.css' }),
     new webpack.DefinePlugin({
       'process.env': {
+        WEBPACK: JSON.stringify(true),
         BUILD_TARGET: JSON.stringify('server')
       }
     })

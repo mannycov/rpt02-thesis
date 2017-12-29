@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import App from './src/components/App.jsx'
+import './src/components/styles.scss'
 
 function render (Component) {
   ReactDOM.render(
