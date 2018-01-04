@@ -2,12 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
+import 'semantic-ui-less/semantic.less'
+
 import App from './src/components/App.jsx'
-import './src/components/styles.scss'
 
 function render (Component) {
   ReactDOM.render(
-    <AppContainer>
+    <AppContainer text>
       <Component />
     </AppContainer>,
     document.getElementById('root')
