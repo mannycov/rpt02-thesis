@@ -4,8 +4,10 @@ import { renderToString } from 'react-dom/server'
 import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
+import { StaticRouter } from 'react-router-dom'
 
-import App from '../client/src/components/App.jsx'
+// import App from '../client/src/components/App.jsx'
+import Root from '../client/Root.jsx'
 
 const app = express()
 
@@ -20,7 +22,9 @@ app.get('/testendpoints', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  const application = renderToString(<App />)
+  const context = {}
+  const application = renderToString(<StaticRouter location={req.url} context={context} ><Root /></StaticRouter>)
+
   const html = `<!doctype html>
     <html class="no-js" lang="">
       <head>

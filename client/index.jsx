@@ -1,22 +1,37 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
+import { createBrowserHistory } from 'history'
 import { AppContainer } from 'react-hot-loader'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import reducers from './reducers'
 
 import 'semantic-ui-less/semantic.less'
+import Root from './Root.jsx'
 
-import App from './src/components/App.jsx'
+const history = createBrowserHistory()
+const store = createStore(reducers, applyMiddleware(routerMiddleware(history)))
 
-function render (Component) {
-  ReactDOM.render(
-    <AppContainer text>
-      <Component />
+const renderApp = (Component) => {
+  render(
+    <AppContainer>
+      <Provider store={store}>
+        <BrowserRouter history={history}>
+          <Component />
+        </BrowserRouter>
+      </Provider>
     </AppContainer>,
     document.getElementById('root')
   )
 }
 
-render(App)
+renderApp(Root)
 
 if (module.hot) {
-  module.hot.accept('./src/components/App.jsx', () => { render(App) })
+  module.hot.accept('./reducers.js', () => {
+    store.replaceReducer(require('./reducers').default)
+    renderApp(Root)
+  })
 }
