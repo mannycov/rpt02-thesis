@@ -20,7 +20,11 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
+<<<<<<< HEAD
 /******/ 	var hotCurrentHash = "8f6d59b21cb3da6ea619"; // eslint-disable-line no-unused-vars
+=======
+/******/ 	var hotCurrentHash = "1b87c3d01b1f21a6330d"; // eslint-disable-line no-unused-vars
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -690,8 +694,17 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_react_dist_commonjs_elements_Button_Button__ = __webpack_require__("semantic-ui-react/dist/commonjs/elements/Button/Button");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_react_dist_commonjs_elements_Button_Button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_semantic_ui_react_dist_commonjs_elements_Button_Button__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+
+
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -714,6 +727,7 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
+<<<<<<< HEAD
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -726,13 +740,41 @@ var App = function (_React$Component) {
           'div',
           null,
           'hey homboyz'
+=======
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          'h1',
+          null,
+          'Hello'
+        ),
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          'h2',
+          null,
+          'this stuff is hella tight'
+        ),
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          'div',
+          null,
+          'hey homboys'
+        ),
+        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_0_semantic_ui_react_dist_commonjs_elements_Button_Button___default.a,
+          null,
+          'click me!'
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
         )
       );
     }
   }]);
 
   return App;
+<<<<<<< HEAD
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+=======
+}(__WEBPACK_IMPORTED_MODULE_1_react___default.a.Component);
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 
 var _default = App;
 
@@ -745,6 +787,7 @@ var _temp = function () {
     return;
   }
 
+<<<<<<< HEAD
   __REACT_HOT_LOADER__.register(App, 'App', '/Users/bmathew/HackReactor/rpt02-thesis/client/src/components/App.jsx');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/bmathew/HackReactor/rpt02-thesis/client/src/components/App.jsx');
@@ -844,6 +887,11 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(competitionsSchema, 'competitionsSchema', '/Users/bmathew/HackReactor/rpt02-thesis/database/index.js');
 
   __REACT_HOT_LOADER__.register(categorySchema, 'categorySchema', '/Users/bmathew/HackReactor/rpt02-thesis/database/index.js');
+=======
+  __REACT_HOT_LOADER__.register(App, 'App', '/Users/crizzcoxx/Dropbox/HR/thesis/rpt02-thesis/client/src/components/App.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/crizzcoxx/Dropbox/HR/thesis/rpt02-thesis/client/src/components/App.jsx');
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 }();
 
 ;
@@ -1017,9 +1065,15 @@ var _temp = function () {
     return;
   }
 
+<<<<<<< HEAD
   __REACT_HOT_LOADER__.register(server, 'server', '/Users/bmathew/HackReactor/rpt02-thesis/server/index.js');
 
   __REACT_HOT_LOADER__.register(currentApp, 'currentApp', '/Users/bmathew/HackReactor/rpt02-thesis/server/index.js');
+=======
+  __REACT_HOT_LOADER__.register(server, 'server', '/Users/crizzcoxx/Dropbox/HR/thesis/rpt02-thesis/server/index.js');
+
+  __REACT_HOT_LOADER__.register(currentApp, 'currentApp', '/Users/crizzcoxx/Dropbox/HR/thesis/rpt02-thesis/server/index.js');
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 }();
 
 ;
@@ -1053,8 +1107,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+<<<<<<< HEAD
 var db = __webpack_require__("./database/index.js");
 
+=======
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 var app = __WEBPACK_IMPORTED_MODULE_0_express___default()();
 
 app.use(__WEBPACK_IMPORTED_MODULE_4_express_logging___default()(__WEBPACK_IMPORTED_MODULE_5_logops___default.a));
@@ -1069,10 +1126,16 @@ app.get('/testendpoints', function (req, res) {
 
 app.get('*', function (req, res) {
   var application = Object(__WEBPACK_IMPORTED_MODULE_2_react_dom_server__["renderToString"])(__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__client_src_components_App_jsx__["a" /* default */], null));
+<<<<<<< HEAD
   var html = '<!doctype html>\n    <html class="no-js" lang="">\n      <head>\n        <meta charset="utf-8">\n        <meta http-equiv="x-ua-compatible" content="ie=edge">\n        <title>HMR all the things!</title>\n        <meta name="description" content="">\n        <meta name="viewport"\n        content="width=device-width,  initial-scale=1">\n        <link rel="stylesheet" type="text/css" href="/client/.dist/styles.css">\n      </head>\n      <body>\n        <div id="root">' + application + '</div>\n        <script src="http://localhost:3001/client.js"></script>\n      </body>\n    </html>';
   res.send(html);
 });
 
+=======
+  var html = '<!doctype html>\n    <html class="no-js" lang="">\n      <head>\n        <meta charset="utf-8">\n        <meta http-equiv="x-ua-compatible" content="ie=edge">\n        <title>HMR all the things!</title>\n        <meta name="description" content="">\n        <meta name="viewport"\n        content="width=device-width,  initial-scale=1">\n        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css">\n        <link rel="stylesheet" type="text/css" href="/client/.dist/styles.css">\n      </head>\n      <body>\n        <div id="root">' + application + '</div>\n        <script src="http://localhost:3001/client.js"></script>\n      </body>\n    </html>';
+  res.send(html);
+});
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 var _default = app;
 /* harmony default export */ __webpack_exports__["default"] = (_default);
 ;
@@ -1082,9 +1145,15 @@ var _temp = function () {
     return;
   }
 
+<<<<<<< HEAD
   __REACT_HOT_LOADER__.register(app, 'app', '/Users/bmathew/HackReactor/rpt02-thesis/server/server.js');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/bmathew/HackReactor/rpt02-thesis/server/server.js');
+=======
+  __REACT_HOT_LOADER__.register(app, 'app', '/Users/crizzcoxx/Dropbox/HR/thesis/rpt02-thesis/server/server.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/crizzcoxx/Dropbox/HR/thesis/rpt02-thesis/server/server.js');
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 }();
 
 ;
@@ -1135,6 +1204,7 @@ module.exports = require("logops");
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ "mongoose":
 /***/ (function(module, exports) {
 
@@ -1153,6 +1223,26 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom/server");
+=======
+/***/ "react":
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+
+/***/ "react-dom/server":
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom/server");
+
+/***/ }),
+
+/***/ "semantic-ui-react/dist/commonjs/elements/Button/Button":
+/***/ (function(module, exports) {
+
+module.exports = require("semantic-ui-react/dist/commonjs/elements/Button/Button");
+>>>>>>> e1e64e197560a6c9550e7cef611730ed55fd6e4f
 
 /***/ })
 

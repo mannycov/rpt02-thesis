@@ -4,8 +4,10 @@ import { renderToString } from 'react-dom/server'
 import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
+import { StaticRouter } from 'react-router-dom'
 
-import App from '../client/src/components/App.jsx'
+// import App from '../client/src/components/App.jsx'
+import Root from '../client/Root.jsx'
 
 const db = require('../database/index.js');
 
@@ -22,7 +24,9 @@ app.get('/testendpoints', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  const application = renderToString(<App />)
+  const context = {}
+  const application = renderToString(<StaticRouter location={req.url} context={context} ><Root /></StaticRouter>)
+
   const html = `<!doctype html>
     <html class="no-js" lang="">
       <head>
@@ -32,6 +36,7 @@ app.get('*', (req, res) => {
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css">
         <link rel="stylesheet" type="text/css" href="/client/.dist/styles.css">
       </head>
       <body>
