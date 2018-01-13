@@ -9,6 +9,8 @@ import { StaticRouter } from 'react-router-dom'
 // import App from '../client/src/components/App.jsx'
 import Root from '../client/Root.jsx'
 
+const db = require('../database/index.js');
+
 const app = express()
 
 app.use(expressLogging(logger))
@@ -44,4 +46,6 @@ app.get('*', (req, res) => {
     </html>`
   res.send(html)
 })
+
+
 export default app
