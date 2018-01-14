@@ -16,7 +16,6 @@ const app = express()
 app.use(expressLogging(logger))
 
 app.use(bodyParser.urlencoded({ extended: false }))
-
 app.use(bodyParser.json())
 
 app.get('/testendpoints', (req, res) => {
