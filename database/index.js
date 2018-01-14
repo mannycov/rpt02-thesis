@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var Schema = mongoose.Schema;
 
 mongoose.connect('mongodb://localhost/competely')
 
@@ -9,7 +10,7 @@ db.once('open', function() {
 });
 
 var userSchema = new Schema({
-  user_id:  ObjectId,
+  user_id:  Number,
   first_name: String,
   last_name: String,
   username: String,
@@ -30,7 +31,7 @@ var userSchema = new Schema({
 });
 
 var goalsSchema = new Schema({
-  goals_id:  ObjectId,
+  goals_id:  Number,
   goals_name: String,
   category_id: Array,
   status: String,
@@ -41,7 +42,7 @@ var goalsSchema = new Schema({
 });
 
 var competitionsSchema = new Schema({
-  competitions_id:  ObjectId,
+  competitions_id:  Number,
   competitions_name: String,
   start_date: Date,
   end_date: Date,
@@ -53,18 +54,18 @@ var competitionsSchema = new Schema({
 });
 
 var competitionsSchema = new Schema({
-  checkpoint_id:  ObjectId,
+  checkpoint_id:  Number,
   checkpoint_name: String,
   status: String
 });
 
 var categorySchema = new Schema({
-  category_id:  ObjectId,
+  category_id:  Number,
   category_name: String
 });
 
 var competitionsSchema = new Schema({
-  trophy_id:  ObjectId,
+  trophy_id:  Number,
   trophy_name: String
 });
 
