@@ -1,3 +1,6 @@
 body {
     background-color: yellow;
 }
+.ui.menu {
+    padding-left: 84%;
+}
