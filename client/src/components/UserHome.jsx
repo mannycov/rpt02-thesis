@@ -1,38 +1,29 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
+import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 const UserHome = () => (
-  <div>
-    <h1>The User's home page</h1>
-    <ul>
-      <h3>my goals</h3>
-      <li>
-        goal 1
-      </li>
-    </ul>
-    <form>
-      <input type="text" />
-    </form>
-    <Button>Add Goal</Button>
-    <ul>
-      <h3>my friends</h3>
-      <li>
-        friend 1
-      </li>
-    </ul>
-    <ul>
-      <h3>competitions</h3>
-      <li>
-        competition 1
-      </li>
-    </ul>
-    <ul>
-      <h3>my trophies</h3>
-      <li>
-        trophy 1
-      </li>
-    </ul>
-  </div>
+  <Card>
+    <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
+    <Card.Content>
+      <Card.Header>
+        Manny
+      </Card.Header>
+      <Card.Meta>
+        <span className='date'>
+          Joined in 2018
+        </span>
+      </Card.Meta>
+      <Card.Description>
+        Manny is a dude living in San Jose.
+      </Card.Description>
+    </Card.Content>
+    <Card.Content extra>
+      <a>
+        <Icon name="user" />
+        22 Friends
+      </a>
+    </Card.Content>
+  </Card>
 )
 
 export default UserHome
