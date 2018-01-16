@@ -7,6 +7,7 @@ import Friends from './src/components/Friends.jsx'
 import Competitions from './src/components/Competitions.jsx'
 import Trophies from './src/components/Trophies.jsx'
 import SignupForm from './src/components/SignupForm.jsx'
+import NotFound from './src/components/NotFound.jsx'
 
 const Root = () => (
   <Switch>
@@ -16,6 +17,7 @@ const Root = () => (
     <Route path="/competitions" component={Competitions} />
     <Route path="/trophies" component={Trophies} />
     <Route path="/signupform" component={SignupForm} />
+    <Route component={NotFound} />
   </Switch>
 )
 
