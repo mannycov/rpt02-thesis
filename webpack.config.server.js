@@ -42,20 +42,10 @@ module.exports = {
             loader: 'style-loader'
           },
           {
-            loader: 'css-loader',
-            options: {
-              alias: {
-                '../fonts/bootstrap': 'bootstrap-sass/assets/fonts/bootstrap'
-              }
-            }
+            loader: 'css-loader'
           },
           {
-            loader: 'less-loader',
-            options: {
-              includePaths: [
-                path.resolve('./node_modules/bootstrap-sass/assets/stylesheets')
-              ]
-            }
+            loader: 'less-loader'
           }
         ]
       }

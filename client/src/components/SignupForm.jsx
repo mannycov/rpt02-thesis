@@ -16,35 +16,35 @@ const SignupForm = () => (
 				<label>Last Name</label>
 				<input placeholder="Last Name" />
 			</div>
-			<div class="field">
+			<div className="field">
 				<label>Email</label>
-				<div class="ui input">
+				<div className="ui input">
 					<input type="text" placeholder="Email" />
 				</div>
 			</div>
-			<div class="field">
+			<div className="field">
 				<label>Password</label>
-				<div class="ui input">
+				<div className="ui input">
 					<input type="text" placeholder="Enter Your Password" />
 				</div>
 			</div>
-			<div class="field">
+			<div className="field">
 				<label>Verify Password</label>
-				<div class="ui input">
+				<div className="ui input">
 					<input type="text" placeholder="Re-Enter Your Password" />
 				</div>
 			</div>
 			<div className="field">
 				<div className="ui checkbox">
-					<input type="checkbox" class="hidden" readonly="" tabindex="0" />
+					<input type="checkbox" className="hidden" readonly="" tabindex="0" />
 					<label>I agree to the Terms and Conditions</label>
 				</div>
 			</div>
-			<button type="submit" class="ui button" role="button">
+			<button type="submit" className="ui button" role="button">
 				Submit
 			</button>
 		</form>
 	</div>
 );
 
-export default SignupForm
+export default SignupForm;
