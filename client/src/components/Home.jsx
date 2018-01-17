@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import HomePageHeader from "./HomePageHeader.jsx";
 
 const Home = () => (
-  <div>
-    <h1>This is the App Component</h1>
-    <h2>Register</h2>
-  </div>
-)
+	<div>
+		<HomePageHeader />
+		<h1>Main Home Page Component</h1>
+	</div>
+);
 
 export default Home
