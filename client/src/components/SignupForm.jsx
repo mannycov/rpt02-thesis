@@ -41,7 +41,7 @@ const SignupForm = () => (
 				</div>
 			</div>
 			<button type="submit" className="ui button" role="button">
-				Submit
+				Sign Up Now
 			</button>
 		</form>
 	</div>
