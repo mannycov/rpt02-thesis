@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
-import { Button } from "semantic-ui-react";
+import { Button } from 'semantic-ui-react'
 
 const HomePageHeader = () => (
-	<div>
-		<div className="ui menu" id="header-home">
-			<div className="item">
-				<Link to="/signupform">
+  <div>
+    <div className="ui menu" id="header-home">
+      <div className="item">
+        <Link to="/signupform">
 					<Button className="ui button" role="button">
 						Sign up
 					</Button>
@@ -22,4 +22,4 @@ const HomePageHeader = () => (
 	</div>
 );
 
-export default HomePageHeader;
+export default HomePageHeader
