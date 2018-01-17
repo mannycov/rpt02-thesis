@@ -6,7 +6,8 @@ const Status = ({ code, children }) => (
     if (staticContext)
       staticContext.status = code
     return children
-  }}/>
+  }}
+  />
 )
 
 const NotFound = () => (
