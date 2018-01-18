@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import reducers from './reducers'
 
-import 'semantic-ui-less/semantic.less'
 import Root from './Root.jsx'
 
 const history = createBrowserHistory()

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
+import MenuBar from './MenuBar.jsx'
+import SideMenu from './SideMenu.jsx'
 
 class UserHome extends Component {
   handleItemClick (name) {
@@ -10,17 +12,7 @@ class UserHome extends Component {
     const { activeItem } = this.state || {}
     return (
       <div>
-        <Menu secondary>
-          <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Item name="messages" active={activeItem === 'messages'} onClick={this.handleItemClick} />
-          <Menu.Item name="friends" active={activeItem === 'friends'} onClick={this.handleItemClick} />
-          <Menu.Menu position="right">
-            <Menu.Item>
-              <Input icon="search" placeholder="Search..." />
-            </Menu.Item>
-            <Menu.Item name="logout" active={activeItem === 'logout'} onClick={this.handleItemClick} />
-          </Menu.Menu>
-        </Menu>
+        <MenuBar />
         <Card>
           <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
           <Card.Content>
@@ -52,29 +44,7 @@ class UserHome extends Component {
             Submit
           </Form.Field>
         </Form>
-        <Menu vertical>
-          <Menu.Item>
-            <Menu.Header>Goals</Menu.Header>
-
-            <Menu.Menu>
-              <Menu.Item name="weight loss" active={activeItem === 'weight loss'} onClick={this.handleItemClick} />
-              <Menu.Item name="meditation" active={activeItem === 'meditation'} onClick={this.handleItemClick} />
-            </Menu.Menu>
-          </Menu.Item>
-
-          <Menu.Item>
-            <Menu.Header>Competitions</Menu.Header>
-
-            <Menu.Menu>
-              <Menu.Item name="lose 10 lbs." active={activeItem === 'lose 10 lbs.'} onClick={this.handleItemClick} />
-            </Menu.Menu>
-          </Menu.Item>
-
-          <Menu.Item>
-            <Menu.Header>Trophies</Menu.Header>
-
-          </Menu.Item>
-        </Menu>
+        <SideMenu />
       </div>
     )
   }
