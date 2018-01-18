@@ -1,11 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import HomePageHeader from "./HomePageHeader.jsx";
+import { Button, Image } from "semantic-ui-react";
 
 const Home = () => (
 	<div>
-		<HomePageHeader />
-		<h1>Main Home Page Component</h1>
+		<HomePageHeader  />
+    <div class="ui raised very padded text container">
+      <Image src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
+      <p></p>
+      <p></p>
+    </div>
 	</div>
 );
 
