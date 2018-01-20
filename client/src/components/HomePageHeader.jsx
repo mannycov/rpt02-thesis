@@ -23,9 +23,9 @@ const HomePageHeader = () => (
       	 	More
       		<i class="dropdown icon"></i>
 		      <div class="menu">
-		        <a class="item"><i class="edit icon"></i> Edit Profile</a>
-		        <a class="item"><i class="globe icon"></i> Choose Language</a>
-		        <a class="item"><i class="settings icon"></i> Account Settings</a>
+		        <a class="item"><i class="edit icon"></i> Find a Competition</a>
+		        <a class="item"><i class="globe icon"></i> About Us</a>
+		        <a class="item"><i class="settings icon"></i> Contact </a>
 		      </div>
     		</div>
   		</div>
