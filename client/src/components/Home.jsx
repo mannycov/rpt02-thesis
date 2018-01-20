@@ -24,8 +24,8 @@ const Home = () => (
                   <h2>"Start competing today!"</h2>
 
                   </div>
-                  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                  <div className="item">
+
+                  <div className="item" style={{position: 'absolute', bottom: 30, width: '100%', height: 'auto' }}>
                     <Link to="/signupform">
 
                       <Button class="ui button huge green" role="button">
@@ -135,10 +135,10 @@ const Home = () => (
             <div class="ui equal width grid">
               <div class="column">
                 <div class="ui small inverted horizontal divided link list">
-                  <a class="item" href="https://www.hackreactor.com" target="_blank" rel="noopener noreferrer">
-                  Hack Reactor</a>
-                  <a class="item" href="fake@fake.com">Contact Us
-                  </a>
+                <a class="item" href="https://www.hackreactor.com" target="_blank" rel="noopener noreferrer">
+                Hack Reactor</a>
+                <a class="item" href="fake@fake.com">Contact Us
+                </a>
                 </div>
               </div>
             </div>
