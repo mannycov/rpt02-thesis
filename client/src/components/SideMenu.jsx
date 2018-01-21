@@ -18,9 +18,9 @@ class SideMenu extends Component {
             <Menu.Header>Goals</Menu.Header>
 
             <Menu.Menu>
-              
               {this.props.goals.map(goal => (
                 <Menu.Item
+                  key={goal._id}
                   name={goal.goals_name}
                   active={activeItem === goal}
                   onClick={this.handleItemClick}
