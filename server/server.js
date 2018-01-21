@@ -33,7 +33,6 @@ app.get('/api/goal', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      console.log(data)
       res.send(data)
     }
   })
@@ -48,8 +47,6 @@ app.post('/api/goal', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      console.log('goal instance saved into db')
-      // res.send('in post landing page')
       res.sendStatus(201)
     }
   })
