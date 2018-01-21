@@ -8,8 +8,9 @@ import { StaticRouter } from 'react-router-dom'
 
 // import App from '../client/src/components/App.jsx'
 import Root from '../client/Root.jsx'
+import { GoalsModel } from '../database/index.js'
 
-const db = require('../database/index.js');
+const db = require('../database/index.js')
 
 const app = express()
 
@@ -20,6 +21,38 @@ app.use(bodyParser.json())
 
 app.get('/testendpoints', (req, res) => {
   res.send('Hello homeboy g money')
+})
+
+app.post('/testpost', (req, res) => {
+  res.send('in test post landing page')
+})
+
+app.get('/api/goal', (req, res) => {
+
+  GoalsModel.find({}, function (err, data) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(data)
+      res.send(data)
+    }
+  })
+})
+
+app.post('/api/goal', (req, res) => {
+
+  const goalTitle = req.body.goal
+  const goalModelInstance = new GoalsModel({ goals_name: goalTitle })
+
+  goalModelInstance.save(function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('goal instance saved into db')
+      // res.send('in post landing page')
+      res.sendStatus(201)
+    }
+  })
 })
 
 app.get('*', (req, res) => {
@@ -44,6 +77,5 @@ app.get('*', (req, res) => {
     </html>`;
   res.send(html)
 })
-
 
 export default app
