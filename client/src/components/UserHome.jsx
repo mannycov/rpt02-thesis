@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
-import axios from 'axios'
+//import axios from 'axios'
 import $ from 'jquery'
 
 // Components
@@ -137,11 +137,11 @@ class UserHome extends Component {
         <form onSubmit={this.handleSubmit} ref="commentForm" className="ui form">
           <div className="field">
             <label>Goal Title</label>
-            <input 
+            <input
               type="text"
               value={this.state.goalTitle}
               onChange={this.handleGoalTitleChange}
-              placeholder="Enter your goal here..." 
+              placeholder="Enter your goal here..."
             />
           </div>
           <div className="field">
