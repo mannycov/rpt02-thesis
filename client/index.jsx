@@ -6,22 +6,21 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import reducers from './reducers'
+// import reducers from './reducers'
 
-import 'semantic-ui-less/semantic.less'
 import Root from './Root.jsx'
 
-const history = createBrowserHistory()
-const store = createStore(reducers, applyMiddleware(routerMiddleware(history)))
+// const history = createBrowserHistory()
+// const store = createStore(reducers, applyMiddleware(routerMiddleware(history)))
 
 const renderApp = (Component) => {
   render(
     <AppContainer>
-      <Provider store={store}>
-        <BrowserRouter history={history}>
-          <Component />
-        </BrowserRouter>
-      </Provider>
+      {/* <Provider store={store}> */}
+      <BrowserRouter>
+        <Component />
+      </BrowserRouter>
+      {/* </Provider> */}
     </AppContainer>,
     document.getElementById('root')
   )
@@ -30,8 +29,8 @@ const renderApp = (Component) => {
 renderApp(Root)
 
 if (module.hot) {
-  module.hot.accept('./reducers.js', () => {
-    store.replaceReducer(require('./reducers').default)
+  module.hot.accept('./Root.jsx', () => {
+    // store.replaceReducer(require('./reducers').default)
     renderApp(Root)
   })
 }

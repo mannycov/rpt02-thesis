@@ -1,20 +1,20 @@
-const mongoose = require('mongoose')
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var db = mongoose.connection
 
 mongoose.connect('mongodb://localhost/competely')
 
-const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function() {
+db.once('open', function () {
   console.log('you da man and connected in more ways than you know ')
-});
+})
 
 var userSchema = new Schema({
-  user_id:  Number,
+  user_id: Number,
   first_name: String,
   last_name: String,
   username: String,
-  email:   String,
+  email: String,
   // comments: [{ body: String, date: Date }],
   date_of_birth: { type: Date },
   about_me: String,
@@ -28,10 +28,10 @@ var userSchema = new Schema({
   city: String,
   postal: Number,
   trophies: Number
-});
+})
 
 var goalsSchema = new Schema({
-  goals_id:  Number,
+  goals_id: Number,
   goals_name: String,
   category_id: Array,
   status: String,
@@ -39,10 +39,12 @@ var goalsSchema = new Schema({
   purpose: String,
   checkpoint_id: Number,
   ongoing_goal: Boolean
-});
+})
+
+export const GoalsModel = mongoose.model('GoalsModel', goalsSchema);
 
 var competitionsSchema = new Schema({
-  competitions_id:  Number,
+  competitions_id: Number,
   competitions_name: String,
   start_date: Date,
   end_date: Date,
@@ -51,22 +53,20 @@ var competitionsSchema = new Schema({
   winner: Number,
   ranking_list: Array,
   trophies: Array
-});
+})
 
 var competitionsSchema = new Schema({
-  checkpoint_id:  Number,
+  checkpoint_id: Number,
   checkpoint_name: String,
   status: String
-});
+})
 
 var categorySchema = new Schema({
-  category_id:  Number,
+  category_id: Number,
   category_name: String
-});
+})
 
 var competitionsSchema = new Schema({
-  trophy_id:  Number,
+  trophy_id: Number,
   trophy_name: String
-});
-
-module.exports = db
+})
