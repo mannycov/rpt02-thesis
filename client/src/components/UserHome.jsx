@@ -1,11 +1,107 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
+import axios from 'axios'
+import $ from 'jquery'
+
+// Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
 
+const ROOT_URL = 'http://localhost:3000'
+
 class UserHome extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      goalTitle: '',
+      goalDesc: '',
+      goals: []
+    }
+    this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
+    this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount () {
+    this.fetchGoals()
+  }
+
+  handleGoalTitleChange (e) {
+    this.setState({
+      goalTitle: e.target.value
+    })
+  }
+
+  hanldeGoalDescChange (e) {
+    this.setState({
+      goalDesc: e.target.value
+    })
+  }
+
   handleItemClick (name) {
     this.setState({ activeItem: name })
+  }
+
+  handleSubmit (e) {
+    e.preventDefault()
+
+    const copyOfGoals = [...this.state.goals]
+    copyOfGoals.push(this.state.goalTitle)
+
+    // axios.post('/api/goal', {
+    //   // console.log('posting'),
+    //   name: this.state.goalTitle
+    // })
+    //   .then((response) => {
+    //     console.log(response)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+
+    $.ajax({
+      type: 'POST',
+      url: ROOT_URL + '/api/goal',
+      data: { goal: this.state.goalTitle },
+      success: (data) => {
+        this.fetchGoals()
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+
+    this.setState({
+      goals: copyOfGoals,
+      goalTitle: ''
+    })
+  }
+
+  fetchGoals () {
+    // axios.get('/api/goal')
+    //   .then((response) => {
+    //     console.log('this is the response inside fetchGoals:', response)
+    //     // this.setState({
+    //     //   goals: response
+    //     // })
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //   })
+    $.ajax({
+      type: 'GET',
+      url: ROOT_URL + '/api/goal',
+      data: this.state,
+      success: (data) => {
+        this.setState({
+          goals: data
+        })
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   render () {
@@ -35,16 +131,36 @@ class UserHome extends Component {
             </a>
           </Card.Content>
         </Card>
-        <Form>
-          <Form.Group widths="equal">
-            <Form.Field placeholder="Enter your goal" label="Title" control="input" />
-          </Form.Group>
-          <Form.Field placeholder="Describe your gioal" label="Description" control="textarea" rows="4" />
-          <Form.Field label="Submit" control="button">
-            Submit
-          </Form.Field>
-        </Form>
-        <SideMenu />
+
+        <br />
+
+        <form onSubmit={this.handleSubmit} ref="commentForm" className="ui form">
+          <div className="field">
+            <label>Goal Title</label>
+            <input 
+              type="text"
+              value={this.state.goalTitle}
+              onChange={this.handleGoalTitleChange}
+              placeholder="Enter your goal here..." 
+            />
+          </div>
+          <div className="field">
+            <label>Goal Description</label>
+            <textarea
+              placeholder="Describe your goal..."
+              rows="4"
+              value={this.state.goalDesc}
+              onChange={this.hanldeGoalDescChange}
+            />
+          </div>
+          <button type="submit" className="ui button">Submit</button>
+        </form>
+
+        <br /><br />
+
+        <SideMenu
+          goals={this.state.goals}
+        />
       </div>
     )
   }
