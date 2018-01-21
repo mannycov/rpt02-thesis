@@ -46,4 +46,4 @@ const HomePageHeader = () => (
 	</div>
 );
 
-export default HomePageHeader;
+export default HomePageHeader
