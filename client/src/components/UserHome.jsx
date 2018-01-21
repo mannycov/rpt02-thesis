@@ -109,11 +109,11 @@ class UserHome extends Component {
         <form onSubmit={this.handleSubmit} ref="commentForm" className="ui form">
           <div className="field">
             <label>Goal Title</label>
-            <input 
+            <input
               type="text"
               value={this.state.goalTitle}
               onChange={this.handleGoalTitleChange}
-              placeholder="Enter your goal here..." 
+              placeholder="Enter your goal here..."
             />
           </div>
           <div className="field">
