@@ -104,7 +104,11 @@ class UserHome extends Component {
           </Card.Content>
         </Card>
 
-        <br />
+        <SideMenu
+          goals={this.state.goals}
+        />
+
+        <br /><br />
 
         <form onSubmit={this.handleSubmit} ref="commentForm" className="ui form">
           <div className="field">
@@ -128,11 +132,6 @@ class UserHome extends Component {
           <button type="submit" className="ui button">Submit</button>
         </form>
 
-        <br /><br />
-
-        <SideMenu
-          goals={this.state.goals}
-        />
       </div>
     )
   }
