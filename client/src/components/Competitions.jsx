@@ -1,7 +1,11 @@
-import React from 'react'
+import React from "react";
+import { Header, Image } from "semantic-ui-react";
 
 const Competitions = () => (
-  <h2>Competitions Component</h2>
-)
+	<Header as="h2">
+		<Image circular src="/assets/images/avatar/large/patrick.png" /> Patrick
+	</Header>
+);
 
-export default Competitions
+export default Competitions;
+
