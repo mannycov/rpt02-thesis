@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Menu, Input } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 class MenuBar extends Component {
   handleItemClick (name) {
@@ -18,7 +19,9 @@ class MenuBar extends Component {
             <Menu.Item>
               <Input icon="search" placeholder="Search..." />
             </Menu.Item>
-            <Menu.Item name="logout" active={activeItem === 'logout'} onClick={this.handleItemClick} />
+            <Link to="/">
+              <button type="submit" className="ui button">Logout</button>
+            </Link>
           </Menu.Menu>
         </Menu>
       </div>
