@@ -7,25 +7,25 @@ const HomePageHeader = () => (
 	<div>
 		<div className="ui attached stackable menu">
 
-			<div class="ui container">
-    		<a class="ui small image">
+			<div className="ui container">
+    		<a className="ui small image">
       		<Image src="https://thumb1.shutterstock.com/display_pic_with_logo/165062914/522985843/stock-vector-warrior-fitness-gym-logo-design-template-522985843.jpg" />
     		</a>
 
-    		<a class="item">
-      		<i class="grid layout icon"></i> Browse
+    		<a className="item">
+      		<i className="grid layout icon"></i> Browse
     		</a>
-    		<a class="item">
-      		<i class="mail icon"></i> Messages
+    		<a className="item">
+      		<i className="mail icon"></i> Messages
     		</a>
 
-    		<div class="ui simple dropdown item">
+    		<div className="ui simple dropdown item">
       	 	More
-      		<i class="dropdown icon"></i>
-		      <div class="menu">
-		        <a class="item"><i class="edit icon"></i> Find a Competition</a>
-		        <a class="item"><i class="globe icon"></i> About Us</a>
-		        <a class="item"><i class="settings icon"></i> Contact </a>
+      		<i className="dropdown icon"></i>
+		      <div className="menu">
+		        <a className="item"><i className="edit icon"></i> Find a Competition</a>
+		        <a className="item"><i className="globe icon"></i> About Us</a>
+		        <a className="item"><i className="settings icon"></i> Contact </a>
 		      </div>
     		</div>
   		</div>
@@ -38,9 +38,11 @@ const HomePageHeader = () => (
 				</Link>
 			</div>
 			<div className="item">
-				<Button className="ui button" role="button">
-					Log-in
-				</Button>
+				<Link to="/userhome">
+					<Button className="ui button" role="button">
+						Log-in
+					</Button>
+				</Link>
 			</div>
 		</div>
 	</div>
