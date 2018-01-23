@@ -34,8 +34,8 @@ class SideMenu extends Component {
 						<Menu.Header>Trophies</Menu.Header>
 					</Menu.Item>
 				</Menu>
-			</div>;
-  }
+			</div>
+  };
 }
 
 export default SideMenu

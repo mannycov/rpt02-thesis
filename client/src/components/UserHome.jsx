@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
-//import axios from 'axios'
+
 import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import $ from 'jquery'
+
+import axios from 'axios'
 
 // Components
 import MenuBar from './MenuBar.jsx'
@@ -50,28 +52,15 @@ class UserHome extends Component {
     const copyOfGoals = [...this.state.goals]
     copyOfGoals.push(this.state.goalTitle)
 
-    // axios.post('/api/goal', {
-    //   // console.log('posting'),
-    //   name: this.state.goalTitle
-    // })
-    //   .then((response) => {
-    //     console.log(response)
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
-
-    $.ajax({
-      type: 'POST',
-      url: ROOT_URL + '/api/goal',
-      data: { goal: this.state.goalTitle },
-      success: (data) => {
-        this.fetchGoals()
-      },
-      error: (err) => {
-        console.log(err)
-      }
+    axios.post(ROOT_URL + '/api/goal', {
+      goal: this.state.goalTitle
     })
+      .then((response) => {
+        this.fetchGoals()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
     this.setState({
       goals: copyOfGoals,
@@ -80,29 +69,15 @@ class UserHome extends Component {
   }
 
   fetchGoals () {
-    // axios.get('/api/goal')
-    //   .then((response) => {
-    //     console.log('this is the response inside fetchGoals:', response)
-    //     // this.setState({
-    //     //   goals: response
-    //     // })
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
-    $.ajax({
-      type: 'GET',
-      url: ROOT_URL + '/api/goal',
-      data: this.state,
-      success: (data) => {
+    axios.get(ROOT_URL + '/api/goal')
+      .then((response) => {
         this.setState({
-          goals: data
+          goals: response.data
         })
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render () {
