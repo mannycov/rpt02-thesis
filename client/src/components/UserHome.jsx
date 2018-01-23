@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
 //import axios from 'axios'
+import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import $ from 'jquery'
 
 // Components
