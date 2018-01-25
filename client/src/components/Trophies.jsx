@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Button, Form, Menu, Input, Grid } from 'semantic-ui-react'
+import { Card, Icon, Image, Button, Form, Menu, Input, Grid, Header } from 'semantic-ui-react'
 
 import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import axios from 'axios'
@@ -81,37 +81,35 @@ class Trophies extends Component {
   render () {
     const { activeItem } = this.state || {}
     return (
-      <Grid centered divided columns={2}>
-      <div class="two column row">
-      <div class="ui vertical segment">
       <div>
+      <MenuBar />
 
-        <MenuBar />
+      <Grid centered divided="vertically" columns={2}>
+
+
         <Grid.Column textAlign="center">
-        <Card>
-          <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
-          <Card.Content>
-            <Card.Header>
-              Manny's Trophy Page
-            </Card.Header>
-            <Card.Meta>
-              <span className="date">
-                Joined in 2018
-              </span>
-            </Card.Meta>
-            <Card.Description>
-              Manny is some dude living in the Bay.
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name="user" />
-              22 Friends
-            </a>
-          </Card.Content>
-        </Card>
-        </Grid.Column>
-
+          <Card>
+            <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
+            <Card.Content>
+              <Card.Header>
+                Manny's Trophy Page
+              </Card.Header>
+              <Card.Meta>
+                <span className="date">
+                  Joined in 2018
+                </span>
+              </Card.Meta>
+              <Card.Description>
+                Manny is some dude living in the Bay.
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <a>
+                <Icon name="user" />
+                22 Friends
+              </a>
+            </Card.Content>
+          </Card>
         <SideMenu
           goals={this.state.goals}
         />
@@ -140,20 +138,24 @@ class Trophies extends Component {
           <button type="submit" className="ui button">Submit</button>
         </form>
 
-        <br /><br />
-        </div>
+        </Grid.Column>
+
+
+      <Grid.Column>
+        <Grid.Row>
+          <Grid.Column>
+              <Card>
+              <div class="ui tiny image" >
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size='small' />
+              </div>
+              <div class="content">
+                <div class="header">Sprinting</div>
+                <div class="meta">First Place</div>
+              </div>
+              </Card>
+          </Grid.Column>
 
           <Grid.Column>
-            <Card>
-            <div class="ui tiny image" >
-              <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size='small' />
-            </div>
-            <div class="content">
-              <div class="header">Weight Lifting</div>
-              <div class="meta">First Place</div>
-            </div>
-            </Card>
-
             <Card>
             <div class="ui tiny image" >
               <Image src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg" title="Second Place" size='small' />
@@ -163,7 +165,9 @@ class Trophies extends Component {
               <div class="meta">Second Place</div>
             </div>
             </Card>
+          </Grid.Column>
 
+          <Grid.Column>
             <Card>
             <div class="ui tiny image" >
               <Image src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png" title="No Place" size='small' />
@@ -175,9 +179,34 @@ class Trophies extends Component {
             </Card>
           </Grid.Column>
 
-      </div>
-      </div>
+          <Grid.Column>
+            <Card>
+            <div class="ui tiny image" >
+              <Image src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png" title="No Place" size='small' />
+            </div>
+            <div class="content">
+              <div class="header">Longest Yoga Stance Hold</div>
+              <div class="meta">Didn't Place</div>
+            </div>
+            </Card>
+          </Grid.Column>
+
+          <Grid.Column>
+              <Card>
+              <div class="ui tiny image" >
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size='small' />
+              </div>
+              <div class="content">
+                <div class="header">Weight Lifting</div>
+                <div class="meta">First Place</div>
+              </div>
+              </Card>
+            </Grid.Column>
+          </Grid.Row>
+
+        </Grid.Column>
       </Grid>
+      </div>
     )
   }
 }
