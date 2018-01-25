@@ -14,6 +14,9 @@ class SideMenu extends Component {
         <Menu vertical>
           <Menu.Item>
             <Menu.Header>Goals</Menu.Header>
+        <Menu style={{ width: 290 }} vertical>
+          <Menu.Item>
+            <Menu.Header>Goals</Menu.Header>
             <Menu.Menu>
               {this.props.goals.map(goal => (
                 <Menu.Item
