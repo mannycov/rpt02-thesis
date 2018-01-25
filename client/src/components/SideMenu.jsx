@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Menu, Input } from 'semantic-ui-react'
-import CompetitionsPopUp from './CompetitionsPopUp.jsx';
+import { Menu } from 'semantic-ui-react'
+import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 
 class SideMenu extends Component {
   handleItemClick (name) {
@@ -11,10 +11,12 @@ class SideMenu extends Component {
     const { activeItem } = this.state || {}
     return (
       <div>
+        <Menu vertical>
+          <Menu.Item>
+            <Menu.Header>Goals</Menu.Header>
         <Menu style={{ width: 290 }} vertical>
           <Menu.Item>
             <Menu.Header>Goals</Menu.Header>
-
             <Menu.Menu>
               {this.props.goals.map(goal => (
                 <Menu.Item
