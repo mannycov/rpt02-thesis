@@ -149,7 +149,7 @@ class Trophies extends Component {
                 <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size='small' />
               </div>
               <div class="content">
-                <div class="header">Sprinting</div>
+                <div class="header">Get Huge</div>
                 <div class="meta">First Place</div>
               </div>
               </Card>
@@ -161,7 +161,7 @@ class Trophies extends Component {
               <Image src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg" title="Second Place" size='small' />
             </div>
             <div class="content">
-              <div class="header">Sprinting</div>
+              <div class="header">You Can Do It</div>
               <div class="meta">Second Place</div>
             </div>
             </Card>
@@ -173,7 +173,7 @@ class Trophies extends Component {
               <Image src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png" title="No Place" size='small' />
             </div>
             <div class="content">
-              <div class="header">Pie Eating</div>
+              <div class="header">Lose Weight</div>
               <div class="meta">Didn't Place</div>
             </div>
             </Card>
@@ -185,23 +185,11 @@ class Trophies extends Component {
               <Image src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png" title="No Place" size='small' />
             </div>
             <div class="content">
-              <div class="header">Longest Yoga Stance Hold</div>
+              <div class="header">Beat the Lake Run</div>
               <div class="meta">Didn't Place</div>
             </div>
             </Card>
           </Grid.Column>
-
-          <Grid.Column>
-              <Card>
-              <div class="ui tiny image" >
-                <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size='small' />
-              </div>
-              <div class="content">
-                <div class="header">Weight Lifting</div>
-                <div class="meta">First Place</div>
-              </div>
-              </Card>
-            </Grid.Column>
           </Grid.Row>
 
         </Grid.Column>
