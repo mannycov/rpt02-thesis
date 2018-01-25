@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 
 class SideMenu extends Component {
@@ -28,9 +29,11 @@ class SideMenu extends Component {
         <Menu.Item>
           <CompetitionsPopUp />
         </Menu.Item>
-        <Menu.Item>
-          <Menu.Header>Trophies</Menu.Header>
-        </Menu.Item>
+        <Link to="/trophies">
+          <Menu.Item>
+            <Menu.Header>Trophies</Menu.Header>
+          </Menu.Item>
+        </Link>
       </Menu>
     )
   }
