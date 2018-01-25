@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Button, Popup, Grid, Menu, Image, Label, List, Segment, Table, Progress } from 'semantic-ui-react'
+import { Header, Button, Popup, Grid, Menu, Image, Label, List, Segment, Table, Progress, Statistic, Icon } from 'semantic-ui-react'
 import MenuBar from './MenuBar.jsx'
 
 const CompetitionsFullPage = () => (
@@ -12,12 +12,45 @@ const CompetitionsFullPage = () => (
 			/>{" "}
 			My Competitions
 		</Header>
-		<Segment clearing />
+		<Segment clearing>
+			<Statistic.Group widths="three">
+				<Statistic>
+					<Statistic.Value text>
+						<i class="plus icon" />
+					</Statistic.Value>
+					<Statistic.Label>Create Competition</Statistic.Label>
+				</Statistic>
+
+				<Statistic>
+					<Statistic.Value>
+						{`5  `}
+						<i class="flag checkered icon" />
+					</Statistic.Value>
+					<Statistic.Label>{`Competitions    Won`}</Statistic.Label>
+				</Statistic>
+
+				<Statistic>
+					<Statistic.Value>
+						<Image
+							src="https://st2.depositphotos.com/4326917/10312/v/450/depositphotos_103125822-stock-illustration-champions-cup-line-vector-icon.jpg"
+							className="circular inline"
+						/>
+						42
+					</Statistic.Value>
+					<Statistic.Label>Trophies</Statistic.Label>
+				</Statistic>
+			</Statistic.Group>
+		</Segment>
 		<Grid columns={3} divided>
 			<Grid.Row>
-				<Grid.Column>
-					<Image src="https://react.semantic-ui.com/assets/images/wireframe/media-paragraph.png" />
-				</Grid.Column>
+				<Grid columns={2} padded>
+					<Grid.Column>
+						<Image src="https://media1.tenor.com/images/074d7cfcf221f8fdc6b51248b94a2537/tenor.gif?itemid=4172168" />
+					</Grid.Column>
+					<Grid.Column>
+						<Header size="large">Get Huge</Header>
+					</Grid.Column>
+				</Grid>
 				<Grid.Column>
 					<Table basic="very" celled collapsing>
 						<Table.Header>
@@ -36,8 +69,8 @@ const CompetitionsFullPage = () => (
 											size="mini"
 										/>
 										<Header.Content>
-											Lena
-											<Header.Subheader>Human Resources</Header.Subheader>
+											Li
+											<Header.Subheader>@li</Header.Subheader>
 										</Header.Content>
 									</Header>
 								</Table.Cell>
@@ -52,8 +85,8 @@ const CompetitionsFullPage = () => (
 											size="mini"
 										/>
 										<Header.Content>
-											Matthew
-											<Header.Subheader>Fabric Design</Header.Subheader>
+											Matt
+											<Header.Subheader>@mattander91</Header.Subheader>
 										</Header.Content>
 									</Header>
 								</Table.Cell>
@@ -68,8 +101,8 @@ const CompetitionsFullPage = () => (
 											size="mini"
 										/>
 										<Header.Content>
-											Lindsay
-											<Header.Subheader>Entertainment</Header.Subheader>
+											Ramya
+											<Header.Subheader>@ramyatata</Header.Subheader>
 										</Header.Content>
 									</Header>
 								</Table.Cell>
@@ -84,8 +117,8 @@ const CompetitionsFullPage = () => (
 											size="mini"
 										/>
 										<Header.Content>
-											Mark
-											<Header.Subheader>Executive</Header.Subheader>
+											Vitor
+											<Header.Subheader>@vpereira</Header.Subheader>
 										</Header.Content>
 									</Header>
 								</Table.Cell>
@@ -94,18 +127,19 @@ const CompetitionsFullPage = () => (
 						</Table.Body>
 					</Table>
 				</Grid.Column>
-				<Grid.Column>
-					<Image src="https://react.semantic-ui.com/assets/images/wireframe/media-paragraph.png" />
-				</Grid.Column>
-			</Grid.Row>
-
-			<Grid.Row>
 				<Grid.Column />
+				<i class="calendar outline icon" >>
+        <Header size="large">Start Date</Header>
 				<Grid.Column />
+        <i class="calendar outline icon">
+        <Header size="large">End Date</Header>
 				<Grid.Column>
 					<Progress percent={44} progress />
 				</Grid.Column>
 			</Grid.Row>
+
+
+
 		</Grid>
 	</div>
 );
