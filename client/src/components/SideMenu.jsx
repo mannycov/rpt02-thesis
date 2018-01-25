@@ -10,7 +10,6 @@ class SideMenu extends Component {
   render () {
     const { activeItem } = this.state || {}
     return (
-      <div>
         <Menu vertical>
           <Menu.Item>
             <Menu.Header>Goals</Menu.Header>
@@ -36,7 +35,6 @@ class SideMenu extends Component {
             <Menu.Header>Trophies</Menu.Header>
           </Menu.Item>
         </Menu>
-      </div>
     )
   }
 }
