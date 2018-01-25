@@ -12,6 +12,7 @@ const CompetitionsFullPage = () => (
 			/>{" "}
 			My Competitions
 		</Header>
+
 		<Segment clearing />
 		<Grid columns={3} divided>
 			<Grid.Row>
