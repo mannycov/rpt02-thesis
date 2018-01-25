@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
+
+import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import axios from 'axios'
 
 // Components
@@ -110,7 +112,7 @@ class UserHome extends Component {
 
         <br /><br />
 
-        <form onSubmit={this.handleSubmit} ref="commentForm" className="ui form">
+        <form onSubmit={this.handleSubmit} style={{ width: 290 }} ref="commentForm" className="ui form">
           <div className="field">
             <label>Goal Title</label>
             <input
@@ -131,6 +133,8 @@ class UserHome extends Component {
           </div>
           <button type="submit" className="ui button">Submit</button>
         </form>
+
+        <br /><br />
 
       </div>
     )
