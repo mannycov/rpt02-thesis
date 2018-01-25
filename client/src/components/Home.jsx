@@ -15,7 +15,7 @@ const Home = () => (
         </a>
         <Image src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
         <div className="ui middle aligned centered stackable grid container">
-          <div style={{position: 'absolute', bottom: 0, top: 55, width: '100%', height: 'auto' }} >
+          <div style={{position: 'absolute', bottom: 0, top: 55, width: '100%', height: '100%' }} >
             <div className="row">
               <div className="ten center aligned wide column">
                 <h1 className="ui header" id="tagline">
@@ -48,7 +48,7 @@ const Home = () => (
           </div>
           <div className="ui middle aligned equal width stackable grid">
             <div className="column">
-              <img className="mgb-alternating-media ui image" src="https://media.istockphoto.com/photos/tug-of-war-picture-id503870180?k=6&m=503870180&s=612x612&w=0&h=J7xJTbTxgmAl7HHt-aOA-dV6m90f1G3oReAC4A-s5_U=" />
+              <img className="mgb-alternating-media ui image" src="http://perec.columbia.edu/files/content/Boxing%203.jpg" />
             </div>
             <div className="column">
               <h3 className="ui header">Compete with friends and locals
@@ -77,7 +77,7 @@ const Home = () => (
               </a>
             </div>
             <div className="nine wide computer ten wide tablet column">
-              <img  src="https://media.istockphoto.com/photos/competitive-chefs-picture-id476610355?k=6&m=476610355&s=612x612&w=0&h=IJ36E658aqk5Ciq7hapR4-QPR4xIp1Yihll3tj_aTgE=" alt="Duck" />
+              <img  src="http://balleralert.com/wp-content/uploads/2017/01/fitness-768x340.jpg" />
             </div>
           </div>
       </div>
