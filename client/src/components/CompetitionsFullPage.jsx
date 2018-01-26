@@ -128,10 +128,10 @@ const CompetitionsFullPage = () => (
 					</Table>
 				</Grid.Column>
 				<Grid.Column />
-				<i class="calendar outline icon" >>
+				<i class="calendar outline icon" />
         <Header size="large">Start Date</Header>
 				<Grid.Column />
-        <i class="calendar outline icon">
+        <i class="calendar outline icon" />
         <Header size="large">End Date</Header>
 				<Grid.Column>
 					<Progress percent={44} progress />
