@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Button, Form, Menu, Input } from 'semantic-ui-react'
+import { Grid, Image, Button } from 'semantic-ui-react'
 
-import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import axios from 'axios'
 
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
+import CardComponent from './Card.jsx'
+import App from './App.jsx'
+// import AddGoal from './AddGoal.jsx'
 
 const ROOT_URL = 'http://localhost:3000'
 
@@ -82,60 +84,70 @@ class UserHome extends Component {
     const { activeItem } = this.state || {}
     return (
       <div>
+
         <MenuBar />
-        <Card>
-          <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
-          <Card.Content>
-            <Card.Header>
-              Manny
-            </Card.Header>
-            <Card.Meta>
-              <span className="date">
-                Joined in 2018
-              </span>
-            </Card.Meta>
-            <Card.Description>
-              Manny is some dude living in the Bay.
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name="user" />
-              22 Friends
-            </a>
-          </Card.Content>
-        </Card>
 
-        <SideMenu
-          goals={this.state.goals}
-        />
+        <Grid columns={3}>
 
-        <br /><br />
+          {/* Row 1 */}
+          <Grid.Row>
+            <Grid.Column>
+              <CardComponent />
+            </Grid.Column>
+            <Grid.Column>
+              <App />
+            </Grid.Column>
+            <Grid.Column>
+              <h1>Trophies List</h1>
+            </Grid.Column>
+          </Grid.Row>
 
-        <form onSubmit={this.handleSubmit} style={{ width: 290 }} ref="commentForm" className="ui form">
-          <div className="field">
-            <label>Goal Title</label>
-            <input
-              type="text"
-              value={this.state.goalTitle}
-              onChange={this.handleGoalTitleChange}
-              placeholder="Enter your goal here..."
-            />
-          </div>
-          <div className="field">
-            <label>Goal Description</label>
-            <textarea
-              placeholder="Describe your goal..."
-              rows="4"
-              value={this.state.goalDesc}
-              onChange={this.hanldeGoalDescChange}
-            />
-          </div>
-          <button type="submit" className="ui button">Submit</button>
-        </form>
+          {/* Row 2 */}
+          <Grid.Row>
+            <Grid.Column>
+              <Button>
+                + Add Goal
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
 
-        <br /><br />
+          {/* Row 3 */}
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <form onSubmit={this.handleSubmit} style={{ width: 290 }} ref="commentForm" className="ui form">
+                <div className="field">
+                  <label>Goal Title</label>
+                  <input
+                    type="text"
+                    value={this.state.goalTitle}
+                    onChange={this.handleGoalTitleChange}
+                    placeholder="Enter your goal here..."
+                  />
+                </div>
+                <div className="field">
+                  <label>Goal Description</label>
+                  <textarea
+                    placeholder="Describe your goal..."
+                    rows="4"
+                    value={this.state.goalDesc}
+                    onChange={this.hanldeGoalDescChange}
+                  />
+                </div>
+                <button type="submit" className="ui button">Submit</button>
+              </form>
+            </Grid.Column>
+          </Grid.Row>
 
+          {/* Row 4 */}
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <SideMenu
+                goals={this.state.goals}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <br/><br/>
       </div>
     )
   }
