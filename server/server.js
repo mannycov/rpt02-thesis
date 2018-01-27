@@ -8,7 +8,10 @@ import { StaticRouter } from 'react-router-dom'
 
 // import App from '../client/src/components/App.jsx'
 import Root from '../client/Root.jsx'
-import { GoalsModel } from '../database/index.js'
+import {
+  GoalsModel,
+  CompetitionsModel
+} from '../database/index.js'
 
 const db = require('../database/index.js')
 
@@ -23,12 +26,7 @@ app.get('/testendpoints', (req, res) => {
   res.send('Hello homeboy g money')
 })
 
-app.post('/testpost', (req, res) => {
-  res.send('in test post landing page')
-})
-
 app.get('/api/goal', (req, res) => {
-
   GoalsModel.find({}, function (err, data) {
     if (err) {
       console.log(err)
@@ -38,10 +36,27 @@ app.get('/api/goal', (req, res) => {
   })
 })
 
+app.post('/api/competitions', (req, res) => {
+  const competitionName = req.body.competitionName
+  const competitionsModelInstance = new CompetitionsModel({
+    competitions_name: competitionName,
+  })
+
+  competitionsModelInstance.save(function (err) {
+    if (err) {
+      console.log('competitions not saved', err)
+    } else {
+      res.sendStatus(201)
+    }
+  })
+})
+
 app.post('/api/goal', (req, res) => {
 
   const goalTitle = req.body.goal
-  const goalModelInstance = new GoalsModel({ goals_name: goalTitle })
+  const goalModelInstance = new GoalsModel({
+    goals_name: goalTitle
+  })
 
   goalModelInstance.save(function (err) {
     if (err) {

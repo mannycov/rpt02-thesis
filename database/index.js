@@ -9,7 +9,7 @@ db.once('open', function () {
   console.log('you da man and connected in more ways than you know ')
 })
 
-var userSchema = new Schema({
+const userSchema = new Schema({
   user_id: Number,
   first_name: String,
   last_name: String,
@@ -30,7 +30,7 @@ var userSchema = new Schema({
   trophies: Number
 })
 
-var goalsSchema = new Schema({
+const goalsSchema = new Schema({
   goals_id: Number,
   goals_name: String,
   category_id: Array,
@@ -43,7 +43,7 @@ var goalsSchema = new Schema({
 
 export const GoalsModel = mongoose.model('GoalsModel', goalsSchema);
 
-var competitionsSchema = new Schema({
+const competitionsSchema = new Schema({
   competitions_id: Number,
   competitions_name: String,
   start_date: Date,
@@ -52,21 +52,18 @@ var competitionsSchema = new Schema({
   members: Array,
   winner: Number,
   ranking_list: Array,
-  trophies: Array
-})
-
-var competitionsSchema = new Schema({
+  trophies: Array,
   checkpoint_id: Number,
   checkpoint_name: String,
-  status: String
+  status: String,
+  trophy_id: Number,
+  trophy_name: String
 })
 
-var categorySchema = new Schema({
+export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema);
+
+const categorySchema = new Schema({
   category_id: Number,
   category_name: String
 })
 
-var competitionsSchema = new Schema({
-  trophy_id: Number,
-  trophy_name: String
-})

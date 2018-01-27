@@ -2,6 +2,7 @@ import React from 'react'
 import { Header, Image, Grid, Segment, Statistic } from 'semantic-ui-react'
 import CompetitionsFriendsRank from './CompetitionsFriendsRank.jsx'
 import CompetitionsFullPageList from './CompetitionsFullPageList.jsx'
+import CreateCompetition from "./CreateCompetition.jsx";
 import MenuBar from './MenuBar.jsx'
 import Data from '../../FakeData'
 
@@ -17,12 +18,7 @@ const CompetitionsFullPage = () => (
 		</Header>
 		<Segment clearing>
 			<Statistic.Group widths="three">
-				<Statistic>
-					<Statistic.Value text>
-						<i class="plus icon" />
-					</Statistic.Value>
-					<Statistic.Label>Create Competition</Statistic.Label>
-				</Statistic>
+				<CreateCompetition />
 				<Statistic>
 					<Statistic.Value>
 						{`5  `}
@@ -42,15 +38,14 @@ const CompetitionsFullPage = () => (
 				</Statistic>
 			</Statistic.Group>
 		</Segment>
-				{ Data.map((CompetitionsFp) => {
-          return(
-            <CompetitionsFullPageList
-              key = { CompetitionsFp.id }
-              CompetitionsFp = { CompetitionsFp }
-            />
-          )
-        })
-        }
+		{Data.map(CompetitionsFp => {
+			return (
+				<CompetitionsFullPageList
+					key={CompetitionsFp.id}
+					CompetitionsFp={CompetitionsFp}
+				/>
+			);
+		})}
 	</div>
 );
 
