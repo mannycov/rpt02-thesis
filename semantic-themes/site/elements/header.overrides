@@ -35,7 +35,3 @@ div#header-home {
     background-image: url('https://static.pexels.com/photos/17840/pexels-photo.jpg') !important;
     background-size: cover !important;
 }
-
-#tagline.span {
-    color: white;
-}
