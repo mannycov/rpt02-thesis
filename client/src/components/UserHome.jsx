@@ -1,22 +1,13 @@
 import React, { Component } from 'react'
-<<<<<<< HEAD
 import { Card, Icon, Image, Grid, Button, Form, Menu, Input } from 'semantic-ui-react'
-=======
-import { Grid, Image, Button } from 'semantic-ui-react'
->>>>>>> add grid and render card from separate component in profile page
 
+import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import axios from 'axios'
 
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
-<<<<<<< HEAD
 import UserFeed from './UserFeed.jsx'
-=======
-import CardComponent from './Card.jsx'
-import App from './App.jsx'
-// import AddGoal from './AddGoal.jsx'
->>>>>>> add grid and render card from separate component in profile page
 
 const ROOT_URL = 'http://localhost:3000'
 
@@ -92,7 +83,6 @@ class UserHome extends Component {
     const { activeItem } = this.state || {}
     return (
       <div>
-
         <MenuBar />
         <Grid>
           <Grid.Column width={5}>
