@@ -94,7 +94,6 @@ class UserHome extends Component {
       <div>
 
         <MenuBar />
-<<<<<<< HEAD
         <Grid>
           <Grid.Column width={5}>
             <h1>Bio</h1>
@@ -126,36 +125,6 @@ class UserHome extends Component {
             <br /><br />
 
             <Grid.Row>
-=======
-
-        <Grid columns={3}>
-
-          {/* Row 1 */}
-          <Grid.Row>
-            <Grid.Column>
-              <CardComponent />
-            </Grid.Column>
-            <Grid.Column>
-              <App />
-            </Grid.Column>
-            <Grid.Column>
-              <h1>Trophies List</h1>
-            </Grid.Column>
-          </Grid.Row>
-
-          {/* Row 2 */}
-          <Grid.Row>
-            <Grid.Column>
-              <Button>
-                + Add Goal
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-
-          {/* Row 3 */}
-          <Grid.Row>
-            <Grid.Column width={8}>
->>>>>>> add grid and render card from separate component in profile page
               <form onSubmit={this.handleSubmit} style={{ width: 290 }} ref="commentForm" className="ui form">
                 <div className="field">
                   <label>Goal Title</label>
@@ -177,7 +146,6 @@ class UserHome extends Component {
                 </div>
                 <button type="submit" className="ui button">Submit</button>
               </form>
-<<<<<<< HEAD
             </Grid.Row>
 
             <br /><br />
@@ -240,21 +208,6 @@ class UserHome extends Component {
           </Grid.Column>
 
         </Grid>
-=======
-            </Grid.Column>
-          </Grid.Row>
-
-          {/* Row 4 */}
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <SideMenu
-                goals={this.state.goals}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <br/><br/>
->>>>>>> add grid and render card from separate component in profile page
       </div>
     )
   }
