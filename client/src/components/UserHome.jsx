@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
+<<<<<<< HEAD
 import { Card, Icon, Image, Grid, Button, Form, Menu, Input } from 'semantic-ui-react'
+=======
+import { Grid, Image, Button } from 'semantic-ui-react'
+>>>>>>> add grid and render card from separate component in profile page
 
-import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import axios from 'axios'
 
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
+<<<<<<< HEAD
 import UserFeed from './UserFeed.jsx'
+=======
+import CardComponent from './Card.jsx'
+import App from './App.jsx'
+// import AddGoal from './AddGoal.jsx'
+>>>>>>> add grid and render card from separate component in profile page
 
 const ROOT_URL = 'http://localhost:3000'
 
@@ -83,7 +92,9 @@ class UserHome extends Component {
     const { activeItem } = this.state || {}
     return (
       <div>
+
         <MenuBar />
+<<<<<<< HEAD
         <Grid>
           <Grid.Column width={5}>
             <h1>Bio</h1>
@@ -115,6 +126,36 @@ class UserHome extends Component {
             <br /><br />
 
             <Grid.Row>
+=======
+
+        <Grid columns={3}>
+
+          {/* Row 1 */}
+          <Grid.Row>
+            <Grid.Column>
+              <CardComponent />
+            </Grid.Column>
+            <Grid.Column>
+              <App />
+            </Grid.Column>
+            <Grid.Column>
+              <h1>Trophies List</h1>
+            </Grid.Column>
+          </Grid.Row>
+
+          {/* Row 2 */}
+          <Grid.Row>
+            <Grid.Column>
+              <Button>
+                + Add Goal
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+
+          {/* Row 3 */}
+          <Grid.Row>
+            <Grid.Column width={8}>
+>>>>>>> add grid and render card from separate component in profile page
               <form onSubmit={this.handleSubmit} style={{ width: 290 }} ref="commentForm" className="ui form">
                 <div className="field">
                   <label>Goal Title</label>
@@ -136,6 +177,7 @@ class UserHome extends Component {
                 </div>
                 <button type="submit" className="ui button">Submit</button>
               </form>
+<<<<<<< HEAD
             </Grid.Row>
 
             <br /><br />
@@ -198,6 +240,21 @@ class UserHome extends Component {
           </Grid.Column>
 
         </Grid>
+=======
+            </Grid.Column>
+          </Grid.Row>
+
+          {/* Row 4 */}
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <SideMenu
+                goals={this.state.goals}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <br/><br/>
+>>>>>>> add grid and render card from separate component in profile page
       </div>
     )
   }
