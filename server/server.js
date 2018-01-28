@@ -22,10 +22,6 @@ app.use(expressLogging(logger))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/testendpoints', (req, res) => {
-  res.send('Hello homeboy g money')
-})
-
 app.get('/api/goal', (req, res) => {
   GoalsModel.find({}, function (err, data) {
     if (err) {
