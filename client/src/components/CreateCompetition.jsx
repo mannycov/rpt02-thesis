@@ -7,7 +7,7 @@ const CreateCompetition = () => (
 		trigger={
 			<Statistic>
 				<Statistic.Value text>
-					<i class="plus icon" />
+					<i className="plus icon" />
 				</Statistic.Value>
 				<Statistic.Label>Create Competition</Statistic.Label>
 			</Statistic>
@@ -16,16 +16,14 @@ const CreateCompetition = () => (
 	>
 		<Header icon="plus icon" content="Create a Competition" />
 		<Modal.Content>
-			<p>
-				Coming Soon
-			</p>
+				<CreateCompetitionForm />
 		</Modal.Content>
 		<Modal.Actions>
 			<Button color="red">
 				<Icon name="remove" /> Cancel
 			</Button>
 			<Button color="green">
-				<Icon name="checkmark" /> Add
+				<Icon name="checkmark" /> Add Competition
 			</Button>
 		</Modal.Actions>
 	</Modal>

@@ -18,7 +18,8 @@ class UserHome extends Component {
     this.state = {
       goalTitle: '',
       goalDesc: '',
-      goals: []
+      goals: [],
+      isHidden: true
     }
     this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
     this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
