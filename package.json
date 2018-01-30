@@ -45,6 +45,7 @@
 		"less-loader": "^4.0.5",
 		"npm-run-all": "^4.1.2",
 		"start-server-webpack-plugin": "^2.2.0",
+		"style-loader": "^0.20.1",
 		"webpack": "^3.10.0",
 		"webpack-dev-server": "^2.11.1",
 		"webpack-node-externals": "^1.6.0"

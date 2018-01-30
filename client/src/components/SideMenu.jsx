@@ -8,10 +8,9 @@ class SideMenu extends Component {
     this.setState({ activeItem: name })
   }
 
-  render () {
-
+  render (props) {
+    console.log('props in the sidemenu component', this.props.goals);
     const { activeItem } = this.state || {}
-    console.log("console logging props in sidemenu", this.props.goals);
     return <Menu style={{ width: 290 }} vertical>
 				<Menu.Item>
 					<Menu.Header>Goals</Menu.Header>
@@ -29,7 +28,9 @@ class SideMenu extends Component {
 				</Menu.Item>
 				<Menu.Item>
           <CompetitionsPopUp
-            categoryOptions={this.props.categoryOptions}
+            goals={this.props.goals}
+            competititonsHandleClick={this.props.competititonsHandleClick}
+            isHidden={this.props.isHidden}
             />
 				</Menu.Item>
 				<Link to="/trophies">
