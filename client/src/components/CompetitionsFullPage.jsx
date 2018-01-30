@@ -6,7 +6,9 @@ import CreateCompetition from "./CreateCompetition.jsx"
 import MenuBar from './MenuBar.jsx'
 import Data from '../../FakeData'
 
-const CompetitionsFullPage = () => (
+const CompetitionsFullPage = ({goals}) => {
+  console.log('props in the competitions fullpage', goals);
+return(
 	<div>
 		<MenuBar />
 		<Header as="h2">
@@ -48,5 +50,6 @@ const CompetitionsFullPage = () => (
 		})}
 	</div>
 );
+}
 
 export default CompetitionsFullPage
