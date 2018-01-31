@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Card, Icon, Image, Grid, Button, Form, Menu, Input } from 'semantic-ui-react'
 
 import CompetitionsPopUp from './CompetitionsPopUp.jsx'
+import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 import axios from 'axios'
 
 // Components
@@ -20,7 +21,7 @@ class UserHome extends Component {
       goalTitle: '',
       goalDesc: '',
       goals: ['test1', 'test2'],
-      isHidden: false
+      isHidden: true
     }
     this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
     this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
@@ -50,7 +51,7 @@ class UserHome extends Component {
 
   competititonsHandleClick (isHidden) {
     this.setState({
-      isHidden: true
+      isHidden: false
     })
     console.log("you were clicked in the pop menu");
   }
@@ -92,153 +93,158 @@ class UserHome extends Component {
   }
 
   render (props) {
-    const { activeItem } = this.state || {};
-    return (
-      <div>
-        <MenuBar />
-        <Grid>
-          <Grid.Column width={5}>
-            <h1>Bio</h1>
-            <Grid.Row>
+    const { activeItem } = this.state || {}
+    console.log('in the user components is hidden??', this.state.isHidden)
+    if (this.state.isHidden) {
+      return(
+        <div>
+          <MenuBar />
+          <Grid>
+            <Grid.Column width={5}>
+              <h1>Bio</h1>
+              <Grid.Row>
+                <Card>
+                  <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
+                  <Card.Content>
+                    <Card.Header>Manny</Card.Header>
+                    <Card.Meta>
+                      <span className="date">Joined in 2018</span>
+                    </Card.Meta>
+                    <Card.Description>
+                  Manny is some dude living in the Bay.
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <a>
+                      <Icon name="user" />
+                  22 Friends
+                    </a>
+                  </Card.Content>
+                </Card>
+              </Grid.Row>
+
+              <br />
+              <br />
+
+              <Grid.Row>
+                <AddGoal />
+              </Grid.Row>
+
+              <Grid.Row>
+                <form
+                  onSubmit={this.handleSubmit}
+                  style={{ width: 290 }}
+                  ref="commentForm"
+                  className="ui form"
+                >
+                  <div className="field">
+                    <label>Goal Title</label>
+                    <input
+                      type="text"
+                      value={this.state.goalTitle}
+                      onChange={this.handleGoalTitleChange}
+                      placeholder="Enter your goal here..."
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Goal Description</label>
+                    <textarea
+                      placeholder="Describe your goal..."
+                      rows="4"
+                      value={this.state.goalDesc}
+                      onChange={this.hanldeGoalDescChange}
+                    />
+                  </div>
+                  <button type="submit" className="ui button">
+                Submit
+                  </button>
+                </form>
+              </Grid.Row>
+
+              <br />
+              <br />
+
+              <Grid.Row>
+                <SideMenu
+                  goals={this.state.goals}
+                  competititonsHandleClick={this.competititonsHandleClick}
+                  isHidden={this.state.isHidden}
+                  {...props}
+                />
+              </Grid.Row>
+            </Grid.Column>
+
+            <br />
+            <br />
+
+            <Grid.Column width={7}>
+              <h1>Feed</h1>
+              <Grid.Row>
+                <UserFeed />
+              </Grid.Row>
+            </Grid.Column>
+
+            <Grid.Column width={3}>
+              <h1>Trophies</h1>
               <Card>
-                <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
-                <Card.Content>
-                  <Card.Header>Manny</Card.Header>
-                  <Card.Meta>
-                    <span className="date">Joined in 2018</span>
-                  </Card.Meta>
-                  <Card.Description>
-                Manny is some dude living in the Bay.
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <a>
-                    <Icon name="user" />
-                22 Friends
-                  </a>
-                </Card.Content>
+                <div className="ui tiny image">
+                  <Image
+                    src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg"
+                    title="First Place"
+                    size="small"
+                  />
+                </div>
+                <div className="content">
+                  <div className="header">Get Huge</div>
+                  <div className="meta">First Place</div>
+                </div>
               </Card>
-            </Grid.Row>
-
-            <br />
-            <br />
-
-            <Grid.Row>
-              <AddGoal />
-            </Grid.Row>
-
-            <Grid.Row>
-              <form
-                onSubmit={this.handleSubmit}
-                style={{ width: 290 }}
-                ref="commentForm"
-                className="ui form"
-              >
-                <div className="field">
-                  <label>Goal Title</label>
-                  <input
-                    type="text"
-                    value={this.state.goalTitle}
-                    onChange={this.handleGoalTitleChange}
-                    placeholder="Enter your goal here..."
+              <Card>
+                <div className="ui tiny image">
+                  <Image
+                    src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg"
+                    title="Second Place"
+                    size="small"
                   />
                 </div>
-                <div className="field">
-                  <label>Goal Description</label>
-                  <textarea
-                    placeholder="Describe your goal..."
-                    rows="4"
-                    value={this.state.goalDesc}
-                    onChange={this.hanldeGoalDescChange}
+                <div className="content">
+                  <div className="header">You Can Do It</div>
+                  <div className="meta">Second Place</div>
+                </div>
+              </Card>
+              <Card>
+                <div className="ui tiny image">
+                  <Image
+                    src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
+                    title="No Place"
+                    size="small"
                   />
                 </div>
-                <button type="submit" className="ui button">
-              Submit
-                </button>
-              </form>
-            </Grid.Row>
-
-            <br />
-            <br />
-
-            <Grid.Row>
-              <SideMenu
-                goals={this.state.goals}
-                competititonsHandleClick={this.competititonsHandleClick}
-                isHidden={this.state.isHidden}
-                {...props}
-              />
-            </Grid.Row>
-          </Grid.Column>
-
-          <br />
-          <br />
-
-          <Grid.Column width={7}>
-            <h1>Feed</h1>
-            <Grid.Row>
-              <UserFeed />
-            </Grid.Row>
-          </Grid.Column>
-
-          <Grid.Column width={3}>
-            <h1>Trophies</h1>
-            <Card>
-              <div className="ui tiny image">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg"
-                  title="First Place"
-                  size="small"
-                />
-              </div>
-              <div className="content">
-                <div className="header">Get Huge</div>
-                <div className="meta">First Place</div>
-              </div>
-            </Card>
-            <Card>
-              <div className="ui tiny image">
-                <Image
-                  src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg"
-                  title="Second Place"
-                  size="small"
-                />
-              </div>
-              <div className="content">
-                <div className="header">You Can Do It</div>
-                <div className="meta">Second Place</div>
-              </div>
-            </Card>
-            <Card>
-              <div className="ui tiny image">
-                <Image
-                  src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
-                  title="No Place"
-                  size="small"
-                />
-              </div>
-              <div className="content">
-                <div className="header">Lose Weight</div>
-                <div className="meta">Didn't Place</div>
-              </div>
-            </Card>
-            <Card>
-              <div className="ui tiny image">
-                <Image
-                  src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
-                  title="No Place"
-                  size="small"
-                />
-              </div>
-              <div className="content">
-                <div className="header">Beat the Lake Run</div>
-                <div className="meta">Didn't Place</div>
-              </div>
-            </Card>
-          </Grid.Column>
-        </Grid>
-      </div>
-    );
+                <div className="content">
+                  <div className="header">Lose Weight</div>
+                  <div className="meta">Didn't Place</div>
+                </div>
+              </Card>
+              <Card>
+                <div className="ui tiny image">
+                  <Image
+                    src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
+                    title="No Place"
+                    size="small"
+                  />
+                </div>
+                <div className="content">
+                  <div className="header">Beat the Lake Run</div>
+                  <div className="meta">Didn't Place</div>
+                </div>
+              </Card>
+            </Grid.Column>
+          </Grid>
+        </div>
+      )
+    }
+      return <CompetitionsFullPage />
+    }
   }
 }
 
