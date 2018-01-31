@@ -7,26 +7,24 @@ import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 
 const CompetitionsPopUp = ({ goals, competititonsHandleClick, isHidden}) => {
   console.log('props in the competitions popup', competititonsHandleClick)
-  return (
-    isHidden === true ? <CompetitionsFullPage /> :
-      <Popup
-        trigger={
-          <Menu.Header onClick={ () => competititonsHandleClick(isHidden)}
-          >
-            Competitions
-          </Menu.Header>
-        }
-        flowing hoverable>
-          <Grid
-          onClick={() => competititonsHandleClick(isHidden)}
-          centered divided columns={Data.length}>
-            {Data.map((competition) => {
-              return <CompetitionsList key={competition.id} competitionName={competition} />;
-            })}
-          </Grid>
-      </Popup>
-
-  );
+  return(
+    <Popup
+      trigger={
+        <Menu.Header
+        >
+          Competitions
+        </Menu.Header>
+      }
+      flowing hoverable>
+        <Grid
+        onClick={() => competititonsHandleClick(isHidden)}
+        centered divided columns={Data.length}>
+          {Data.map((competition) => {
+            return <CompetitionsList key={competition.id} competitionName={competition} />;
+          })}
+        </Grid>
+    </Popup>
+  )
 };
 
 export default CompetitionsPopUp
