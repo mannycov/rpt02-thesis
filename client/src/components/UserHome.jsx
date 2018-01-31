@@ -50,8 +50,9 @@ class UserHome extends Component {
 
   competititonsHandleClick (isHidden) {
     this.setState({
-      hideShowState: isHidden
+      isHidden: true
     })
+    console.log("you were clicked in the pop menu");
   }
 
   handleSubmit (e) {
