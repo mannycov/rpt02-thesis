@@ -9,10 +9,8 @@ const CompetitionsPopUp = ({ goals, competititonsHandleClick, isHidden}) => {
 	console.log("props in the competitions popup", goals);
 	return <Link goals={goals} to="/competitionsfullpage">
 			<Popup trigger={<Menu.Header
-            onClick={() => competititonsHandleClick(isHidden)}
-            {if (ishHidden) {
-            <CompetitionsFullPage />
-            }}
+            onClick={() => competititonsHandleClick(isHidden)
+            }
 					>
 						Competitions
 					</Menu.Header>} flowing hoverable>
