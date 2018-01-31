@@ -8,6 +8,7 @@ import axios from 'axios'
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
 import UserFeed from './UserFeed.jsx'
+import AddGoal from './AddGoal.jsx'
 
 const ROOT_URL = 'http://localhost:3000'
 
