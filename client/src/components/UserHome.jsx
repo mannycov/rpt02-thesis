@@ -243,8 +243,7 @@ class UserHome extends Component {
         </div>
       )
     }
-      return <CompetitionsFullPage />
-    }
+    return <CompetitionsFullPage />
   }
 }
 
