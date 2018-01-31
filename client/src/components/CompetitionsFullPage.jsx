@@ -2,11 +2,13 @@ import React from 'react'
 import { Header, Image, Grid, Segment, Statistic } from 'semantic-ui-react'
 import CompetitionsFriendsRank from './CompetitionsFriendsRank.jsx'
 import CompetitionsFullPageList from './CompetitionsFullPageList.jsx'
-import CreateCompetition from "./CreateCompetition.jsx";
+import CreateCompetition from "./CreateCompetition.jsx"
 import MenuBar from './MenuBar.jsx'
 import Data from '../../FakeData'
 
-const CompetitionsFullPage = () => (
+const CompetitionsFullPage = ({goals}) => {
+  console.log('props in the competitions fullpage', goals);
+return(
 	<div>
 		<MenuBar />
 		<Header as="h2">
@@ -22,7 +24,7 @@ const CompetitionsFullPage = () => (
 				<Statistic>
 					<Statistic.Value>
 						{`5  `}
-						<i class="flag checkered icon" />
+						<i className="flag checkered icon" />
 					</Statistic.Value>
 					<Statistic.Label>{`Competitions    Won`}</Statistic.Label>
 				</Statistic>
@@ -48,5 +50,6 @@ const CompetitionsFullPage = () => (
 		})}
 	</div>
 );
+}
 
 export default CompetitionsFullPage

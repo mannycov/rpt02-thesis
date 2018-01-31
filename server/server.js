@@ -6,12 +6,14 @@ import expressLogging from 'express-logging'
 import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
 
-// import App from '../client/src/components/App.jsx'
 import Root from '../client/Root.jsx'
 import {
   GoalsModel,
   CompetitionsModel
 } from '../database/index.js'
+
+// import GoalsModel from '../database/models/goals.js'
+// import CompetitionsModel from '../database/models/competitions.js'
 
 const db = require('../database/index.js')
 
@@ -21,10 +23,6 @@ app.use(expressLogging(logger))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
-app.get('/testendpoints', (req, res) => {
-  res.send('Hello homeboy g money')
-})
 
 app.get('/api/goal', (req, res) => {
   GoalsModel.find({}, function (err, data) {
@@ -39,7 +37,7 @@ app.get('/api/goal', (req, res) => {
 app.post('/api/competitions', (req, res) => {
   const competitionName = req.body.competitionName
   const competitionsModelInstance = new CompetitionsModel({
-    competitions_name: competitionName,
+    competitions_name: competitionName
   })
 
   competitionsModelInstance.save(function (err) {
