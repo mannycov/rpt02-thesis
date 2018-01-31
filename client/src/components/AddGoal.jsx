@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 class AddGoal extends Component {
   constructor () {
@@ -34,10 +35,12 @@ class AddGoal extends Component {
 
     return (
       <div>
-        <Button onClick={() => { this.show('tiny') }}>
-          <i className="plus icon" />
-          Add a Goal
-        </Button>
+        <Link to="/goal">
+          <Button>
+            <i className="plus icon" />
+            Add a Goal
+          </Button>
+        </Link>
 
         <Modal size={size} open={open} onClose={this.close}>
           <Modal.Header>
@@ -45,7 +48,10 @@ class AddGoal extends Component {
           </Modal.Header>
           <Modal.Content>
             <form className="ui form">
-              <input type="text" />
+              <input 
+                type="text"
+                placeholder="Write something..."
+              />
             </form>
           </Modal.Content>
           <Modal.Actions>
