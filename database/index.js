@@ -3,7 +3,7 @@ var Schema = mongoose.Schema
 var db = mongoose.connection
 
 mongoose.connect(
-	"mongodb://competely:Youcandoit1@ds133796.mlab.com:33796/competely"
+	'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
 );
 
 db.on('error', console.error.bind(console, 'connection error:'))
