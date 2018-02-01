@@ -35,7 +35,7 @@ app.get('/api/goal', (req, res) => {
 })
 
 app.post('/api/competitions', (req, res) => {
-  const competitionName = req.body.competitionName
+  const competitionName = req.body
   const competitionsModelInstance = new CompetitionsModel({
     competitions_name: competitionName
   })

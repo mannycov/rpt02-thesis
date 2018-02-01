@@ -13,18 +13,18 @@ import NotFound from './src/components/NotFound.jsx'
 import Goal from './src/components/Goal.jsx'
 
 const Root = () => (
-	<Switch>
-		<Route exact path="/" component={Home} />
-		<Route path="/userhome" component={UserHome} />
-		<Route path="/friends" component={Friends} />
-		<Route path="/competitionsfullpage" component={CompetitionsFullPage} />
-		<Route path="/competitionspopup" component={CompetitionsPopUp} />
-		<Route path="/trophies" component={Trophies} />
-		<Route path="/signupform" component={SignupForm} />
-		<Route path="/homepageheader" component={HomePageHeader} />
-		<Route path="/goal" component={Goal} />
-		<Route component={NotFound} />
-	</Switch>
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route path="/userhome" component={UserHome} />
+    <Route path="/friends" component={Friends} />
+    <Route path="/competitionsfullpage" component={CompetitionsFullPage} />
+    <Route path="/competitionspopup" component={CompetitionsPopUp} />
+    <Route path="/trophies" component={Trophies} />
+    <Route path="/signupform" component={SignupForm} />
+    <Route path="/homepageheader" component={HomePageHeader} />
+    <Route path="/goal" component={Goal} />
+    <Route component={NotFound} />
+  </Switch>
 )
 
 export default Root
