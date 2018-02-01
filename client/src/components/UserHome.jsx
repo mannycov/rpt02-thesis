@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Grid, Button, Form, Menu, Input } from 'semantic-ui-react'
-
-import CompetitionsPopUp from './CompetitionsPopUp.jsx'
-import CompetitionsFullPage from './CompetitionsFullPage.jsx'
+import { Card, Icon, Image, Grid } from 'semantic-ui-react'
 import axios from 'axios'
+
+import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 
 // Components
 import MenuBar from './MenuBar.jsx'
@@ -46,24 +45,24 @@ class UserHome extends Component {
   }
 
   handleItemClick (name) {
-    this.setState({ activeItem: name });
+    this.setState({ activeItem: name })
   }
 
   competititonsHandleClick (isHidden) {
     this.setState({
       isHidden: false
     })
-    console.log("you were clicked in the pop menu");
+    console.log('you were clicked in the pop menu')
   }
 
   handleSubmit (e) {
     e.preventDefault()
 
-    const copyOfGoals = [...this.state.goals];
-    copyOfGoals.push(this.state.goalTitle);
+    const copyOfGoals = [...this.state.goals]
+    copyOfGoals.push(this.state.goalTitle)
 
     axios
-      .post(ROOT_URL + "/api/goal", {
+      .post(ROOT_URL + '/api/goal', {
         goal: this.state.goalTitle
       })
       .then((response) => {
@@ -81,7 +80,7 @@ class UserHome extends Component {
 
   fetchGoals () {
     axios
-      .get(ROOT_URL + "/api/goal")
+      .get(ROOT_URL + '/api/goal')
       .then((response) => {
         this.setState({
           goals: response.data
@@ -96,7 +95,7 @@ class UserHome extends Component {
     const { activeItem } = this.state || {}
     console.log('in the user components is hidden??', this.state.isHidden)
     if (this.state.isHidden) {
-      return(
+      return (
         <div>
           <MenuBar />
           <Grid>
