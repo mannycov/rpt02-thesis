@@ -7,13 +7,18 @@ class MenuBar extends Component {
     this.setState({ activeItem: name })
   }
 
-  render () {
+  render (props) {
     const { activeItem } = this.state || {}
+    console.log('my prizzle', this.props.isHidden)
     return (
       <div>
         <Menu secondary>
           <Link to="/userhome">
-            <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick} />
+            <Menu.Item
+              name="home"
+              active={activeItem === 'home'}
+              onClick={this.handleItemClick}
+            />
           </Link>
           <Menu.Item name="messages" active={activeItem === 'messages'} onClick={this.handleItemClick} />
           <Menu.Item name="friends" active={activeItem === 'friends'} onClick={this.handleItemClick} />
