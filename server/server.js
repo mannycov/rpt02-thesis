@@ -36,17 +36,18 @@ app.get('/api/goal', (req, res) => {
 
 app.post('/api/competitions', (req, res) => {
   const competitionName = req.body
-  const competitionsModelInstance = new CompetitionsModel({
-    competitions_name: competitionName
-  })
+  console.log('from the server side post body competitions', competitionName)
+  // const competitionsModelInstance = new CompetitionsModel({
+  //   competitions_name: competitionName
+  // })
 
-  competitionsModelInstance.save(function (err) {
-    if (err) {
-      console.log('competitions not saved', err)
-    } else {
-      res.sendStatus(201)
-    }
-  })
+  // competitionsModelInstance.save(function (err) {
+  //   if (err) {
+  //     console.log('competitions not saved', err)
+  //   } else {
+  //     res.sendStatus(201)
+  //   }
+  // })
 })
 
 app.post('/api/goal', (req, res) => {

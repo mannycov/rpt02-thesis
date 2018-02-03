@@ -12,12 +12,12 @@ import AddGoal from './AddGoal.jsx'
 const ROOT_URL = 'http://localhost:3000'
 
 class UserHome extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       goalTitle: '',
       goalDesc: '',
-      goals: ["test1", "test2"],
+      goals: ['test1', 'test2'],
       isHidden: true,
       compName: '',
       compCat: '',
@@ -27,9 +27,9 @@ class UserHome extends Component {
     this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
     this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.competititonsHandleClick = this.competititonsHandleClick.bind(this)
-    this.handleCompName = this.handleCompName.bind(this);
-    this.handleCompCat = this.handleCompCat.bind(this);
+    this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
+    this.handleCompName = this.handleCompName.bind(this)
+    this.handleCompCat = this.handleCompCat.bind(this)
     this.handleCompStart = this.handleCompStart.bind(this)
     this.handleCompEnd = this.handleCompStart.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
@@ -39,77 +39,81 @@ class UserHome extends Component {
     this.fetchGoals()
   }
 
-  handleGoalTitleChange(e) {
+  handleGoalTitleChange (e) {
     this.setState({
       goalTitle: e.target.value
     })
   }
 
-  hanldeGoalDescChange(e) {
+  hanldeGoalDescChange (e) {
     this.setState({
       goalDesc: e.target.value
     })
   }
 
-  handleItemClick(name) {
+  handleItemClick (name) {
     this.setState({ activeItem: name })
   }
 
-  competititonsHandleClick(isHidden) {
+  competitionsHandleClick (isHidden) {
     this.setState({
       isHidden: !isHidden
     })
     console.log('you were clicked in the pop menu')
   }
 
-  handleCompName(compName) {
+  handleCompName (compName) {
     console.log(compName)
     this.setState({
       compName: compName.target.value
     })
   }
 
-  handleCompCat(compCat) {
-    console.log(compCat);
+  handleCompCat (e, compCat) {
     this.setState({
-      compCat: compCat.target.value
+      compCat: compCat.value
     })
   }
 
-  handleCompStart(compStart) {
-    console.log(compStart);
+  handleCompStart (compStarts) {
+    console.log('in the user home', compStarts.target.value)
     this.setState({
-      compStart: compStart.target.value
+      compStart: compStarts.target.value
     })
   }
-  handleCompEnd(compEnd) {
-    console.log(compEnd);
+  handleCompEnd (compEnd) {
+    console.log(compEnd)
     this.setState({
       compEnd: compEnd.target.value
     })
   }
 
-  competitionsSubmit (compName, compCat, compStart, compEnd) {
-    console.log('comp obj', compName, compCat, compstart, compEd)
-    axios.post("/api/competitions", {
-      comptetionName: compName,
-      competitionCategory: compCat,
-      competitionStart: compStart,
-      competionEnd: compEnd
+  competitionsSubmit (compsName, compsCat, compsStart, compsEnd) {
+    console.log('what im submitting in the user component', compsName, compsCat, compsStart, compsEnd)
+
+    let createCompetition = {
+      comptetionName: compsName,
+      competitionCategory: compsCat,
+      competitionStart: compsStart,
+      competionEnd: compsEnd
+    }
+
+    axios.post('/api/competitions', {
+      createCompetition: createCompetition
     })
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(error) {
-      console.log(error);
-    })
+      .then(function(response) {
+        console.log(response)
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit (e) {
+    e.preventDefault()
 
-    const copyOfGoals = [...this.state.goals];
-    copyOfGoals.push(this.state.goalTitle);
+    const copyOfGoals = [...this.state.goals]
+    copyOfGoals.push(this.state.goalTitle)
 
     axios
       .post(ROOT_URL + "/api/goal", {
@@ -143,13 +147,13 @@ class UserHome extends Component {
 
   render(props) {
     const { activeItem } = this.state || {};
-    console.log("in the user components is hidden??", this.state.isHidden);
+    console.log("userHome components hidden true??", this.state.isHidden);
     if (this.state.isHidden) {
       return(
         <div>
           <MenuBar
             isHidden={this.state.isHidden}
-            competititonsHandleClick={this.competititonsHandleClick}
+            competitionsHandleClick={this.competitionsHandleClick}
           />
           <Grid>
             <Grid.Column width={5}>
@@ -216,7 +220,7 @@ class UserHome extends Component {
               <Grid.Row>
                 <SideMenu
                   goals={this.state.goals}
-                  competititonsHandleClick={this.competititonsHandleClick}
+                  competitionsHandleClick={this.competitionsHandleClick}
                   isHidden={this.state.isHidden}
                   {...props}
                 />
@@ -291,15 +295,16 @@ class UserHome extends Component {
     }
     return (
       <CompetitionsFullPage
+        isHidden={this.state.isHidden}
         compName={this.state.compName}
         compCat={this.state.compCat}
         compStart={this.state.compStart}
         compEnd={this.state.compEnd}
-        handleCompName = {this.handleCompName}
-        handleCompCat = {this.handleCompCat}
-        handleCompStart = {this.handleCompStart}
-        handleCompEnd = {this.handleCompStart}
-        competitionsSubmit = {this.competitionsSubmit}
+        handleCompName={this.handleCompName}
+        handleCompCat={this.handleCompCat}
+        handleCompStart={this.handleCompStart}
+        handleCompEnd={this.handleCompEnd}
+        competitionsSubmit={this.competitionsSubmit}
       />
     )
   }

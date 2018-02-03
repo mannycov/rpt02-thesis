@@ -1,8 +1,9 @@
 import React from "react"
-import { Button, Header, Icon, Modal, Statistic, Form } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Statistic, Form, Dropdown } from 'semantic-ui-react'
 import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
 
 const CreateCompetition = ({
+  isHidden,
   compName,
   compCat,
   compStart,
@@ -12,62 +13,67 @@ const CreateCompetition = ({
   handleCompStart,
   handleCompEnd,
   competitionsSubmit
-}) => (
-  <Modal
-    trigger={
-      <Statistic>
-        <Statistic.Value text>
-          <i className="plus icon" />
-        </Statistic.Value>
-        <Statistic.Label>Create Competition</Statistic.Label>
-      </Statistic>
-    }
-    closeIcon
-  >
-    <Header icon="plus icon" content="Create a Competition" />
-    <Modal.Content>
-      <Form
-        onSubmit={(event) => { event.preventDefault(); competitionsSubmit(compName, compCat, compStart, compEnd); }}
-      >
-        <Form.Group widths="equal">
-          <Form.Input
-            fluid
-            onChange={handleCompName}
-            label="Competition Name"
-            placeholder="Competition Name"
-          />
-          <Form.Select
-            fluid
-            onChange={handleCompCat}
-            label="Choose Category"
-            options={DefaultCompeteCategories}
-            placeholder="Category"
-          />
-          <Form.Input
-            onChange={handleCompStart}
-            fluid label="Choose Start Date"
-            placeholder="Start Date"
-          />
-          <Form.Input
-            onChange={handleCompEnd}
-            fluid label="Choose End Date"
-            placeholder="End Date"
-          />
-        </Form.Group>
-      </Form>
-    </Modal.Content>
-    <Modal.Actions>
-      <Button color="red">
-        <Icon name="remove" /> Cancel
-      </Button>
-      <Button
-        color="green"
-        type="submit"
-      >
-        <Icon name="checkmark" /> Add Competition
-      </Button>
-    </Modal.Actions>
-  </Modal>
-);
+}) => {
+  return (
+
+    <Modal
+      trigger={
+        <Statistic>
+          <Statistic.Value text>
+            <i className="plus icon" />
+          </Statistic.Value>
+          <Statistic.Label>Create Competition</Statistic.Label>
+        </Statistic>
+      }
+      closeIcon
+    >
+      <Header className="plus icon" content="Create a Competition" />
+      <Modal.Content>{console.log('form props in create competition component', compName, compCat, compStart, compEnd)}
+        <Form
+          onSubmit={ competitionsSubmit(compName, compCat, compStart, compEnd) }
+        >
+          <Form.Group widths="equal">
+            <Form.Input
+              fluid
+              type="text"
+              onChange={handleCompName}
+              label="Competition Name"
+              placeholder="Competition Name"
+            />
+
+            <Form.Dropdown
+              fluid
+              type="text"
+              label="Choose Category"
+              selection
+              options={DefaultCompeteCategories}
+              placeholder="Category"
+              onChange={handleCompCat}
+            />
+            <Form.Input
+              type="text"
+              onChange={handleCompStart}
+              fluid label="Choose Start Date"
+              placeholder="Start Date"
+            />
+            <Form.Input
+              type="text"
+              onChange={handleCompEnd}
+              fluid label="Choose End Date"
+              placeholder="End Date"
+            />
+
+          </Form.Group>
+          <Form.Button
+              color="green"
+              type="button"
+              content="Add Competition"
+          >
+          </Form.Button>
+        </Form>
+      </Modal.Content>
+    </Modal>
+  )
+}
 
 export default CreateCompetition
