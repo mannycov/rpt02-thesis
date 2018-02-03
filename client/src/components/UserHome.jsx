@@ -90,23 +90,19 @@ class UserHome extends Component {
 
   competitionsSubmit (compsName, compsCat, compsStart, compsEnd) {
     console.log('what im submitting in the user component', compsName, compsCat, compsStart, compsEnd)
-
-    let createCompetition = {
-      comptetionName: compsName,
-      competitionCategory: compsCat,
-      competitionStart: compsStart,
-      competionEnd: compsEnd
-    }
-
-    axios.post('/api/competitions', {
-      createCompetition: createCompetition
-    })
+    axios
+			.post("/api/competitions", {
+				comptetionName: compsName,
+				competitionCategory: compsCat,
+				competitionStart: compsStart,
+				competitionEnd: compsEnd
+			})
       .then(function(response) {
-        console.log(response)
-      })
-      .catch(function(error) {
-        console.log(error)
-      })
+        console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
   }
 
   handleSubmit (e) {

@@ -1,5 +1,5 @@
-import React from "react"
-import { Button, Header, Icon, Modal, Statistic, Form, Dropdown } from 'semantic-ui-react'
+import React from 'react'
+import { Header, Modal, Statistic, Form } from 'semantic-ui-react'
 import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
 
 const CreateCompetition = ({
@@ -30,7 +30,7 @@ const CreateCompetition = ({
       <Header className="plus icon" content="Create a Competition" />
       <Modal.Content>{console.log('form props in create competition component', compName, compCat, compStart, compEnd)}
         <Form
-          onSubmit={ competitionsSubmit(compName, compCat, compStart, compEnd) }
+          onSubmit={competitionsSubmit.bind(null, compName, compCat, compStart, compEnd)}
         >
           <Form.Group widths="equal">
             <Form.Input
@@ -53,23 +53,24 @@ const CreateCompetition = ({
             <Form.Input
               type="text"
               onChange={handleCompStart}
-              fluid label="Choose Start Date"
+              fluid
+              label="Choose Start Date"
               placeholder="Start Date"
             />
             <Form.Input
               type="text"
               onChange={handleCompEnd}
-              fluid label="Choose End Date"
+              fluid
+              label="Choose End Date"
               placeholder="End Date"
             />
 
           </Form.Group>
           <Form.Button
-              color="green"
-              type="button"
-              content="Add Competition"
-          >
-          </Form.Button>
+            color="green"
+            content="Add Competition"
+            type="submit"
+          />
         </Form>
       </Modal.Content>
     </Modal>
