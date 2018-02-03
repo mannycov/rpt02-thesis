@@ -9,7 +9,7 @@ class MenuBar extends Component {
 
   render (props) {
     const { activeItem } = this.state || {}
-    console.log('my prizzle', this.props.isHidden)
+    console.log('menuheader is it hidden?', this.props.isHidden)
     return (
       <div>
         <Menu secondary>
