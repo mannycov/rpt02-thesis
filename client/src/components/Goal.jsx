@@ -53,6 +53,8 @@ class Goal extends Component {
         <MenuBar />
 
         <h1>My Goals</h1>
+        
+        <br />
 
         <form className="ui form" onSubmit={this.handleSubmit}>
           <div className="field">
@@ -64,6 +66,7 @@ class Goal extends Component {
             />
           </div>
           <div className="field">
+            <label>Type</label>
             <select name="types">
               <option value="Endurance">Endurance</option>
               <option value="Strength">Strength</option>
