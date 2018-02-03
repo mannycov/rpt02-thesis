@@ -13,6 +13,7 @@ class MenuBar extends Component {
       <div>
         <Menu secondary>
           <Menu.Item
+            as={Link}
             to="/userhome"
             name="home"
             active={activeItem === 'home'}
