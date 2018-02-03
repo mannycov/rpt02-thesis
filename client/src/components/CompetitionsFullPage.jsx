@@ -19,7 +19,7 @@ const CompetitionsFullPage = ({
   handleCompEnd,
   competitionsSubmit
 }) => {
-	console.log("ishidden in the fullpageCompetitions component", isHidden)
+	console.log('ishidden in the fullpageCompetitions component', isHidden)
   return (
     <div>
       <MenuBar />
@@ -27,7 +27,7 @@ const CompetitionsFullPage = ({
         <Image
           circular
           src="https://react.semantic-ui.com/assets/images/avatar/large/patrick.png"
-        />{'' '}
+        />{' '}
         My Competitions
       </Header>
       <Segment clearing>
