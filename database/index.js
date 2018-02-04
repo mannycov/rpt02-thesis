@@ -3,12 +3,12 @@ var Schema = mongoose.Schema
 var db = mongoose.connection
 
 mongoose.connect(
-	'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
-);
+  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
+)
 
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function () {
-  console.log('you da man and connected in more ways than you know ')
+  console.log('you da man and connected in more ways than you know')
 })
 
 const userSchema = new Schema({
@@ -61,7 +61,7 @@ const competitionsSchema = new Schema({
   status: String,
   trophy_id: Number,
   trophy_name: String
-});
+})
 
 export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema);
 
@@ -69,4 +69,3 @@ const categorySchema = new Schema({
   category_id: Number,
   category_name: String
 })
-

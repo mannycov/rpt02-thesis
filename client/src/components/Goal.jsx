@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Icon, TextArea, Select, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import 'react-datepicker/dist/react-datepicker.css'
+// import 'react-datepicker/dist/react-datepicker.css'
 
 // Components
 import MenuBar from './MenuBar.jsx'
