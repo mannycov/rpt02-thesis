@@ -31,7 +31,7 @@ class UserHome extends Component {
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
     this.handleCompStart = this.handleCompStart.bind(this)
-    this.handleCompEnd = this.handleCompStart.bind(this)
+    this.handleCompEnd = this.handleCompEnd.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
   }
 

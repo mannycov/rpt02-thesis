@@ -46,15 +46,13 @@ app.post('/api/competitions', (req, res) => {
   competitionsModelInstance.save((err) => {
     if (err) {
       console.log('competitions not saved', err)
-      res.sendStatus(404).json('no data storedyou lost homey')
     } else {
-      res.sendStatus(201).json('txt to come')
+      res.status(201).json('txt to come')
     }
   })
 })
 
 app.post('/api/goal', (req, res) => {
-
   const goalTitle = req.body.goal
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle
