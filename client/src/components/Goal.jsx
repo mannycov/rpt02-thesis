@@ -116,7 +116,10 @@ class Goal extends Component {
 
             <Icon name="calendar" color="blue" size="large" />
 
-            <Form.Input width="2" placeholder="Select End" />
+            <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleDateChange}
+            />
           </Form.Group>
 
           {/* Notes */}
