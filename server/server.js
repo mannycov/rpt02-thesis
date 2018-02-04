@@ -25,9 +25,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/api/goal', (req, res) => {
-  GoalsModel.find({}, function (err, data) {
+  GoalsModel.find({}, (err, data) => {
     if (err) {
       console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+app.get('/api/getcompetitions', (req, res) => {
+  GoalsModel.find({}, (err, data) => {
+    if (err) {
+      console.log(err);
     } else {
       res.send(data)
     }
