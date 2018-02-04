@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Icon, TextArea, Select, Button } from 'semantic-ui-react'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import 'react-datepicker/dist/react-datepicker.css'
 
 // Components
 import MenuBar from './MenuBar.jsx'
@@ -17,17 +20,25 @@ class Goal extends Component {
       category: '',
       submittedGoal: '',
       submittedCategory: '',
+      startDate: moment(),
       categories: categoryData
     }
     // this.handleTitleChange = this.handleTitleChange.bind(this)
     // this.handleTargetChange = this.handleTargetChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleDateChange = this.handleDateChange.bind(this)
   }
 
   handleChange (e, { name, value }) {
     this.setState({
       [name]: value
+    })
+  }
+
+  handleDateChange (date) {
+    this.setState({
+      startDate: date
     })
   }
 
@@ -96,7 +107,10 @@ class Goal extends Component {
 
             <Icon name="calendar" color="blue" size="large" />
 
-            <Form.Input width="2" placeholder="Select Start" />
+            <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleDateChange}
+            />
 
             <label>End Date</label>
 
@@ -106,7 +120,7 @@ class Goal extends Component {
           </Form.Group>
 
           {/* Notes */}
-          <Form.Field width="6" control={TextArea} label="Notes" placeholder="Enter some notes here..." />
+          <Form.Field width="6" control={TextArea} label="Notes" placeholder="Additional info here..." />
 
           {/* Submit */}
           <Button primary>Sumbit</Button>
