@@ -3,7 +3,6 @@ import { Card, Icon, Image, Grid } from 'semantic-ui-react'
 import axios from 'axios'
 
 import CompetitionsFullPage from './CompetitionsFullPage.jsx'
-
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
@@ -15,17 +14,25 @@ const ROOT_URL = 'http://localhost:3000'
 class UserHome extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
       goalTitle: '',
       goalDesc: '',
       goals: ['test1', 'test2'],
-      isHidden: true
+      isHidden: true,
+      compName: '',
+      compCat: '',
+      compStart: '',
+      compEnd: ''
     }
     this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
     this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.competititonsHandleClick = this.competititonsHandleClick.bind(this)
+    this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
+    this.handleCompName = this.handleCompName.bind(this)
+    this.handleCompCat = this.handleCompCat.bind(this)
+    this.handleCompStart = this.handleCompStart.bind(this)
+    this.handleCompEnd = this.handleCompEnd.bind(this)
+    this.competitionsSubmit = this.competitionsSubmit.bind(this)
   }
 
   componentDidMount () {
@@ -48,11 +55,54 @@ class UserHome extends Component {
     this.setState({ activeItem: name })
   }
 
-  competititonsHandleClick (isHidden) {
+  competitionsHandleClick (isHidden) {
     this.setState({
-      isHidden: false
+      isHidden: !isHidden
     })
     console.log('you were clicked in the pop menu')
+  }
+
+  handleCompName (compName) {
+    console.log(compName)
+    this.setState({
+      compName: compName.target.value
+    })
+  }
+
+  handleCompCat (e, compCat) {
+    this.setState({
+      compCat: compCat.value
+    })
+  }
+
+  handleCompStart (compStarts) {
+    console.log('in the user home', compStarts.target.value)
+    this.setState({
+      compStart: compStarts.target.value
+    })
+  }
+  handleCompEnd (compEnd) {
+    console.log(compEnd)
+    this.setState({
+      compEnd: compEnd.target.value
+    })
+  }
+
+  competitionsSubmit (compsName, compsCat, compsStart, compsEnd) {
+    console.log('what im submitting in the user component', compsName, compsCat, compsStart, compsEnd)
+    axios
+			.post("/api/competitions", {
+				comptetionName: compsName,
+				competitionCategory: compsCat,
+				competitionStart: compsStart,
+				competitionEnd: compsEnd
+			})
+      .then(function(response) {
+        console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
   }
 
   handleSubmit (e) {
@@ -62,13 +112,13 @@ class UserHome extends Component {
     copyOfGoals.push(this.state.goalTitle)
 
     axios
-      .post(ROOT_URL + '/api/goal', {
+      .post(ROOT_URL + "/api/goal", {
         goal: this.state.goalTitle
       })
-      .then((response) => {
+      .then(response => {
         this.fetchGoals()
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
 
@@ -78,26 +128,29 @@ class UserHome extends Component {
     })
   }
 
-  fetchGoals () {
+  fetchGoals() {
     axios
       .get(ROOT_URL + '/api/goal')
-      .then((response) => {
+      .then(response => {
         this.setState({
           goals: response.data
-        })
+        });
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  render (props) {
-    const { activeItem } = this.state || {}
-    console.log('in the user components is hidden??', this.state.isHidden)
+  render(props) {
+    const { activeItem } = this.state || {};
+    console.log("userHome components hidden true??", this.state.isHidden);
     if (this.state.isHidden) {
-      return (
+      return(
         <div>
-          <MenuBar />
+          <MenuBar
+            isHidden={this.state.isHidden}
+            competitionsHandleClick={this.competitionsHandleClick}
+          />
           <Grid>
             <Grid.Column width={5}>
               <h1>Bio</h1>
@@ -110,25 +163,22 @@ class UserHome extends Component {
                       <span className="date">Joined in 2018</span>
                     </Card.Meta>
                     <Card.Description>
-                  Manny is some dude living in the Bay.
+                      Manny is some dude living in the Bay.
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
                     <a>
                       <Icon name="user" />
-                  22 Friends
+                      22 Friends
                     </a>
                   </Card.Content>
                 </Card>
               </Grid.Row>
-
               <br />
               <br />
-
               <Grid.Row>
                 <AddGoal />
               </Grid.Row>
-
               <Grid.Row>
                 <form
                   onSubmit={this.handleSubmit}
@@ -155,7 +205,7 @@ class UserHome extends Component {
                     />
                   </div>
                   <button type="submit" className="ui button">
-                Submit
+                    Submit
                   </button>
                 </form>
               </Grid.Row>
@@ -166,23 +216,20 @@ class UserHome extends Component {
               <Grid.Row>
                 <SideMenu
                   goals={this.state.goals}
-                  competititonsHandleClick={this.competititonsHandleClick}
+                  competitionsHandleClick={this.competitionsHandleClick}
                   isHidden={this.state.isHidden}
                   {...props}
                 />
               </Grid.Row>
             </Grid.Column>
-
             <br />
             <br />
-
             <Grid.Column width={7}>
               <h1>Feed</h1>
               <Grid.Row>
                 <UserFeed />
               </Grid.Row>
             </Grid.Column>
-
             <Grid.Column width={3}>
               <h1>Trophies</h1>
               <Card>
@@ -242,7 +289,20 @@ class UserHome extends Component {
         </div>
       )
     }
-    return <CompetitionsFullPage />
+    return (
+      <CompetitionsFullPage
+        isHidden={this.state.isHidden}
+        compName={this.state.compName}
+        compCat={this.state.compCat}
+        compStart={this.state.compStart}
+        compEnd={this.state.compEnd}
+        handleCompName={this.handleCompName}
+        handleCompCat={this.handleCompCat}
+        handleCompStart={this.handleCompStart}
+        handleCompEnd={this.handleCompEnd}
+        competitionsSubmit={this.competitionsSubmit}
+      />
+    )
   }
 }
 

@@ -1,32 +1,80 @@
-import React from "react"
-import { Button, Header, Icon, Modal, Statistic } from "semantic-ui-react"
-import CreateCompetitionForm from './CreateCompetitionForm.jsx';
+import React from 'react'
+import { Header, Modal, Statistic, Form } from 'semantic-ui-react'
+import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
 
-const CreateCompetition = () => (
-	<Modal
-		trigger={
-			<Statistic>
-				<Statistic.Value text>
-					<i className="plus icon" />
-				</Statistic.Value>
-				<Statistic.Label>Create Competition</Statistic.Label>
-			</Statistic>
-		}
-		closeIcon
-	>
-		<Header icon="plus icon" content="Create a Competition" />
-		<Modal.Content>
-				<CreateCompetitionForm />
-		</Modal.Content>
-		<Modal.Actions>
-			<Button color="red">
-				<Icon name="remove" /> Cancel
-			</Button>
-			<Button color="green">
-				<Icon name="checkmark" /> Add Competition
-			</Button>
-		</Modal.Actions>
-	</Modal>
-);
+const CreateCompetition = ({
+  isHidden,
+  compName,
+  compCat,
+  compStart,
+  compEnd,
+  handleCompName,
+  handleCompCat,
+  handleCompStart,
+  handleCompEnd,
+  competitionsSubmit
+}) => {
+  return (
+
+    <Modal
+      trigger={
+        <Statistic>
+          <Statistic.Value text>
+            <i className="plus icon" />
+          </Statistic.Value>
+          <Statistic.Label>Create Competition</Statistic.Label>
+        </Statistic>
+      }
+      closeIcon
+    >
+      <Header className="plus icon" content="Create a Competition" />
+      <Modal.Content>{console.log('form props in create competition component', compName, compCat, compStart, compEnd)}
+        <Form
+          onSubmit={competitionsSubmit.bind(null, compName, compCat, compStart, compEnd)}
+        >
+          <Form.Group widths="equal">
+            <Form.Input
+              fluid
+              type="text"
+              onChange={handleCompName}
+              label="Competition Name"
+              placeholder="Competition Name"
+            />
+
+            <Form.Dropdown
+              fluid
+              type="text"
+              label="Choose Category"
+              selection
+              options={DefaultCompeteCategories}
+              placeholder="Category"
+              onChange={handleCompCat}
+            />
+            <Form.Input
+              type="text"
+              onChange={handleCompStart}
+              fluid
+              label="Choose Start Date"
+              placeholder="Start Date"
+            />
+            <Form.Input
+              type="text"
+              onChange={handleCompEnd}
+              fluid
+              label="Choose End Date"
+              placeholder="End Date"
+            />
+
+          </Form.Group>
+          <Form.Button
+            color="green"
+            content="Add Competition"
+            type="submit"
+          />
+        </Form>
+      </Modal.Content>
+    </Modal>
+  )
+}
 
 export default CreateCompetition

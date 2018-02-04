@@ -35,22 +35,24 @@ app.get('/api/goal', (req, res) => {
 })
 
 app.post('/api/competitions', (req, res) => {
-  const competitionName = req.body.competitionName
+  const competitionBody = req.body
+  console.log('from the server side post body competitions', competitionBody)
   const competitionsModelInstance = new CompetitionsModel({
-    competitions_name: competitionName
+    competitions_name: competitionBody.comptetionName,
+    competitions_category: competitionBody.competitionCategory,
+    competitions_start_date: competitionBody.competitionStart,
+    competitions_end_date: competitionBody.competitionEnd
   })
-
-  competitionsModelInstance.save(function (err) {
+  competitionsModelInstance.save((err) => {
     if (err) {
       console.log('competitions not saved', err)
     } else {
-      res.sendStatus(201)
+      res.status(201).json('txt to come')
     }
   })
 })
 
 app.post('/api/goal', (req, res) => {
-
   const goalTitle = req.body.goal
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle
