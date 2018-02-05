@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Popup, Menu, Grid } from 'semantic-ui-react'
-import Data from '../../FakeData'
 import CompetitionsList from './CompetitionsList.jsx'
-import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 
-const CompetitionsPopUp = ({ goals, competitionsHandleClick, isHidden}) => {
+const CompetitionsPopUp =
+({
+  goals, competitionsHandleClick, isHidden, Data
+}) => {
+  console.log('props in date within popups', Data)
   return (
     <Popup
       trigger={
@@ -13,13 +14,21 @@ const CompetitionsPopUp = ({ goals, competitionsHandleClick, isHidden}) => {
           Competitions
         </Menu.Header>
       }
-      flowing hoverable>
+      flowing
+      hoverable
+    >
       <Grid
         onClick={() => competitionsHandleClick(isHidden)}
-        centered divided columns={Data.length}
+        centered
+        divided
+        columns={Data.length}
       >
         {Data.map((competition) => {
-          return <CompetitionsList key={competition.id} competitionName={competition} />
+          return (
+            <CompetitionsList
+              key={competition._id}
+              competitionName={competition}
+            />)
         })}
       </Grid>
     </Popup>

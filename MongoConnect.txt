@@ -9,4 +9,4 @@ Terminal Command to Connect:
 1) type this into the console 1st: mongod
 2) open a new console tab/window and then also type this: mongo
 3) type this into the console that you opened the shell w/ mongo (step 2)
-   mongo ds133796.mlab.com:33796/competely -u competely -p Youcandoit1
+   mongo ds133796.mlab.com:33796/competely -u competely -p Youcandoit
