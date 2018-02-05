@@ -15,6 +15,7 @@ class UserHome extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      competitionData: [],
       goalTitle: '',
       goalDesc: '',
       goals: ['test1', 'test2'],
@@ -26,7 +27,7 @@ class UserHome extends Component {
     }
     this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
     this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
@@ -37,6 +38,7 @@ class UserHome extends Component {
 
   componentDidMount () {
     this.fetchGoals()
+    this.fetchCompetitions()
   }
 
   handleGoalTitleChange (e) {
@@ -59,7 +61,6 @@ class UserHome extends Component {
     this.setState({
       isHidden: !isHidden
     })
-    console.log('you were clicked in the pop menu')
   }
 
   handleCompName (compName) {
@@ -88,23 +89,6 @@ class UserHome extends Component {
     })
   }
 
-  competitionsSubmit (compsName, compsCat, compsStart, compsEnd) {
-    console.log('what im submitting in the user component', compsName, compsCat, compsStart, compsEnd)
-    axios
-			.post("/api/competitions", {
-				comptetionName: compsName,
-				competitionCategory: compsCat,
-				competitionStart: compsStart,
-				competitionEnd: compsEnd
-			})
-      .then(function(response) {
-        console.log(response);
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-  }
-
   handleSubmit (e) {
     e.preventDefault()
 
@@ -128,24 +112,64 @@ class UserHome extends Component {
     })
   }
 
-  fetchGoals() {
+  fetchGoals () {
     axios
       .get(ROOT_URL + '/api/goal')
-      .then(response => {
+      .then((response) => {
         this.setState({
           goals: response.data
-        });
+        })
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-  render(props) {
-    const { activeItem } = this.state || {};
-    console.log("userHome components hidden true??", this.state.isHidden);
+  fetchCompetitions () {
+    axios.get('/api/getcompetitions')
+      .then((response) => {
+        this.setState({
+          competitionData: response.data
+        })
+        console.log('data from the db in user home', response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  competitionsSubmit (compsName, compsCat, compsStart, compsEnd, hiddenUserPage) {
+    console.log(
+      'what im submitting in the user component',
+      compsName,
+      compsCat,
+      compsStart,
+      compsEnd
+    )
+    this.setState({
+      isHidden: !hiddenUserPage
+    })
+    axios.post('/api/competitions', {
+      comptetionName: compsName,
+      competitionCategory: compsCat,
+      competitionStart: compsStart,
+      competitionEnd: compsEnd
+    })
+      .then((response) => {
+        console.log('did all my comps come back from the db?', response.data.data)
+        this.setState({
+          competitionData: response.data
+        })
+      })
+      .catch((error) => {
+        console.log('this is the error after a post submit request', error)
+      })
+  }
+
+  render (props) {
+    const { activeItem } = this.state || {}
     if (this.state.isHidden) {
-      return(
+      return (
         <div>
           <MenuBar
             isHidden={this.state.isHidden}
@@ -215,10 +239,11 @@ class UserHome extends Component {
 
               <Grid.Row>
                 <SideMenu
+                  Data={this.state.competitionData}
                   goals={this.state.goals}
                   competitionsHandleClick={this.competitionsHandleClick}
                   isHidden={this.state.isHidden}
-                  {...props}
+                  // {...props}
                 />
               </Grid.Row>
             </Grid.Column>
@@ -291,6 +316,7 @@ class UserHome extends Component {
     }
     return (
       <CompetitionsFullPage
+        Data={this.state.competitionData}
         isHidden={this.state.isHidden}
         compName={this.state.compName}
         compCat={this.state.compCat}

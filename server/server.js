@@ -8,9 +8,10 @@ import { StaticRouter } from 'react-router-dom'
 
 import Root from '../client/Root.jsx'
 import {
-  GoalsModel,
-  CompetitionsModel
-} from '../database/index.js'
+	GoalsModel,
+	CompetitionsModel,
+	CategoryModel
+} from "../database/index.js";
 
 // import GoalsModel from '../database/models/goals.js'
 // import CompetitionsModel from '../database/models/competitions.js'
@@ -35,14 +36,25 @@ app.get('/api/goal', (req, res) => {
 })
 
 app.get('/api/getcompetitions', (req, res) => {
-  GoalsModel.find({}, (err, data) => {
+  CompetitionsModel.find({}, (err, data) => {
     if (err) {
-      console.log(err);
+      console.log(err)
     } else {
       res.send(data)
     }
   })
 })
+
+app.get("/api/test", (req, res) => {
+	CategoryModel.find({}, (err, data) => {
+		if (err) {
+			console.log(err);
+		} else {
+      console.log("test in express to data", data.competitions_pictures[0])
+			res.send(data
+		}
+	});
+});
 
 app.post('/api/competitions', (req, res) => {
   const competitionBody = req.body
@@ -57,12 +69,19 @@ app.post('/api/competitions', (req, res) => {
     if (err) {
       console.log('competitions not saved', err)
     } else {
-      res.status(201).json('txt to come')
+      CompetitionsModel.find({}, function (error, data) {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('all my data from db to server', data)
+          res.status(201).json(data)
+        }
+      })
     }
   })
 })
 
-app.post('/api/goal', (req, res) => {
+app.post('/api/goal', function (req, res) {
   const goalTitle = req.body.goal
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle

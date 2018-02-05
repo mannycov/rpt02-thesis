@@ -47,25 +47,29 @@ export const GoalsModel = mongoose.model('GoalsModel', goalsSchema);
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
+  competitions_pictures: Array,
   competitions_name: String,
   competitions_category: String,
   competitions_start_date: Date,
   competitions_end_date: Date,
+  competitions_won: Array,
   category_id: Number,
   members: Array,
   winner: Number,
   ranking_list: Array,
-  trophies: Array,
   checkpoint_id: Number,
   checkpoint_name: String,
   status: String,
+  trophies: Array,
   trophy_id: Number,
   trophy_name: String
 })
 
-export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema);
+export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema)
 
 const categorySchema = new Schema({
   category_id: Number,
-  category_name: String
+  competitions_pictures: Array
 })
+
+export const CategoryModel = mongoose.model('CategoryModel', categorySchema);
