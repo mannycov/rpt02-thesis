@@ -37,6 +37,8 @@ const userSchema = new Schema({
 const goalsSchema = new Schema({
   goals_id: Number,
   goals_name: String,
+  target: String,
+  category: String,
   category_id: Array,
   status: String,
   description: String,

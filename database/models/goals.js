@@ -7,7 +7,7 @@ const goalsSchema = new Schema({
   category_id: Array,
   status: String,
   description: String,
-  purpose: String,
+  target: String,
   checkpoint_id: Number,
   ongoing_goal: Boolean
 })
