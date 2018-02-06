@@ -8,14 +8,13 @@ import { StaticRouter } from 'react-router-dom'
 
 import Root from '../client/Root.jsx'
 import {
-	GoalsModel,
-	CompetitionsModel,
-	CategoryModel
-} from "../database/index.js";
+  GoalsModel,
+  CompetitionsModel,
+  CategoriesModel
+} from '../database/index.js'
 
 // import GoalsModel from '../database/models/goals.js'
 // import CompetitionsModel from '../database/models/competitions.js'
-
 const db = require('../database/index.js')
 
 const app = express()
@@ -45,15 +44,14 @@ app.get('/api/getcompetitions', (req, res) => {
   })
 })
 
-app.get("/api/test", (req, res) => {
-	CategoryModel.find({}, (err, data) => {
-		if (err) {
-			console.log(err);
-		} else {
-      console.log("test in express to data", data.competitions_pictures[0])
-			res.send(data
-		}
-	});
+app.get('/api/test', (req, res) => {
+  CategoriesModel.find({}, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
 });
 
 app.post('/api/competitions', (req, res) => {
@@ -115,7 +113,7 @@ app.get('*', (req, res) => {
         <div id="root">${application}</div>
         <script src="http://localhost:3001/client.js"></script>
       </body>
-    </html>`;
+    </html>`
   res.send(html)
 })
 
