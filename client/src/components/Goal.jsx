@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Icon, TextArea, Select, Button } from 'semantic-ui-react'
+import { Form, Icon, TextArea, Select, Button, Dropdown } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import axios from 'axios'
@@ -52,7 +52,7 @@ class Goal extends Component {
   }
 
   handleSubmit () {
-    const { goal, target, goals } = this.state
+    const { goal, target, category, goals } = this.state
 
     const copyOfGoals = [...goals]
 
@@ -60,7 +60,8 @@ class Goal extends Component {
 
     axios
       .post(ROOT_URL + "/api/goal", {
-        goal: this.state.goal
+        goal: this.state.goal,
+        target: this.state.target
       })
       .then((response) => {
         this.fetchGoals()
@@ -72,6 +73,7 @@ class Goal extends Component {
     this.setState({
       submittedGoal: goal,
       submittedTarget: target,
+      submittedCategory: category,
       goal: '',
       target: '',
       goals: copyOfGoals
@@ -96,7 +98,10 @@ class Goal extends Component {
       goal,
       submittedGoal,
       target,
-      submittedTarget
+      submittedTarget,
+      category,
+      submittedCategory,
+      value
     } = this.state
     return (
       <div>
@@ -113,10 +118,15 @@ class Goal extends Component {
 
           {/* Input Fields */}
           <Form.Group>
-            <Form.Input width="2" fluid label="Goal" name="goal" value={goal} onChange={this.handleChange} placeholder="(e.g. lose 10lbs.)" />
-            <Form.Input width="2" fluid label="Target" name="target" value={target} onChange={this.handleChange} placeholder="(e.g. 175lbs.)" />
+            <Form.Input width="3" fluid label="Goal" name="goal" value={goal} onChange={this.handleChange} placeholder="(e.g. lose 10lbs.)" />
+            <Form.Input width="3" fluid label="Target" name="target" value={target} onChange={this.handleChange} placeholder="(e.g. 175lbs.)" />
             {/* Dropdown */}
-            <Form.Field width="2" control={Select} label="Categories" options={this.state.categories} placeholder="Categories" />
+
+          </Form.Group>
+
+          <Form.Group inline>
+            <label>Categories</label>
+            <Dropdown label="Categories" options={this.state.categories} onChange={this.handleChange} selection value={value} placeholder="Categories" />
           </Form.Group>
 
           {/* Dates */}
@@ -150,9 +160,11 @@ class Goal extends Component {
         <strong>onChange:</strong>
         <pre>{JSON.stringify({ goal }, null, 2)}</pre>
         <pre>{JSON.stringify({ target }, null, 2)}</pre>
+        <pre>{JSON.stringify({ category }, null, 2)}</pre>
         <strong>onSubmit:</strong>
         <pre>{JSON.stringify({ submittedGoal }, null, 2)}</pre>
         <pre>{JSON.stringify({ submittedTarget }, null, 2)}</pre>
+        <pre>{JSON.stringify({ submittedCategory }, null, 2)}</pre>
 
         <br /><br />
 
