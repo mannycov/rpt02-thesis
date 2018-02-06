@@ -6,7 +6,9 @@ mongoose.connect(
   'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
 )
 
-db.on('error', console.error.bind(console, 'connection error:'))
+//competely:Youcandoit@ds133796.mlab.com:33796/competely
+
+mongodb: db.on("error", console.error.bind(console, "connection error:"))
 db.once('open', function () {
   console.log('you da man and connected in more ways than you know')
 })
@@ -43,7 +45,7 @@ const goalsSchema = new Schema({
   ongoing_goal: Boolean
 })
 
-export const GoalsModel = mongoose.model('GoalsModel', goalsSchema);
+export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
@@ -67,9 +69,10 @@ const competitionsSchema = new Schema({
 
 export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema)
 
-const categorySchema = new Schema({
+const categoriesSchema = new Schema({
   category_id: Number,
   competitions_pictures: Array
-})
+});
 
-export const CategoryModel = mongoose.model('CategoryModel', categorySchema);
+export const CategoriesModel = mongoose.model('CategoriesModel', categoriesSchema
+)
