@@ -5,10 +5,10 @@ import CompetitionsPopUp from './CompetitionsPopUp.jsx'
 import CompetitionsFullPage  from './CompetitionsPopUp.jsx'
 
 class SideMenu extends Component {
-  handleItemClick(name) {
+  handleItemClick (name) {
     this.setState({ activeItem: name });
   }
-  render(props) {
+  render (props) {
     console.log("is sidemenu component?", this.props.isHidden)
     console.log("checking data passed into sidemenu", this.props.Data)
     const { activeItem } = this.state || {}

@@ -16,8 +16,6 @@ class UserHome extends Component {
     super(props)
     this.state = {
       competitionData: [],
-      goalTitle: '',
-      goalDesc: '',
       goals: ['test1', 'test2'],
       isHidden: true,
       compName: '',
@@ -25,9 +23,6 @@ class UserHome extends Component {
       compStart: '',
       compEnd: ''
     }
-    this.handleGoalTitleChange = this.handleGoalTitleChange.bind(this)
-    this.hanldeGoalDescChange = this.hanldeGoalDescChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
@@ -39,18 +34,6 @@ class UserHome extends Component {
   componentDidMount () {
     this.fetchGoals()
     this.fetchCompetitions()
-  }
-
-  handleGoalTitleChange (e) {
-    this.setState({
-      goalTitle: e.target.value
-    })
-  }
-
-  hanldeGoalDescChange (e) {
-    this.setState({
-      goalDesc: e.target.value
-    })
   }
 
   handleItemClick (name) {
@@ -82,33 +65,11 @@ class UserHome extends Component {
       compStart: compStarts.target.value
     })
   }
+
   handleCompEnd (compEnd) {
     console.log(compEnd)
     this.setState({
       compEnd: compEnd.target.value
-    })
-  }
-
-  handleSubmit (e) {
-    e.preventDefault()
-
-    const copyOfGoals = [...this.state.goals]
-    copyOfGoals.push(this.state.goalTitle)
-
-    axios
-      .post(ROOT_URL + "/api/goal", {
-        goal: this.state.goalTitle
-      })
-      .then(response => {
-        this.fetchGoals()
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
-    this.setState({
-      goals: copyOfGoals,
-      goalTitle: ''
     })
   }
 
@@ -202,36 +163,6 @@ class UserHome extends Component {
               <br />
               <Grid.Row>
                 <AddGoal />
-              </Grid.Row>
-              <Grid.Row>
-                <form
-                  onSubmit={this.handleSubmit}
-                  style={{ width: 290 }}
-                  ref="commentForm"
-                  className="ui form"
-                >
-                  <div className="field">
-                    <label>Goal Title</label>
-                    <input
-                      type="text"
-                      value={this.state.goalTitle}
-                      onChange={this.handleGoalTitleChange}
-                      placeholder="Enter your goal here..."
-                    />
-                  </div>
-                  <div className="field">
-                    <label>Goal Description</label>
-                    <textarea
-                      placeholder="Describe your goal..."
-                      rows="4"
-                      value={this.state.goalDesc}
-                      onChange={this.hanldeGoalDescChange}
-                    />
-                  </div>
-                  <button type="submit" className="ui button">
-                    Submit
-                  </button>
-                </form>
               </Grid.Row>
 
               <br />
