@@ -25,6 +25,7 @@ class Goal extends Component {
       submittedGoal: '',
       submittedCategory: '',
       submittedTarget: '',
+      value: '',
       startDate: moment(),
       goals: [],
       categories: categoryData
@@ -32,6 +33,7 @@ class Goal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleDateChange = this.handleDateChange.bind(this)
+    this.handleDropDownChange = this.handleDropDownChange.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
   }
 
@@ -45,6 +47,12 @@ class Goal extends Component {
     })
   }
 
+  handleDropDownChange (e, { value }) {
+    this.setState({
+      value
+    })
+  }
+
   handleDateChange (date) {
     this.setState({
       startDate: date
@@ -52,7 +60,13 @@ class Goal extends Component {
   }
 
   handleSubmit () {
-    const { goal, target, category, goals } = this.state
+    const {
+      goal,
+      target,
+      category,
+      value,
+      goals
+    } = this.state
 
     const copyOfGoals = [...goals]
 
@@ -62,7 +76,7 @@ class Goal extends Component {
       .post(ROOT_URL + "/api/goal", {
         goal: this.state.goal,
         target: this.state.target,
-        category: this.state.category
+        category: this.state.value
       })
       .then((response) => {
         this.fetchGoals()
@@ -141,10 +155,12 @@ class Goal extends Component {
 
           {/* Dropdown */}
           <Form.Group inline>
-            <Form.Dropdown
-              onChange={this.handleChange}
-              label="Categories"
+            <label>Categories</label>
+            <Dropdown
+              onChange={this.handleDropDownChange}
               selection
+              value={value}
+              label="Categories"
               options={this.state.categories}
               placeholder="Categories"
             />
@@ -182,13 +198,6 @@ class Goal extends Component {
           {/* Submit */}
           <Button primary>Submit</Button>
         </Form>
-
-        <strong>onChange:</strong>
-        <pre>{JSON.stringify({ category }, null, 2)}</pre>
-        <strong>onSubmit:</strong>
-        <pre>{JSON.stringify({ submittedCategory }, null, 2)}</pre>
-
-        <pre>Current value: { submittedCategory }</pre>
 
         <br /><br />
 
