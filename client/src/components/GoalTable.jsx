@@ -17,13 +17,13 @@ const GoalTable = props => (
         {props.goals.map(goal => (
           <Table.Row key={goal._id}>
             <Table.Cell>{goal.goals_name}</Table.Cell>
-            <Table.Cell textAlign='right'>{goal.target}</Table.Cell>
+            <Table.Cell textAlign="left">{goal.target}</Table.Cell>
             <Table.Cell>{goal.category}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
     </Table>
-    <br/><br/><br/>
+    <br /><br /><br />
   </div>
 )
 

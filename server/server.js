@@ -84,10 +84,13 @@ app.post('/api/competitions', (req, res) => {
 app.post('/api/goal', function (req, res) {
   const goalTitle = req.body.goal
   const goalTarget = req.body.target
+  const goalCategory = req.body.category
+  console.log(goalCategory)
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
-    target: goalTarget
+    target: goalTarget,
+    category: goalCategory
   })
 
   goalModelInstance.save(function (err) {
