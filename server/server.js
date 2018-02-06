@@ -13,7 +13,7 @@ import {
   CategoriesModel
 } from '../database/index.js'
 
-// import GoalsModel from '../database/models/goals.js'
+// import GoalsModel from '../database/models/goals'
 // import CompetitionsModel from '../database/models/competitions.js'
 const db = require('../database/index.js')
 
@@ -81,8 +81,11 @@ app.post('/api/competitions', (req, res) => {
 
 app.post('/api/goal', function (req, res) {
   const goalTitle = req.body.goal
+  const goalTarget = req.body.target
+
   const goalModelInstance = new GoalsModel({
-    goals_name: goalTitle
+    goals_name: goalTitle,
+    target: goalTarget
   })
 
   goalModelInstance.save(function (err) {
@@ -103,7 +106,7 @@ app.get('*', (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>HMR all the things!</title>
+        <title>Compete.ly</title>
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">
