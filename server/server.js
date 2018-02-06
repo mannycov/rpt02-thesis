@@ -51,7 +51,7 @@ app.get("/api/test", (req, res) => {
 			console.log(err);
 		} else {
       console.log("test in express to data", data.competitions_pictures[0])
-			res.send(data
+			res.send(data)
 		}
 	});
 });
