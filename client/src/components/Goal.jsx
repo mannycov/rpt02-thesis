@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Form, Icon, TextArea, Select, Button } from 'semantic-ui-react'
+import { Form, Icon, TextArea, Select, Button, Dropdown, Grid } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
-import 'react-datepicker/dist/react-datepicker.css'
+import axios from 'axios'
+// import 'react-datepicker/dist/react-datepicker.css'
 
 // Components
 import MenuBar from './MenuBar.jsx'
@@ -11,6 +12,8 @@ import GoalTable from './GoalTable.jsx'
 // data
 import categoryData from '../data/categories'
 
+const ROOT_URL = 'http://localhost:3000'
+
 class Goal extends Component {
   constructor (props) {
     super(props)
@@ -18,21 +21,35 @@ class Goal extends Component {
     this.state = {
       goal: '',
       category: '',
+      target: '',
       submittedGoal: '',
       submittedCategory: '',
+      submittedTarget: '',
+      value: '',
       startDate: moment(),
+      goals: [],
       categories: categoryData
     }
-    // this.handleTitleChange = this.handleTitleChange.bind(this)
-    // this.handleTargetChange = this.handleTargetChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleDateChange = this.handleDateChange.bind(this)
+    this.handleDropDownChange = this.handleDropDownChange.bind(this)
+    this.fetchGoals = this.fetchGoals.bind(this)
+  }
+
+  componentDidMount () {
+    this.fetchGoals()
   }
 
   handleChange (e, { name, value }) {
     this.setState({
       [name]: value
+    })
+  }
+
+  handleDropDownChange (e, { value }) {
+    this.setState({
+      value
     })
   }
 
@@ -43,44 +60,64 @@ class Goal extends Component {
   }
 
   handleSubmit () {
-    const { goal } = this.state
+    const {
+      goal,
+      target,
+      category,
+      value,
+      goals
+    } = this.state
+
+    const copyOfGoals = [...goals]
+
+    copyOfGoals.push(goal)
+
+    axios
+      .post(ROOT_URL + "/api/goal", {
+        goal: this.state.goal,
+        target: this.state.target,
+        category: this.state.value
+      })
+      .then((response) => {
+        this.fetchGoals()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
     this.setState({
       submittedGoal: goal,
-      goal: ''
+      submittedTarget: target,
+      submittedCategory: category,
+      goal: '',
+      target: '',
+      goals: copyOfGoals
     })
   }
 
-  // handleTitleChange (e) {
-  //   this.setState({
-  //     title: e.target.value
-  //   })
-  // }
-
-  // handleTargetChange (e) {
-  //   this.setState({
-  //     target: e.target.value
-  //   })
-  // }
-
-  // handleSubmit (e) {
-  //   e.preventDefault()
-
-  //   console.log(this.state.title)
-
-  //   const copyOfValues = [...this.state.values]
-
-  //   copyOfValues.push(this.state.title, this.state.target)
-
-  //   this.setState({
-  //     title: '',
-  //     target: '',
-  //     values: copyOfValues
-  //   }, () => { console.log(this.state.values) })
-  // }
+  fetchGoals () {
+    axios
+      .get(ROOT_URL + '/api/goal')
+      .then((response) => {
+        this.setState({
+          goals: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   render () {
-    const { goal, submittedGoal } = this.state
+    const {
+      goal,
+      submittedGoal,
+      target,
+      submittedTarget,
+      category,
+      submittedCategory,
+      value
+    } = this.state
     return (
       <div>
 
@@ -96,9 +133,37 @@ class Goal extends Component {
 
           {/* Input Fields */}
           <Form.Group>
-            <Form.Input width="2" fluid label="Goal" name="goal" value={goal} onChange={this.handleChange} placeholder="(e.g. lose 10lbs.)" />
-            {/* Dropdown */}
-            <Form.Field width="2" control={Select} label="Categories" options={this.state.categories} placeholder="Categories" />
+            <Form.Input
+              width="3"
+              fluid
+              label="Goal"
+              name="goal"
+              value={goal}
+              onChange={this.handleChange}
+              placeholder="(e.g. lose 10lbs.)"
+            />
+            <Form.Input 
+              width="3" 
+              fluid 
+              label="Target"
+              name="target"
+              value={target}
+              onChange={this.handleChange}
+              placeholder="(e.g. 175lbs.)"
+            />
+          </Form.Group>
+
+          {/* Dropdown */}
+          <Form.Group inline>
+            <label>Categories</label>
+            <Dropdown
+              onChange={this.handleDropDownChange}
+              selection
+              value={value}
+              label="Categories"
+              options={this.state.categories}
+              placeholder="Categories"
+            />
           </Form.Group>
 
           {/* Dates */}
@@ -123,21 +188,21 @@ class Goal extends Component {
           </Form.Group>
 
           {/* Notes */}
-          <Form.Field width="6" control={TextArea} label="Notes" placeholder="Additional info here..." />
+          <Form.Field
+            width="6"
+            control={TextArea}
+            label="Notes"
+            placeholder="Additional info here..."
+          />
 
           {/* Submit */}
-          <Button primary>Sumbit</Button>
+          <Button primary>Submit</Button>
         </Form>
-
-        <strong>onChange:</strong>
-        <pre>{JSON.stringify({ goal }, null, 2)}</pre>
-        <strong>onSubmit:</strong>
-        <pre>{JSON.stringify({ submittedGoal }, null, 2)}</pre>
 
         <br /><br />
 
         <GoalTable
-          values={this.props.values}
+          goals={this.state.goals}
         />
 
       </div>

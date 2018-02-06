@@ -4,9 +4,9 @@ import CompetitionsFriendsRank from './CompetitionsFriendsRank.jsx'
 import CompetitionsFullPageList from './CompetitionsFullPageList.jsx'
 import CreateCompetition from './CreateCompetition.jsx'
 import MenuBar from './MenuBar.jsx'
-import Data from '../../FakeData'
 
 const CompetitionsFullPage = ({
+  Data,
   isHidden,
   goals,
   compName,
@@ -19,11 +19,10 @@ const CompetitionsFullPage = ({
   handleCompEnd,
   competitionsSubmit
 }) => {
-	console.log('ishidden in the fullpageCompetitions component', isHidden)
   return (
     <div>
       <MenuBar />
-      <Header as="h2">
+      <Header as="h2">{console.log('checking all props in comp full page', compName, compCat, compStart, compEnd)}
         <Image
           circular
           src="https://react.semantic-ui.com/assets/images/avatar/large/patrick.png"
@@ -46,14 +45,14 @@ const CompetitionsFullPage = ({
           />
           <Statistic>
             <Statistic.Value>
-              {`5  `}
+              {!Data.competitions_won ? 0 + '   ' : Data.competitions_won }
               <i className="flag checkered icon" />
             </Statistic.Value>
             <Statistic.Label>{`Competitions    Won`}</Statistic.Label>
           </Statistic>
           <Statistic>
             <Statistic.Value>
-              {`42  `}
+              {!Data.trophies ? 0 + '   '   : Data.trophies }
               <Image
                 src="https://st2.depositphotos.com/4326917/10312/v/450/depositphotos_103125822-stock-illustration-champions-cup-line-vector-icon.jpg"
                 className="circular inline"
@@ -63,13 +62,13 @@ const CompetitionsFullPage = ({
           </Statistic>
         </Statistic.Group>
       </Segment>
-      {Data.map(CompetitionsFp => {
+      {Data.map((CompetitionsFp) => {
         return (
           <CompetitionsFullPageList
-            key={CompetitionsFp.id}
+            key={CompetitionsFp._id}
             CompetitionsFp={CompetitionsFp}
           />
-        );
+        )
       })}
     </div>
   )

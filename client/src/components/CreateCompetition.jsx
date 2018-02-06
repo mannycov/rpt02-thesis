@@ -1,4 +1,5 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 import { Header, Modal, Statistic, Form } from 'semantic-ui-react'
 import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
 
@@ -15,7 +16,6 @@ const CreateCompetition = ({
   competitionsSubmit
 }) => {
   return (
-
     <Modal
       trigger={
         <Statistic>
@@ -28,9 +28,9 @@ const CreateCompetition = ({
       closeIcon
     >
       <Header className="plus icon" content="Create a Competition" />
-      <Modal.Content>{console.log('form props in create competition component', compName, compCat, compStart, compEnd)}
+      <Modal.Content>{console.log('form props in create competition component', compName, compCat, compStart, compEnd, isHidden)}
         <Form
-          onSubmit={competitionsSubmit.bind(null, compName, compCat, compStart, compEnd)}
+          onSubmit={competitionsSubmit.bind(null, compName, compCat, compStart, compEnd, isHidden)}
         >
           <Form.Group widths="equal">
             <Form.Input
@@ -72,6 +72,9 @@ const CreateCompetition = ({
             type="submit"
           />
         </Form>
+        {isHidden && (
+          <Redirect to={'/competitionsfullpage'}/>
+        )}
       </Modal.Content>
     </Modal>
   )

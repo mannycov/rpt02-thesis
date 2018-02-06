@@ -9,12 +9,12 @@ import { StaticRouter } from 'react-router-dom'
 import Root from '../client/Root.jsx'
 import {
   GoalsModel,
-  CompetitionsModel
+  CompetitionsModel,
+  CategoriesModel
 } from '../database/index.js'
 
-// import GoalsModel from '../database/models/goals.js'
+// import GoalsModel from '../database/models/goals'
 // import CompetitionsModel from '../database/models/competitions.js'
-
 const db = require('../database/index.js')
 
 const app = express()
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/api/goal', (req, res) => {
-  GoalsModel.find({}, function (err, data) {
+  GoalsModel.find({}, (err, data) => {
     if (err) {
       console.log(err)
     } else {
@@ -33,6 +33,26 @@ app.get('/api/goal', (req, res) => {
     }
   })
 })
+
+app.get('/api/getcompetitions', (req, res) => {
+  CompetitionsModel.find({}, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+app.get('/api/test', (req, res) => {
+  CategoriesModel.find({}, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+});
 
 app.post('/api/competitions', (req, res) => {
   const competitionBody = req.body
@@ -47,15 +67,28 @@ app.post('/api/competitions', (req, res) => {
     if (err) {
       console.log('competitions not saved', err)
     } else {
-      res.status(201).json('txt to come')
+      CompetitionsModel.find({}, function (error, data) {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('all my data from db to server', data)
+          res.status(201).json(data)
+        }
+      })
     }
   })
 })
 
-app.post('/api/goal', (req, res) => {
+app.post('/api/goal', function (req, res) {
   const goalTitle = req.body.goal
+  const goalTarget = req.body.target
+  const goalCategory = req.body.category
+  console.log(goalCategory)
+
   const goalModelInstance = new GoalsModel({
-    goals_name: goalTitle
+    goals_name: goalTitle,
+    target: goalTarget,
+    category: goalCategory
   })
 
   goalModelInstance.save(function (err) {
@@ -76,7 +109,7 @@ app.get('*', (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>HMR all the things!</title>
+        <title>Compete.ly</title>
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">
@@ -86,7 +119,7 @@ app.get('*', (req, res) => {
         <div id="root">${application}</div>
         <script src="http://localhost:3001/client.js"></script>
       </body>
-    </html>`;
+    </html>`
   res.send(html)
 })
 

@@ -1,3 +1,3 @@
-const categoryData = [{ key: 'b', value: 'b', text: 'Body Composition' }, { key: 'e', value: 'e', text: 'Endurance' }, { key: 's', value: 's', text: 'Strength' }]
+const categoryData = [{ key: 'e', value: 'Cardio', text: 'Cardio' }, { key: 's', value: 'Strength', text: 'Strength' }]
 
 export default categoryData
