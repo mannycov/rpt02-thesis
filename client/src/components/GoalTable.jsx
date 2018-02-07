@@ -16,7 +16,7 @@ const GoalTable = props => (
       <Table.Body>
         {props.goals.map(goal => (
           <Table.Row key={goal._id}>
-            <Table.Cell>{goal.goals_name}</Table.Cell>
+            <Table.Cell>{goal.goals_name}<button onClick={() => { props.handleRemoveGoal(goal._id) }}>&times;</button></Table.Cell>
             <Table.Cell textAlign="left">{goal.target}</Table.Cell>
             <Table.Cell>{goal.category}</Table.Cell>
           </Table.Row>

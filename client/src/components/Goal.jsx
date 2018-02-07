@@ -34,6 +34,7 @@ class Goal extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleDropDownChange = this.handleDropDownChange.bind(this)
+    this.handleRemoveGoal = this.handleRemoveGoal.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
   }
 
@@ -93,6 +94,17 @@ class Goal extends Component {
       target: '',
       goals: copyOfGoals
     })
+  }
+
+  handleRemoveGoal (id) {
+    axios
+      .delete(`/api/goal/${id}`)
+      .then((response) => {
+        this.fetchGoals()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   fetchGoals () {
@@ -203,6 +215,7 @@ class Goal extends Component {
 
         <GoalTable
           goals={this.state.goals}
+          handleRemoveGoal={this.handleRemoveGoal}
         />
 
       </div>
