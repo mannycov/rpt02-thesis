@@ -51,7 +51,7 @@ export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
-  competitions_pictures: Array,
+  competitions_pictures: String,
   competitions_name: String,
   competitions_category: String,
   competitions_start_date: Date,
