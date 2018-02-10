@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
-import { Form, Icon, TextArea, Select, Button, Dropdown, Grid } from 'semantic-ui-react'
-import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import axios from 'axios'
-// import 'react-datepicker/dist/react-datepicker.css'
 
 // Components
 import MenuBar from './MenuBar.jsx'
 import GoalTable from './GoalTable.jsx'
-
-// data
-import categoryData from '../data/categories'
-
-const ROOT_URL = 'http://localhost:3000'
+import AddGoal from './AddGoal.jsx'
 
 class Goal extends Component {
   constructor (props) {
@@ -22,19 +15,24 @@ class Goal extends Component {
       goal: '',
       category: '',
       target: '',
-      submittedGoal: '',
-      submittedCategory: '',
-      submittedTarget: '',
-      value: '',
+      size: '',
       startDate: moment(),
+      endDate: moment(),
+      notes: '',
       goals: [],
-      categories: categoryData
+      open: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleDateChange = this.handleDateChange.bind(this)
+    this.handleStartDateChange = this.handleStartDateChange.bind(this)
+    this.handleEndDateChange = this.handleEndDateChange.bind(this)
     this.handleDropDownChange = this.handleDropDownChange.bind(this)
+    this.handleTextAreaChange = this.handleTextAreaChange.bind(this)
+    this.handleRemoveGoal = this.handleRemoveGoal.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
+    this.handleTableCellClick = this.handleTableCellClick.bind(this)
+    this.close = this.close.bind(this)
+    this.show = this.show.bind(this)
   }
 
   componentDidMount () {
@@ -49,14 +47,30 @@ class Goal extends Component {
 
   handleDropDownChange (e, { value }) {
     this.setState({
-      value
+      category: value
     })
   }
 
-  handleDateChange (date) {
+  handleStartDateChange (date) {
     this.setState({
       startDate: date
     })
+  }
+
+  handleEndDateChange (date) {
+    this.setState({
+      endDate: date
+    })
+  }
+
+  handleTextAreaChange (e, { value }) {
+    this.setState({
+      notes: value
+    })
+  }
+
+  handleTableCellClick () {
+    console.log('table cell clicked')
   }
 
   handleSubmit () {
@@ -64,19 +78,19 @@ class Goal extends Component {
       goal,
       target,
       category,
-      value,
-      goals
+      startDate,
+      endDate,
+      notes
     } = this.state
 
-    const copyOfGoals = [...goals]
-
-    copyOfGoals.push(goal)
-
     axios
-      .post(ROOT_URL + "/api/goal", {
-        goal: this.state.goal,
-        target: this.state.target,
-        category: this.state.value
+      .post('/api/goal', {
+        goal,
+        target,
+        category,
+        startDate,
+        endDate,
+        notes
       })
       .then((response) => {
         this.fetchGoals()
@@ -85,19 +99,30 @@ class Goal extends Component {
         console.log(error)
       })
 
+    this.close()
+
     this.setState({
-      submittedGoal: goal,
-      submittedTarget: target,
-      submittedCategory: category,
       goal: '',
       target: '',
-      goals: copyOfGoals
+      category: '',
+      notes: ''
     })
+  }
+
+  handleRemoveGoal (id) {
+    axios
+      .delete(`/api/goal/${id}`)
+      .then((response) => {
+        this.fetchGoals()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   fetchGoals () {
     axios
-      .get(ROOT_URL + '/api/goal')
+      .get('/api/goal')
       .then((response) => {
         this.setState({
           goals: response.data
@@ -108,16 +133,21 @@ class Goal extends Component {
       })
   }
 
+  show (size) {
+    this.setState({
+      size,
+      open: true
+    })
+  }
+
+  close () {
+    this.setState({
+      open: false
+    })
+  }
+
   render () {
-    const {
-      goal,
-      submittedGoal,
-      target,
-      submittedTarget,
-      category,
-      submittedCategory,
-      value
-    } = this.state
+    const { goals } = this.state
     return (
       <div>
 
@@ -127,82 +157,32 @@ class Goal extends Component {
 
         <br />
 
-        <h3>Create a Goal</h3>
-
-        <Form onSubmit={this.handleSubmit}>
-
-          {/* Input Fields */}
-          <Form.Group>
-            <Form.Input
-              width="3"
-              fluid
-              label="Goal"
-              name="goal"
-              value={goal}
-              onChange={this.handleChange}
-              placeholder="(e.g. lose 10lbs.)"
-            />
-            <Form.Input 
-              width="3" 
-              fluid 
-              label="Target"
-              name="target"
-              value={target}
-              onChange={this.handleChange}
-              placeholder="(e.g. 175lbs.)"
-            />
-          </Form.Group>
-
-          {/* Dropdown */}
-          <Form.Group inline>
-            <label>Categories</label>
-            <Dropdown
-              onChange={this.handleDropDownChange}
-              selection
-              value={value}
-              label="Categories"
-              options={this.state.categories}
-              placeholder="Categories"
-            />
-          </Form.Group>
-
-          {/* Dates */}
-          <Form.Group inline>
-            <label>Start Date</label>
-
-            <Icon name="calendar" color="blue" size="large" />
-
-            <DatePicker
-              selected={this.state.startDate}
-              onChange={this.handleDateChange}
-            />
-
-            <label>End Date</label>
-
-            <Icon name="calendar" color="blue" size="large" />
-
-            <DatePicker
-              selected={this.state.startDate}
-              onChange={this.handleDateChange}
-            />
-          </Form.Group>
-
-          {/* Notes */}
-          <Form.Field
-            width="6"
-            control={TextArea}
-            label="Notes"
-            placeholder="Additional info here..."
-          />
-
-          {/* Submit */}
-          <Button primary>Submit</Button>
-        </Form>
+        <AddGoal
+          goals={goals}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          handleDropDownChange={this.handleDropDownChange}
+          handleStartDateChange={this.handleStartDateChange}
+          handleEndDateChange={this.handleEndDateChange}
+          handleTextAreaChange={this.handleTextAreaChange}
+          goal={this.state.goal}
+          target={this.state.target}
+          category={this.state.category}
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          notes={this.state.notes}
+          close={this.close}
+          open={this.state.open}
+          show={this.show}
+          size={this.state.size}
+        />
 
         <br /><br />
 
         <GoalTable
           goals={this.state.goals}
+          handleRemoveGoal={this.handleRemoveGoal}
+          handleTableCellClick={this.handleTableCellClick}
         />
 
       </div>
