@@ -1,69 +1,40 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Button, Modal } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
 
-class AddGoal extends Component {
-  constructor () {
-    super()
-    this.state = {
-      open: false
-    }
-    this.show = this.show.bind(this)
-    this.close = this.close.bind(this)
-    this.handleYesClick = this.handleYesClick.bind(this)
-  }
+// Components
+import GoalForm from './GoalForm.jsx'
 
-  show (size) {
-    this.setState({
-      size,
-      open: true
-    })
-  }
+const AddGoal = props => (
+  <div>
+    <Button primary onClick={() => { props.show('large') }}>
+      <i className="plus icon" />
+          Add a Goal
+    </Button>
 
-  close () {
-    this.setState({
-      open: false
-    })
-  }
-
-  handleYesClick () {
-    console.log('handle yes clicked')
-  }
-
-  render () {
-    const { open, size } = this.state
-
-    return (
-      <div>
-        <Link to="/goal">
-          <Button>
-            <i className="plus icon" />
-            Add a Goal
-          </Button>
-        </Link>
-
-        <Modal size={size} open={open} onClose={this.close}>
-          <Modal.Header>
+    <Modal open={props.open} onClose={props.close}>
+      <Modal.Header>
             Create Your Goal
-          </Modal.Header>
-          <Modal.Content>
-            <form className="ui form">
-              <input 
-                type="text"
-                placeholder="Write something..."
-              />
-            </form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button negative onClick={() => { this.close() }}>
-              Cancel
-            </Button>
-            <Button onClick={() => { this.handleYesClick() }} positive icon='plus icon' labelPosition='right' content='Add' />
-          </Modal.Actions>
-        </Modal>
-      </div>
-    )
-  }
-}
+      </Modal.Header>
+      <Modal.Content>
+        <GoalForm
+          close={props.close}
+          goals={props.goals}
+          handleSubmit={props.handleSubmit}
+          handleChange={props.handleChange}
+          handleStartDate={props.handleStartDateChange}
+          handleEndDate={props.handleEndDateChange}
+          handleDropDownChange={props.handleDropDownChange}
+          handleTextArea={props.handleTextAreaChange}
+          goal={props.goal}
+          target={props.target}
+          category={props.category}
+          startDate={props.startDate}
+          endDate={props.endDate}
+          notes={props.notes}
+        />
+      </Modal.Content>
+    </Modal>
+  </div>
+)
 
 export default AddGoal

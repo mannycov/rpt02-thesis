@@ -19,6 +19,13 @@ class MenuBar extends Component {
             active={activeItem === 'home'}
             onClick={this.handleItemClick}
           />
+          <Menu.Item
+            as={Link}
+            to="/goals"
+            name="goals"
+            active={activeItem === 'goals'}
+            onClick={this.handleItemClick}
+          />
           <Menu.Item name="messages" active={activeItem === 'messages'} onClick={this.handleItemClick} />
           <Menu.Item name="friends" active={activeItem === 'friends'} onClick={this.handleItemClick} />
           <Menu.Menu position="right">

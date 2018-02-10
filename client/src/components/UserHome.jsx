@@ -7,9 +7,6 @@ import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
 import UserFeed from './UserFeed.jsx'
-import AddGoal from './AddGoal.jsx'
-
-const ROOT_URL = 'http://localhost:3000'
 
 class UserHome extends Component {
   constructor (props) {
@@ -75,7 +72,7 @@ class UserHome extends Component {
 
   fetchGoals () {
     axios
-      .get(ROOT_URL + '/api/goal')
+      .get('/api/goal')
       .then((response) => {
         this.setState({
           goals: response.data
@@ -158,11 +155,6 @@ class UserHome extends Component {
                     </a>
                   </Card.Content>
                 </Card>
-              </Grid.Row>
-              <br />
-              <br />
-              <Grid.Row>
-                <AddGoal />
               </Grid.Row>
 
               <br />
