@@ -103,23 +103,38 @@ app.post('/api/competitions', (req, res) => {
   })
 })
 
-app.post('/api/goal', function (req, res) {
+app.post('/api/goal', (req, res) => {
   const goalTitle = req.body.goal
   const goalTarget = req.body.target
   const goalCategory = req.body.category
-  console.log(goalCategory)
+  const goalStartDate = req.body.startDate
+  const goalEndDate = req.body.endDate
+  const goalNotes = req.body.notes
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
     target: goalTarget,
-    category: goalCategory
+    category: goalCategory,
+    start_date: goalStartDate,
+    end_date: goalEndDate,
+    notes: goalNotes
   })
 
-  goalModelInstance.save(function (err) {
+  goalModelInstance.save((err) => {
     if (err) {
       console.log(err)
     } else {
       res.sendStatus(201)
+    }
+  })
+})
+
+app.delete('/api/goal/:id', (req, res) => {
+  GoalsModel.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(200)
     }
   })
 })
