@@ -9,7 +9,7 @@ const CompetitionsFullPageList = ({ CompetitionsFp }) => {
       <Grid.Row>
         <Grid columns={2} padded>
           <Grid.Column>
-            <Image src={CompetitionsFp.img} />
+            <Image src={CompetitionsFp.competitions_pictures} />
             <Header as="h5">{CompetitionsFp.competitions_category}</Header>
           </Grid.Column>
           <Grid.Column>
