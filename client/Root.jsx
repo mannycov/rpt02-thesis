@@ -22,7 +22,7 @@ const Root = () => (
     <Route path="/trophies" component={Trophies} />
     <Route path="/signupform" component={SignupForm} />
     <Route path="/homepageheader" component={HomePageHeader} />
-    <Route path="/goal" component={Goal} />
+    <Route path="/goals" component={Goal} />
     <Route component={NotFound} />
   </Switch>
 )
