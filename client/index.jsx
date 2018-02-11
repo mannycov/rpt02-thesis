@@ -6,7 +6,7 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import "./src/overides.css";
+import './src/overides.css'
 // import reducers from './reducers'
 
 import Root from './Root.jsx'

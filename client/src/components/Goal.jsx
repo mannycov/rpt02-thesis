@@ -142,9 +142,9 @@ class Goal extends Component {
               onChange={this.handleChange}
               placeholder="(e.g. lose 10lbs.)"
             />
-            <Form.Input 
-              width="3" 
-              fluid 
+            <Form.Input
+              width="3"
+              fluid
               label="Target"
               name="target"
               value={target}

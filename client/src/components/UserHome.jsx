@@ -100,6 +100,13 @@ class UserHome extends Component {
   }
 
   competitionsSubmit (compsName, compsCat, compsStart, compsEnd, hiddenUserPage) {
+    if (compsCat === 'Build Muscle') {
+      compsCat = 'Build_Muscle'
+    } else if (compsCat === 'Lose Weight') {
+      compsCat = 'Lose_Weight'
+    } else {
+      compsCat = compsCat
+    }
     console.log(
       'what im submitting in the user component',
       compsName,
@@ -114,10 +121,11 @@ class UserHome extends Component {
       comptetionName: compsName,
       competitionCategory: compsCat,
       competitionStart: compsStart,
-      competitionEnd: compsEnd
+      competitionEnd: compsEnd,
+      competitionPic: ''
     })
       .then((response) => {
-        console.log('did all my comps come back from the db?', response.data.data)
+        console.log('in userHome file data back from server', response.data)
         this.setState({
           competitionData: response.data
         })
