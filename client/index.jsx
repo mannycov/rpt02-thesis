@@ -7,6 +7,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import './src/overides.css'
+import 'react-dates/initialize'
+import 'react-dates/lib/css/_datepicker.css'
 // import reducers from './reducers'
 
 import Root from './Root.jsx'

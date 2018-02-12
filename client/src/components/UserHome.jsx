@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Grid } from 'semantic-ui-react'
 import axios from 'axios'
+import momentPropTypes from 'react-moment-proptypes'
 
 import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 // Components
@@ -17,8 +18,9 @@ class UserHome extends Component {
       isHidden: true,
       compName: '',
       compCat: '',
-      compStart: '',
-      compEnd: ''
+      compStart: null,
+      compEnd: null,
+      focused: false
     }
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
@@ -26,6 +28,8 @@ class UserHome extends Component {
     this.handleCompStart = this.handleCompStart.bind(this)
     this.handleCompEnd = this.handleCompEnd.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
+    this.onDateChange = this.onDateChange.bind(this)
+    this.onFocusChange = this.onFocusChange.bind(this)
   }
 
   componentDidMount () {
@@ -67,6 +71,18 @@ class UserHome extends Component {
     console.log(compEnd)
     this.setState({
       compEnd: compEnd.target.value
+    })
+  }
+
+  onDateChange(selectedDate) {
+    this.setState({
+      compStart: selectedDate
+    })
+  }
+
+  onFocusChange(focusedOn) {
+    this.setState({
+      focused: focusedOn
     })
   }
 
@@ -258,6 +274,9 @@ class UserHome extends Component {
         handleCompStart={this.handleCompStart}
         handleCompEnd={this.handleCompEnd}
         competitionsSubmit={this.competitionsSubmit}
+        onDateChange={this.onDateChange}
+        onFocusChange={this.onFocusChange}
+        focused={this.state.focused}
       />
     )
   }
