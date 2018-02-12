@@ -69,10 +69,6 @@ class Goal extends Component {
     })
   }
 
-  handleTableCellClick () {
-    console.log('table cell clicked')
-  }
-
   handleSubmit () {
     const {
       goal,
