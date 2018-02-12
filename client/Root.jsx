@@ -11,6 +11,7 @@ import SignupForm from './src/components/SignupForm.jsx'
 import HomePageHeader from "./src/components/HomePageHeader.jsx"
 import NotFound from './src/components/NotFound.jsx'
 import Goal from './src/components/Goal.jsx'
+import GoalDetails from './src/components/GoalDetails.jsx'
 
 const Root = () => (
   <Switch>
@@ -23,6 +24,7 @@ const Root = () => (
     <Route path="/signupform" component={SignupForm} />
     <Route path="/homepageheader" component={HomePageHeader} />
     <Route path="/goals" component={Goal} />
+    <Route path="/goal/:id" component={GoalDetails} />
     <Route component={NotFound} />
   </Switch>
 )
