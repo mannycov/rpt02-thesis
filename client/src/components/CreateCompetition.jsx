@@ -2,6 +2,8 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 import { Header, Modal, Statistic, Form } from 'semantic-ui-react'
 import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
+import 'react-dates/initialize'
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates'
 
 const CreateCompetition = ({
   isHidden,
@@ -13,7 +15,10 @@ const CreateCompetition = ({
   handleCompCat,
   handleCompStart,
   handleCompEnd,
-  competitionsSubmit
+  competitionsSubmit,
+  onDateChange,
+  onFocusChange,
+  focused
 }) => {
   return (
     <Modal
@@ -50,20 +55,37 @@ const CreateCompetition = ({
               placeholder="Category"
               onChange={handleCompCat}
             />
-            <Form.Input
+            {/* <Form.Input
               type="text"
               onChange={handleCompStart}
               fluid
               label="Choose Start Date"
               placeholder="Start Date"
+            /> */}
+            <SingleDatePicker
+              label="Choose Start Date"
+              placeholder="Start Date"
+              date={compStart} // momentPropTypes.momentObj or null
+              onDateChange={date => onDateChange({ date })} // PropTypes.func.isRequired
+              focused={focused} // PropTypes.bool
+              onFocusChange={({ focused }) => onFocusChange({ focused })} // PropTypes.func.isRequired
             />
-            <Form.Input
+            <SingleDatePicker
+              className="SingleDatePicker SingleDatePicker_2"
+              label="Choose End Date"
+              placeholder="End Date"
+              date={compEnd} // momentPropTypes.momentObj or null
+              onDateChange={date => onDateChange({ date })} // PropTypes.func.isRequired
+              focused={focused} // PropTypes.bool
+              onFocusChange={({ focused }) => onFocusChange({ focused })} // PropTypes.func.isRequired
+            />
+            {/* <Form.Input
               type="text"
               onChange={handleCompEnd}
               fluid
               label="Choose End Date"
               placeholder="End Date"
-            />
+            /> */}
 
           </Form.Group>
           <Form.Button
