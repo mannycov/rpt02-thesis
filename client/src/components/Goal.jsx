@@ -30,7 +30,6 @@ class Goal extends Component {
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this)
     this.handleRemoveGoal = this.handleRemoveGoal.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
-    this.handleTableCellClick = this.handleTableCellClick.bind(this)
     this.close = this.close.bind(this)
     this.show = this.show.bind(this)
   }
