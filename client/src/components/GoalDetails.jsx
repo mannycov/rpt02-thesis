@@ -35,39 +35,43 @@ class GoalDetails extends Component {
 
         <MenuBar />
 
-        <h1>Goal Id: </h1>
+        <h1>Today is: {new Date().toDateString()}</h1>
 
-        <h3>Today is: {new Date().toDateString()}</h3>
-
-        <h4>Graph Here:</h4>
-
-        <br /><br />
-
-        <h3>Date Here:</h3>
+        <h3>Graph Here:</h3>
 
         <br /><br />
 
         <Form>
-          <Input
-            fluid
-            label="Weight"
-            placeholder="0lbs."
-          />
-          <Input
-            fluid
-            label="Reps"
-            placeholder="0"
-          />
-          <Input
-            fluid
-            label="Sets"
-            placeholder="0"
-          />
-          <Input
-            fluid
-            label="Target"
-            placeholder="0 sec."
-          />
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Weight</label>
+              <Input
+                fluid
+                placeholder="0lbs."
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Reps</label>
+              <Input
+                fluid
+                placeholder="0"
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Sets</label>
+              <Input
+                fluid
+                placeholder="0"
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Target</label>
+              <Input
+                fluid
+                placeholder=""
+              />
+            </Form.Field>
+          </Form.Group>
           <Checkbox
             toggle
             label={<label>Click to check in for the day</label>}
@@ -79,6 +83,9 @@ class GoalDetails extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell rowSpan="2">Goal</Table.HeaderCell>
+              <Table.HeaderCell rowSpan="2">Weight</Table.HeaderCell>
+              <Table.HeaderCell rowSpan="2">Reps</Table.HeaderCell>
+              <Table.HeaderCell rowSpan="2">Sets</Table.HeaderCell>
               <Table.HeaderCell rowSpan="2">Target</Table.HeaderCell>
               <Table.HeaderCell rowSpan="2">Check In</Table.HeaderCell>
             </Table.Row>
@@ -86,7 +93,10 @@ class GoalDetails extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell>A goal</Table.Cell>
-              <Table.Cell>Details</Table.Cell>
+              <Table.Cell>155 lbs.</Table.Cell>
+              <Table.Cell>10</Table.Cell>
+              <Table.Cell>5</Table.Cell>
+              <Table.Cell>155 lb.s</Table.Cell>
               <Table.Cell>{this.renderIcon()}</Table.Cell>
             </Table.Row>
           </Table.Body>
