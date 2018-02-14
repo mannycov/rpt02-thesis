@@ -9,6 +9,7 @@ import { StaticRouter } from 'react-router-dom'
 import Root from '../client/Root.jsx'
 import {
   GoalsModel,
+  CheckPointModel,
   CompetitionsModel,
   CategoriesModel
 } from '../database/index.js'
@@ -107,9 +108,19 @@ app.post('/api/goal', (req, res) => {
   goalModelInstance.save((err) => {
     if (err) {
       console.log(err)
-    } else {
-      res.sendStatus(201)
     }
+
+    const checkPoint = new CheckPointModel({
+      goal: goalModelInstance._id
+    })
+
+    checkPoint.save(() => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(201)
+      }
+    })
   })
 })
 

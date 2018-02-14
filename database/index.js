@@ -46,11 +46,23 @@ const goalsSchema = new Schema({
   status: String,
   description: String,
   purpose: String,
-  checkpoint_id: Number,
+  checkpoints: [{ type: Schema.Types.ObjectId, ref: 'CheckPointModel' }],
   ongoing_goal: Boolean
 })
 
 export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
+
+const checkPointSchema = new Schema({
+  checkpoint_id: Number,
+  goal: { type: Schema.Types.ObjectId, ref: 'GoalsModel' },
+  weight: Number,
+  reps: Number,
+  sets: Number,
+  target: Number,
+  check_in: Boolean
+})
+
+export const CheckPointModel = mongoose.model('CheckPointModel', checkPointSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
@@ -72,7 +84,7 @@ const competitionsSchema = new Schema({
   trophy_name: String
 })
 
-export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema)
+export const CompetitionsModel = mongoose.model('CompetitionsModel', competitionsSchema)
 
 const categoriesSchema = new Schema({
   category_id: Number,
