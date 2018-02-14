@@ -8,7 +8,10 @@ class GoalDetails extends Component {
   constructor (props) {
     super(props)
 
-    this.state = { checked: false }
+    this.state = {
+      checked: false,
+      today: new Date().toDateString()
+    }
     this.toggle = this.toggle.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
   }
@@ -22,20 +25,19 @@ class GoalDetails extends Component {
   renderIcon () {
     if (this.state.checked) {
       return (
-        <div>
-          <Icon color="green" name="checkmark" size="large" />
-        </div>
+        <Icon color="green" name="checkmark" size="large" />
       )
     }
   }
 
   render () {
+    const { today } = this.state
     return (
       <div>
 
         <MenuBar />
 
-        <h1>Today is: {new Date().toDateString()}</h1>
+        <h1>Today is: {today}</h1>
 
         <h3>Graph Here:</h3>
 
