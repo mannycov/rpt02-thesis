@@ -11,15 +11,10 @@ class GoalDetails extends Component {
     this.state = {
       checked: false,
       today: new Date().toDateString(),
-      goal: this.props.location.state.goal.goals_name
+      goal: this.props.location.state.goal
     }
     this.toggle = this.toggle.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
-  }
-
-  componentDidMount () {
-   // const { goals } = this.props.location.state.goals
-    console.log(this.props.location.state.goal.goals_name)
   }
 
   toggle () {
@@ -45,7 +40,7 @@ class GoalDetails extends Component {
 
         <h1>Today is: {today}</h1>
 
-        <h2>Goal: {goal}</h2>
+        <h2>{goal.goals_name}</h2>
 
         <h3>Graph Here:</h3>
 
@@ -102,11 +97,11 @@ class GoalDetails extends Component {
           </Table.Header>
           <Table.Body>
             <Table.Row>
-              <Table.Cell>A goal</Table.Cell>
+              <Table.Cell>{goal.goals_name}</Table.Cell>
               <Table.Cell>155 lbs.</Table.Cell>
               <Table.Cell>10</Table.Cell>
               <Table.Cell>5</Table.Cell>
-              <Table.Cell>155 lb.s</Table.Cell>
+              <Table.Cell>{goal.target}</Table.Cell>
               <Table.Cell>{this.renderIcon()}</Table.Cell>
             </Table.Row>
           </Table.Body>
