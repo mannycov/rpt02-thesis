@@ -10,10 +10,16 @@ class GoalDetails extends Component {
 
     this.state = {
       checked: false,
-      today: new Date().toDateString()
+      today: new Date().toDateString(),
+      goal: this.props.location.state.goal.goals_name
     }
     this.toggle = this.toggle.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
+  }
+
+  componentDidMount () {
+   // const { goals } = this.props.location.state.goals
+    console.log(this.props.location.state.goal.goals_name)
   }
 
   toggle () {
@@ -31,13 +37,15 @@ class GoalDetails extends Component {
   }
 
   render () {
-    const { today } = this.state
+    const { today, goal } = this.state
     return (
       <div>
 
         <MenuBar />
 
         <h1>Today is: {today}</h1>
+
+        <h2>Goal: {goal}</h2>
 
         <h3>Graph Here:</h3>
 
