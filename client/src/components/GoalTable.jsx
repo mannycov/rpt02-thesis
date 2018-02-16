@@ -23,7 +23,7 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
             <Table.Cell>
               <Link to={{
                 pathname: `/goal/${goal._id}`,
-                state: { goal: goal}
+                state: { goal }
               }}>
                 {goal.goals_name}
               </Link>
@@ -31,7 +31,7 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
             <Table.Cell textAlign="left">
               <Link to={{
                 pathname: `/goal/${goal._id}`,
-                state: { goal: goal}
+                state: { goal }
               }}>
                 {goal.target}
               </Link>
@@ -39,7 +39,7 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
             <Table.Cell>
               <Link to={{
                 pathname: `/goal/${goal._id}`,
-                state: { goal: goal}
+                state: { goal }
               }}>
                 {goal.category}
               </Link>
@@ -47,7 +47,7 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
             <Table.Cell>
               <Link to={{
                 pathname: `/goal/${goal._id}`,
-                state: { goal: goal}
+                state: { goal }
               }}>
                 {goal.start_date ? goal.start_date.slice(0, 10) : ''}
               </Link>
@@ -55,7 +55,7 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
             <Table.Cell>
               <Link to={{
                 pathname: `/goal/${goal._id}`,
-                state: { goal: goal}
+                state: { goal }
               }}>
                 {goal.end_date ? goal.end_date.slice(0, 10) : ''}
               </Link>
@@ -63,7 +63,7 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
             <Table.Cell>
               <Link to={{
                 pathname: `/goal/${goal._id}`,
-                state: { goal: goal}
+                state: { goal }
               }}>
                 {goal.notes}
               </Link>
@@ -76,6 +76,5 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
     <br /><br /><br />
   </div>
 )
-
 
 export default GoalTable
