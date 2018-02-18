@@ -15,12 +15,14 @@ const CompetitionsFullPage = ({
   compEnd,
   handleCompName,
   handleCompCat,
-  handleCompStart,
-  handleCompEnd,
+  handleCompStartSave,
+  compStartSaveClick,
+  handleCompEndSave,
+  compEndSaveClick,
+  handleStartChange,
+  handleEndChange,
   competitionsSubmit,
-  onDateChange,
-  onFocusChange,
-  focused
+  m
 }) => {
   return (
     <div>
@@ -42,12 +44,14 @@ const CompetitionsFullPage = ({
             compEnd={compEnd}
             handleCompName={handleCompName}
             handleCompCat={handleCompCat}
-            handleCompStart={handleCompStart}
-            handleCompEnd={handleCompEnd}
+            handleCompStartSave={handleCompStartSave}
+            compStartSaveClick={compStartSaveClick}
+            handleCompEndSave={handleCompEndSave}
+            compEndSaveClick={compEndSaveClick}
+            handleStartChange={handleStartChange}
+            handleEndChange={handleEndChange}
             competitionsSubmit={competitionsSubmit}
-            onDateChange={onDateChange}
-            onFocusChange={onFocusChange}
-            focused={focused}
+            m={m}
           />
           <Statistic>
             <Statistic.Value>
