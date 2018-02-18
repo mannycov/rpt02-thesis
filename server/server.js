@@ -118,19 +118,33 @@ app.post('/api/goal', (req, res) => {
   goalModelInstance.save((err) => {
     if (err) {
       console.log(err)
+    } else {
+      res.sendStatus(201)
     }
+  })
+})
 
-    const checkPoint = new CheckPointModel({
-      goal: goalModelInstance._id
-    })
+app.post('/api/checkin', (req, res) => {
+  const goalId = req.body.goalId
+  const checkInWeight = req.body.weight
+  const checkInReps = req.body.reps
+  const checkInSets = req.body.sets
+  const checkInTime = req.body.time
 
-    checkPoint.save(() => {
-      if (err) {
-        console.log(err)
-      } else {
-        res.sendStatus(201)
-      }
-    })
+  const checkIn = new CheckInModel({
+    goal: goalId,
+    weight: checkInWeight,
+    reps: checkInReps,
+    sets: checkInSets,
+    time: checkInTime
+  })
+
+  checkIn.save((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(201)
+    }
   })
 })
 
