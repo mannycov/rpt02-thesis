@@ -9,6 +9,7 @@ import { StaticRouter } from 'react-router-dom'
 import Root from '../client/Root.jsx'
 import {
   GoalsModel,
+  CheckInModel,
   CompetitionsModel,
   CategoriesModel
 } from '../database/index.js'
@@ -25,29 +26,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const emptyObj = []
-
-const getDefaultPictures = () => {
-  CategoriesModel.find({}, (err, data) => {
-    defaultPicsInDb: data[0].competitions_pictures
-    if (err) {
-      console.log(err)
-    } else {
-      console.log('default images coming back', defaultPicsInDb)
-    }
-  })
-}
-
-console.log("checking my mofo function return", getDefaultPictures.defaultPicsInDb)
-
-app.get('/api/test', (req, res) => {
-  CategoriesModel.find({}, (err, data) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.send(data)
-    }
-  })
-})
 
 app.get('/api/goal', (req, res) => {
   GoalsModel.find({}, (err, data) => {
@@ -71,34 +49,41 @@ app.get('/api/getcompetitions', (req, res) => {
 
 app.post('/api/competitions', (req, res) => {
   const competitionBody = req.body
-  console.log('from the server side post body competitions', competitionBody)
-  const competitionsModelInstance = new CompetitionsModel({
-    competitions_name: competitionBody.comptetionName,
-    competitions_category: competitionBody.competitionCategory,
-    competitions_start_date: competitionBody.competitionStart,
-    competitions_end_date: competitionBody.competitionEnd
-  })
-  competitionsModelInstance.save((err) => {
-    if (err) {
-      console.log('competitions not saved', err)
-    } else {
-      //find the categor in category model save it to a variable
-      CompetitionsModel.find({}, function (error, data) {
-        if (error) {
-          console.log(error)
-        } else {
-          data
-          //declare empty array to hold the data passed in the send func below
-          //iterate through data[i]
-          //if data.[i].competitions_category ===
-          //then pull data from the category model from line 70
-          //loop through data
-          //if competitionBody.competitionCategory === the key of of the loop from db
+  let matchingCategory = ''
 
-          console.log('all my data from db to server', data)
-          res.status(201).json(data)
-        }
+  CategoriesModel.find({}, (err, defaultPics) => {
+    let defaultPicsInDb = defaultPics[0].competitions_pictures
+    let userSubbedCategory = competitionBody.competitionCategory
+
+    for (let i = 0; i <= defaultPicsInDb.length -1; i++) {
+      if (userSubbedCategory == Object.keys(defaultPicsInDb[i])) {
+        matchingCategory = defaultPicsInDb[i][userSubbedCategory]
+      }
+    }
+    if (err) {
+      console.log(err)
+    } else {
+      const competitionsModelInstance = new CompetitionsModel({
+        competitions_name: competitionBody.comptetionName,
+        competitions_category: competitionBody.competitionCategory,
+        competitions_start_date: competitionBody.competitionStart,
+        competitions_end_date: competitionBody.competitionEnd,
+        competitions_pictures: matchingCategory
       })
+      competitionsModelInstance.save((err) => {
+        if (err) {
+          console.log('competitions not saved', err)
+        } else {
+          CompetitionsModel.find({}, function (err, data) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log('from server file data coming back from DB', data)
+              res.status(201).json(data)
+            }
+          })
+        }
+      })   //find the categor in category model save it to a variable
     }
   })
 })
@@ -121,6 +106,30 @@ app.post('/api/goal', (req, res) => {
   })
 
   goalModelInstance.save((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(201)
+    }
+  })
+})
+
+app.post('/api/checkin', (req, res) => {
+  const goalId = req.body.goalId
+  const checkInWeight = req.body.weight
+  const checkInReps = req.body.reps
+  const checkInSets = req.body.sets
+  const checkInTime = req.body.time
+
+  const checkIn = new CheckInModel({
+    goal: goalId,
+    weight: checkInWeight,
+    reps: checkInReps,
+    sets: checkInSets,
+    time: checkInTime
+  })
+
+  checkIn.save((err) => {
     if (err) {
       console.log(err)
     } else {
