@@ -6,6 +6,7 @@
 	"scripts": {
 		"start:server": "rm -rf ./client/.dist && webpack --config  webpack.config.server.js",
 		"start:client": "webpack-dev-server --config webpack.config.client.js",
+		"build-css": "lessc --clean-css src/less/input-moment.less dist/input-moment.css",
 		"start": "rm -rf ./client/.dist && npm-run-all --parallel start:server start:client",
 		"test": "jest"
 	},
@@ -70,6 +71,7 @@
 		"express-logging": "^1.1.1",
 		"file-loader": "^1.1.6",
 		"history": "^4.7.2",
+		"input-moment": "^0.4.0",
 		"less": "^2.7.3",
 		"less-loader": "^4.0.5",
 		"lodash": "^4.17.4",

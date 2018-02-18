@@ -2,8 +2,8 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 import { Header, Modal, Statistic, Form } from 'semantic-ui-react'
 import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
-import 'react-dates/initialize'
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates'
+import moment from 'moment'
+import InputMoment from 'input-moment'
 
 const CreateCompetition = ({
   isHidden,
@@ -13,12 +13,14 @@ const CreateCompetition = ({
   compEnd,
   handleCompName,
   handleCompCat,
-  handleCompStart,
-  handleCompEnd,
+  handleCompStartSave,
+  compStartSaveClick,
+  handleCompEndSave,
+  compEndSaveClick,
+  handleStartChange,
+  handleEndChange,
   competitionsSubmit,
-  onDateChange,
-  onFocusChange,
-  focused
+  m
 }) => {
   return (
     <Modal
@@ -33,7 +35,7 @@ const CreateCompetition = ({
       closeIcon
     >
       <Header className="plus icon" content="Create a Competition" />
-      <Modal.Content>{console.log('form props in create competition component', compName, compCat, compStart, compEnd, isHidden)}
+      <Modal.Content>{console.log('fron props in create competition component', compName, compCat, compStart, compEnd)}
         <Form
           onSubmit={competitionsSubmit.bind(null, compName, compCat, compStart, compEnd, isHidden)}
         >
@@ -45,7 +47,6 @@ const CreateCompetition = ({
               label="Competition Name"
               placeholder="Competition Name"
             />
-
             <Form.Dropdown
               fluid
               type="text"
@@ -55,38 +56,34 @@ const CreateCompetition = ({
               placeholder="Category"
               onChange={handleCompCat}
             />
-            {/* <Form.Input
+            <Form.Input
               type="text"
-              onChange={handleCompStart}
+              value={compStart.format('MMMM DD YYYY')}
+              readOnly
               fluid
               label="Choose Start Date"
               placeholder="Start Date"
-            /> */}
-            <SingleDatePicker
-              label="Choose Start Date"
-              placeholder="Start Date"
-              date={compStart} // momentPropTypes.momentObj or null
-              onDateChange={date => onDateChange({ date })} // PropTypes.func.isRequired
-              focused={focused} // PropTypes.bool
-              onFocusChange={({ focused }) => onFocusChange({ focused })} // PropTypes.func.isRequired
             />
-            <SingleDatePicker
-              className="SingleDatePicker SingleDatePicker_2"
-              label="Choose End Date"
-              placeholder="End Date"
-              date={compEnd} // momentPropTypes.momentObj or null
-              onDateChange={date => onDateChange({ date })} // PropTypes.func.isRequired
-              focused={focused} // PropTypes.bool
-              onFocusChange={({ focused }) => onFocusChange({ focused })} // PropTypes.func.isRequired
+            <InputMoment
+              moment={compStart}
+              onChange={handleStartChange}
+              minStep={5}
+              onSave={handleCompStartSave}
             />
-            {/* <Form.Input
+            <Form.Input
               type="text"
-              onChange={handleCompEnd}
+              value={compEnd.format('MMMM DD YYYY')}
+              readOnly
               fluid
               label="Choose End Date"
               placeholder="End Date"
-            /> */}
-
+            />
+            <InputMoment
+              moment={compEnd}
+              onChange={handleEndChange}
+              minStep={5}
+              onSave={handleCompEndSave}
+            />
           </Form.Group>
           <Form.Button
             color="green"

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image, Grid } from 'semantic-ui-react'
 import axios from 'axios'
-import momentPropTypes from 'react-moment-proptypes'
+import moment from 'moment'
+import InputMoment from 'input-moment'
 
 import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 // Components
@@ -10,26 +11,28 @@ import SideMenu from './SideMenu.jsx'
 import UserFeed from './UserFeed.jsx'
 
 class UserHome extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       competitionData: [],
       goals: ['test1', 'test2'],
       isHidden: true,
       compName: '',
       compCat: '',
-      compStart: null,
-      compEnd: null,
-      focused: false
+      compStart: moment(),
+      compStartSaveClick: false,
+      compEnd: moment(),
+      compEndSaveClick: false,
+      m: moment()
     }
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
-    this.handleCompStart = this.handleCompStart.bind(this)
-    this.handleCompEnd = this.handleCompEnd.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
-    this.onDateChange = this.onDateChange.bind(this)
-    this.onFocusChange = this.onFocusChange.bind(this)
+    this.handleStartChange = this.handleStartChange.bind(this)
+    this.handleEndChange = this.handleEndChange.bind(this)
+    this.handleCompStartSave = this.handleCompStartSave.bind(this)
+    this.handleCompEndSave = this.handleCompEndSave.bind(this)
   }
 
   componentDidMount () {
@@ -37,119 +40,131 @@ class UserHome extends Component {
     this.fetchCompetitions()
   }
 
-  handleItemClick (name) {
-    this.setState({ activeItem: name })
+  handleItemClick(name) {
+    this.setState({ activeItem: name });
   }
 
-  competitionsHandleClick (isHidden) {
+  competitionsHandleClick(isHidden) {
     this.setState({
       isHidden: !isHidden
-    })
+    });
   }
 
-  handleCompName (compName) {
-    console.log(compName)
+  handleCompName(compName) {
+    console.log(compName);
     this.setState({
       compName: compName.target.value
-    })
+    });
   }
 
-  handleCompCat (e, compCat) {
+  handleCompCat(e, compCat) {
     this.setState({
       compCat: compCat.value
     })
   }
 
-  handleCompStart (compStarts) {
-    console.log('in the user home', compStarts.target.value)
+  handleStartChange (m) {
+    console.log('handle startchange in userhome m coming back', m)
     this.setState({
-      compStart: compStarts.target.value
+      m: m,
+      compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
     })
   }
 
-  handleCompEnd (compEnd) {
-    console.log(compEnd)
+  handleEndChange (m) {
+    console.log("end change in userhome", m)
     this.setState({
-      compEnd: compEnd.target.value
+      compEnd: m // date:  moment(selectedDate).format('DD/MM/YYYY')
     })
   }
 
-  onDateChange(selectedDate) {
+  handleCompStartSave () {
+    console.log("saving clicking changes components start date")
     this.setState({
-      compStart: selectedDate
+      compStartSaveClick: true
     })
   }
 
-  onFocusChange(focusedOn) {
+  handleCompEndSave () {
+    console.log("saving clicking changes components end date")
     this.setState({
-      focused: focusedOn
+      compEndSaveClick: true
     })
   }
 
   fetchGoals () {
     axios
-      .get('/api/goal')
-      .then((response) => {
+      .get("/api/goal")
+      .then(response => {
         this.setState({
           goals: response.data
         })
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(error => {
+        console.log(error);
       })
   }
 
-  fetchCompetitions () {
-    axios.get('/api/getcompetitions')
-      .then((response) => {
+  fetchCompetitions() {
+    axios
+      .get("/api/getcompetitions")
+      .then(response => {
         this.setState({
           competitionData: response.data
-        })
-        console.log('data from the db in user home', response.data)
+        });
+        console.log("data from the db in user home", response.data);
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  competitionsSubmit (compsName, compsCat, compsStart, compsEnd, hiddenUserPage) {
-    if (compsCat === 'Build Muscle') {
-      compsCat = 'Build_Muscle'
-    } else if (compsCat === 'Lose Weight') {
-      compsCat = 'Lose_Weight'
+  competitionsSubmit(
+    compsName,
+    compsCat,
+    compsStart,
+    compsEnd,
+    hiddenUserPage
+  ) {
+    if (compsCat === "Build Muscle") {
+      compsCat = "Build_Muscle";
+    } else if (compsCat === "Lose Weight") {
+      compsCat = "Lose_Weight";
     } else {
-      compsCat = compsCat
+      compsCat = compsCat;
     }
     console.log(
-      'what im submitting in the user component',
+      "what im submitting in the user component",
       compsName,
       compsCat,
       compsStart,
       compsEnd
-    )
+    );
     this.setState({
       isHidden: !hiddenUserPage
     })
-    axios.post('/api/competitions', {
-      comptetionName: compsName,
-      competitionCategory: compsCat,
-      competitionStart: compsStart,
-      competitionEnd: compsEnd,
-      competitionPic: ''
-    })
-      .then((response) => {
-        console.log('in userHome file data back from server', response.data)
+    axios
+      .post("/api/competitions", {
+        comptetionName: compsName,
+        competitionCategory: compsCat,
+        competitionStart: compsStart,
+        competitionEnd: compsEnd,
+        competitionPic: ""
+      })
+      .then(response => {
+        console.log("in userHome file data back from server", response.data);
         this.setState({
           competitionData: response.data
         })
       })
-      .catch((error) => {
-        console.log('this is the error after a post submit request', error)
+      .catch(error => {
+        console.log("this is the error after a post submit request", error);
       })
   }
 
-  render (props) {
-    const { activeItem } = this.state || {}
+  render(props) {
+    console.log("parent component whats in m", this.state.m);
+    const { activeItem } = this.state || {};
     if (this.state.isHidden) {
       return (
         <div>
@@ -216,70 +231,72 @@ class UserHome extends Component {
                   <div className="header">Get Huge</div>
                   <div className="meta">First Place</div>
                 </div>
-              </Card>
-              <Card>
-                <div className="ui tiny image">
-                  <Image
-                    src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg"
-                    title="Second Place"
-                    size="small"
-                  />
-                </div>
-                <div className="content">
-                  <div className="header">You Can Do It</div>
-                  <div className="meta">Second Place</div>
-                </div>
-              </Card>
-              <Card>
-                <div className="ui tiny image">
-                  <Image
-                    src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
-                    title="No Place"
-                    size="small"
-                  />
-                </div>
-                <div className="content">
-                  <div className="header">Lose Weight</div>
-                  <div className="meta">Didn't Place</div>
-                </div>
-              </Card>
-              <Card>
-                <div className="ui tiny image">
-                  <Image
-                    src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
-                    title="No Place"
-                    size="small"
-                  />
-                </div>
-                <div className="content">
-                  <div className="header">Beat the Lake Run</div>
-                  <div className="meta">Didn't Place</div>
-                </div>
-              </Card>
-            </Grid.Column>
-          </Grid>
-        </div>
-      )
-    }
-    return (
-      <CompetitionsFullPage
-        Data={this.state.competitionData}
-        isHidden={this.state.isHidden}
-        compName={this.state.compName}
-        compCat={this.state.compCat}
-        compStart={this.state.compStart}
-        compEnd={this.state.compEnd}
-        handleCompName={this.handleCompName}
-        handleCompCat={this.handleCompCat}
-        handleCompStart={this.handleCompStart}
-        handleCompEnd={this.handleCompEnd}
-        competitionsSubmit={this.competitionsSubmit}
-        onDateChange={this.onDateChange}
-        onFocusChange={this.onFocusChange}
-        focused={this.state.focused}
-      />
-    )
-  }
+							</Card>
+							<Card>
+								<div className="ui tiny image">
+									<Image
+										src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg"
+										title="Second Place"
+										size="small"
+									/>
+								</div>
+								<div className="content">
+									<div className="header">You Can Do It</div>
+									<div className="meta">Second Place</div>
+								</div>
+							</Card>
+							<Card>
+								<div className="ui tiny image">
+									<Image
+										src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
+										title="No Place"
+										size="small"
+									/>
+								</div>
+								<div className="content">
+									<div className="header">Lose Weight</div>
+									<div className="meta">Didn't Place</div>
+								</div>
+							</Card>
+							<Card>
+								<div className="ui tiny image">
+									<Image
+										src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
+										title="No Place"
+										size="small"
+									/>
+								</div>
+								<div className="content">
+									<div className="header">Beat the Lake Run</div>
+									<div className="meta">Didn't Place</div>
+								</div>
+							</Card>
+						</Grid.Column>
+					</Grid>
+				</div>
+			);
+		}
+		return (
+			<CompetitionsFullPage
+				Data={this.state.competitionData}
+				isHidden={this.state.isHidden}
+				compName={this.state.compName}
+				compCat={this.state.compCat}
+				compStart={this.state.compStart}
+				compEnd={this.state.compEnd}
+				handleCompName={this.handleCompName}
+				handleCompCat={this.handleCompCat}
+				handleCompStartSave={this.handleCompStartSave} // this 1
+				compStartSaveClick={this.state.compStartSaveClick} // this 1
+				handleCompEndSave={this.handleCompEndSave} // this 1
+        compEndSaveClick={this.state.compEndSaveClick} // this 1
+        handleStartChange={this.handleStartChange}
+        handleEndChange={this.handleEndChange}
+				competitionsSubmit={this.competitionsSubmit}
+				m={this.state.m}
+			/>
+		)
+	}
 }
 
 export default UserHome
