@@ -142,7 +142,6 @@ class Goal extends Component {
   }
 
   render () {
-    const { goals } = this.state
     return (
       <div>
 
@@ -153,7 +152,6 @@ class Goal extends Component {
         <br />
 
         <AddGoal
-          goals={goals}
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           handleDropDownChange={this.handleDropDownChange}
