@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const GoalTable = ({goals, handleRemoveGoal}) => (
+const GoalTable = ({ goals, handleRemoveGoal }) => (
   <div>
     <Table celled structured>
       <Table.Header>
@@ -24,7 +24,8 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
               <Link to={{
                 pathname: `/goal/${goal._id}`,
                 state: { goal }
-              }}>
+              }}
+              >
                 {goal.goals_name}
               </Link>
             </Table.Cell>
@@ -32,7 +33,8 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
               <Link to={{
                 pathname: `/goal/${goal._id}`,
                 state: { goal }
-              }}>
+              }}
+              >
                 {goal.target}
               </Link>
             </Table.Cell>
@@ -40,7 +42,8 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
               <Link to={{
                 pathname: `/goal/${goal._id}`,
                 state: { goal }
-              }}>
+              }}
+              >
                 {goal.category}
               </Link>
             </Table.Cell>
@@ -48,7 +51,8 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
               <Link to={{
                 pathname: `/goal/${goal._id}`,
                 state: { goal }
-              }}>
+              }}
+              >
                 {goal.start_date ? goal.start_date.slice(0, 10) : ''}
               </Link>
             </Table.Cell>
@@ -56,7 +60,8 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
               <Link to={{
                 pathname: `/goal/${goal._id}`,
                 state: { goal }
-              }}>
+              }}
+              >
                 {goal.end_date ? goal.end_date.slice(0, 10) : ''}
               </Link>
             </Table.Cell>
@@ -64,7 +69,8 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
               <Link to={{
                 pathname: `/goal/${goal._id}`,
                 state: { goal }
-              }}>
+              }}
+              >
                 {goal.notes}
               </Link>
             </Table.Cell>
