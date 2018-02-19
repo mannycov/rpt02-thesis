@@ -19,7 +19,8 @@ class CheckIn extends Component {
       weight: '',
       reps: '',
       sets: '',
-      time: '',
+      min: '',
+      secs: '',
       size: '',
       open: false
     }
@@ -71,7 +72,8 @@ class CheckIn extends Component {
       weight,
       reps,
       sets,
-      time
+      min,
+      secs
     } = this.state
 
     axios
@@ -80,7 +82,8 @@ class CheckIn extends Component {
         weight,
         reps,
         sets,
-        time
+        min,
+        secs
       })
       .then((response) => {
         this.fetchCheckIns()
@@ -90,6 +93,14 @@ class CheckIn extends Component {
       })
 
     this.close()
+
+    this.setState({
+      weight: '',
+      reps: '',
+      sets: '',
+      min: '',
+      secs: ''
+    })
   }
 
   fetchCheckIns () {
@@ -170,7 +181,7 @@ class CheckIn extends Component {
           {checkins.map(checkin => (
             <Table.Row>
               <Table.Cell>{today}</Table.Cell>
-              <Table.Cell>{checkin.time}</Table.Cell>
+              <Table.Cell>{`${checkin.min}:${checkin.secs}`}</Table.Cell>
               <Table.Cell>{this.renderIcon()}</Table.Cell>
             </Table.Row>
           ))}
@@ -182,7 +193,7 @@ class CheckIn extends Component {
           {checkins.map(checkin => (
             <Table.Row>
               <Table.Cell>{today}</Table.Cell>
-              <Table.Cell>{checkin.weight}.</Table.Cell>
+              <Table.Cell>{checkin.weight} lbs.</Table.Cell>
               <Table.Cell>{checkin.reps}</Table.Cell>
               <Table.Cell>{checkin.sets}</Table.Cell>
               <Table.Cell>{this.renderIcon()}</Table.Cell>
@@ -201,7 +212,8 @@ class CheckIn extends Component {
       weight,
       reps,
       sets,
-      time,
+      min,
+      secs,
       size,
       open
     } = this.state
@@ -226,7 +238,8 @@ class CheckIn extends Component {
           weight={weight}
           reps={reps}
           sets={sets}
-          time={time}
+          min={min}
+          secs={secs}
           size={size}
           open={open}
           handleChange={this.handleChange}

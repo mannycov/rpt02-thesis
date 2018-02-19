@@ -58,7 +58,8 @@ const checkInSchema = new Schema({
   weight: Number,
   reps: Number,
   sets: Number,
-  time: Number,
+  min: Number,
+  secs: Number,
   target: Number,
   check_in: Boolean
 })
