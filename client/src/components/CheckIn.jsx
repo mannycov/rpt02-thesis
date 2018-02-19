@@ -15,6 +15,7 @@ class CheckIn extends Component {
       today: new Date().toDateString(),
       goal: this.props.location.state.goal,
       goalId: this.props.match.params.id,
+      checkins: [],
       weight: '',
       reps: '',
       sets: '',
@@ -27,9 +28,14 @@ class CheckIn extends Component {
     this.close = this.close.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.fetchCheckIns = this.fetchCheckIns.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
     this.renderHeaderRow = this.renderHeaderRow.bind(this)
     this.renderBodyRow = this.renderBodyRow.bind(this)
+  }
+
+  componentDidMount () {
+    this.fetchCheckIns()
   }
 
   toggle () {
@@ -84,6 +90,20 @@ class CheckIn extends Component {
       })
 
     this.close()
+  }
+
+  fetchCheckIns () {
+    const { goalId } = this.state
+    axios
+      .get(`/api/checkin/${goalId}`)
+      .then((response) => {
+        this.setState({
+          checkins: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   renderIcon () {
