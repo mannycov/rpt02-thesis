@@ -150,11 +150,7 @@ class CheckIn extends Component {
     const {
       today,
       goal,
-      checkins,
-      weight,
-      reps,
-      sets,
-      time
+      checkins
     } = this.state
 
     if (goal.category === 'Habit') {
