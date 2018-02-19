@@ -83,7 +83,7 @@ class CheckIn extends Component {
         time
       })
       .then((response) => {
-        console.log(response)
+        this.fetchCheckIns()
       })
       .catch((error) => {
         console.log(error)
@@ -150,6 +150,7 @@ class CheckIn extends Component {
     const {
       today,
       goal,
+      checkins,
       weight,
       reps,
       sets,
@@ -158,28 +159,40 @@ class CheckIn extends Component {
 
     if (goal.category === 'Habit') {
       return (
-        <Table.Row>
-          <Table.Cell>{today}</Table.Cell>
-          <Table.Cell>{this.renderIcon()}</Table.Cell>
-        </Table.Row>
+        <Table.Body>
+          {checkins.map(checkin => (
+            <Table.Row>
+              <Table.Cell>{today}</Table.Cell>
+              <Table.Cell>{this.renderIcon()}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       )
     } else if (goal.category === 'Cardio') {
       return (
-        <Table.Row>
-          <Table.Cell>{today}</Table.Cell>
-          <Table.Cell>{time}</Table.Cell>
-          <Table.Cell>{this.renderIcon()}</Table.Cell>
-        </Table.Row>
+        <Table.Body>
+          {checkins.map(checkin => (
+            <Table.Row>
+              <Table.Cell>{today}</Table.Cell>
+              <Table.Cell>{checkin.time}</Table.Cell>
+              <Table.Cell>{this.renderIcon()}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       )
     } else if (goal.category === 'Strength') {
       return (
-        <Table.Row>
-          <Table.Cell>{today}</Table.Cell>
-          <Table.Cell>{weight}.</Table.Cell>
-          <Table.Cell>{reps}</Table.Cell>
-          <Table.Cell>{sets}</Table.Cell>
-          <Table.Cell>{this.renderIcon()}</Table.Cell>
-        </Table.Row>
+        <Table.Body>
+          {checkins.map(checkin => (
+            <Table.Row>
+              <Table.Cell>{today}</Table.Cell>
+              <Table.Cell>{checkin.weight}.</Table.Cell>
+              <Table.Cell>{checkin.reps}</Table.Cell>
+              <Table.Cell>{checkin.sets}</Table.Cell>
+              <Table.Cell>{this.renderIcon()}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
       )
     }
   }
@@ -238,9 +251,7 @@ class CheckIn extends Component {
           <Table.Header>
             {this.renderHeaderRow()}
           </Table.Header>
-          <Table.Body>
-            {this.renderBodyRow()}
-          </Table.Body>
+          {this.renderBodyRow()}
         </Table>
 
       </div>
