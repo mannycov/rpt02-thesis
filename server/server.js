@@ -47,6 +47,16 @@ app.get('/api/getcompetitions', (req, res) => {
   })
 })
 
+app.get('/api/checkin/:id', (req, res) => {
+  CheckInModel.find({ goal: req.params.id }, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
 app.post('/api/competitions', (req, res) => {
   const competitionBody = req.body
   let matchingCategory = ''
