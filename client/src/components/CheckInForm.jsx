@@ -10,7 +10,6 @@ class CheckInForm extends Component {
       weight: this.props.weight,
       reps: this.props.reps,
       sets: this.props.sets,
-      time: this.props.time,
       handleChange: this.props.handleChange
     }
     this.renderFormInputs = this.renderFormInputs.bind(this)
@@ -22,7 +21,6 @@ class CheckInForm extends Component {
       weight,
       reps,
       sets,
-      time,
       handleChange
     } = this.state
     if (goal.category === 'Strength') {
@@ -63,11 +61,20 @@ class CheckInForm extends Component {
           <Form.Input
             width="3"
             fluid
-            label="Time"
-            name="time"
-            value={time}
+            label="Minutes"
+            name="min"
+            value={this.props.min}
             onChange={handleChange}
-            placeholder="0:00"
+            placeholder="00"
+          />
+          <Form.Input
+            width="3"
+            fluid
+            label="Seconds"
+            name="secs"
+            value={this.props.secs}
+            onChange={handleChange}
+            placeholder="00"
           />
         </Form.Group>
       )

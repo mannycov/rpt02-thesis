@@ -21,6 +21,8 @@ const AddCheckIn = props => (
           close={props.close}
           handleChange={props.handleChange}
           handleSubmit={props.handleSubmit}
+          min={props.min}
+          secs={props.secs}
         />
       </Modal.Content>
     </Modal>
