@@ -143,7 +143,13 @@ app.delete('/api/goal/:id', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      res.sendStatus(200)
+      CheckInModel.remove({ goal: req.params.id }, () => {
+        if (err) {
+          console.log(err)
+        } else {
+          res.sendStatus(200)
+        }
+      })
     }
   })
 })
