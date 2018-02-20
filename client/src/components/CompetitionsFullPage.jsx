@@ -16,18 +16,17 @@ const CompetitionsFullPage = ({
   handleCompName,
   handleCompCat,
   handleCompStartSave,
-  compStartSaveClick,
+  compStartClick,
   handleCompEndSave,
-  compEndSaveClick,
+  compEndClick,
   handleStartChange,
   handleEndChange,
-  competitionsSubmit,
-  m
+  competitionsSubmit
 }) => {
   return (
     <div>
       <MenuBar />
-      <Header as="h2">{console.log('checking all props in comp full page', compName, compCat, compStart, compEnd)}
+      <Header as="h2">{console.log('ishidden value in comps fullpage', isHidden)}
         <Image
           circular
           src="https://react.semantic-ui.com/assets/images/avatar/large/patrick.png"
@@ -45,13 +44,12 @@ const CompetitionsFullPage = ({
             handleCompName={handleCompName}
             handleCompCat={handleCompCat}
             handleCompStartSave={handleCompStartSave}
-            compStartSaveClick={compStartSaveClick}
+            compStartClick={compStartClick}
             handleCompEndSave={handleCompEndSave}
-            compEndSaveClick={compEndSaveClick}
+            compEndClick={compEndClick}
             handleStartChange={handleStartChange}
             handleEndChange={handleEndChange}
             competitionsSubmit={competitionsSubmit}
-            m={m}
           />
           <Statistic>
             <Statistic.Value>

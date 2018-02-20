@@ -6,7 +6,6 @@ const CompetitionsPopUp =
 ({
   goals, competitionsHandleClick, isHidden, Data
 }) => {
-  console.log('props in date within popups', Data)
   return (
     <Popup
       trigger={

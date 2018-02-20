@@ -10,7 +10,6 @@ class SideMenu extends Component {
   }
   render (props) {
     console.log("is sidemenu component?", this.props.isHidden)
-    console.log("checking data passed into sidemenu", this.props.Data)
     const { activeItem } = this.state || {}
     return (
       <Menu style={{ width: 290 }} vertical>
