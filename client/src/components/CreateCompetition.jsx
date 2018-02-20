@@ -1,6 +1,6 @@
 import React from 'react'
 import {Redirect} from 'react-router-dom'
-import { Header, Modal, Statistic, Form } from 'semantic-ui-react'
+import { Header, Modal, Statistic, Form, Popup } from 'semantic-ui-react'
 import DefaultCompeteCategories from '../../DefaultCompeteCategories.js'
 import moment from 'moment'
 import InputMoment from 'input-moment'
@@ -14,16 +14,16 @@ const CreateCompetition = ({
   handleCompName,
   handleCompCat,
   handleCompStartSave,
-  compStartSaveClick,
+  compStartClick,
   handleCompEndSave,
-  compEndSaveClick,
+  compEndClick,
   handleStartChange,
   handleEndChange,
-  competitionsSubmit,
-  m
+  competitionsSubmit
 }) => {
   return (
     <Modal
+      dimmer={false}
       trigger={
         <Statistic>
           <Statistic.Value text>
@@ -35,7 +35,7 @@ const CreateCompetition = ({
       closeIcon
     >
       <Header className="plus icon" content="Create a Competition" />
-      <Modal.Content>{console.log('fron props in create competition component', compName, compCat, compStart, compEnd)}
+      <Modal.Content>{console.log('fron props in create competition component', compName, compCat, compStart, compEnd, compStartClick, compEndClick, 'ishidden', isHidden)}
         <Form
           onSubmit={competitionsSubmit.bind(null, compName, compCat, compStart, compEnd, isHidden)}
         >
@@ -56,33 +56,47 @@ const CreateCompetition = ({
               placeholder="Category"
               onChange={handleCompCat}
             />
-            <Form.Input
-              type="text"
-              value={compStart.format('MMMM DD YYYY')}
-              readOnly
-              fluid
-              label="Choose Start Date"
-              placeholder="Start Date"
+            <Popup
+              on="click"
+              trigger={
+                <Form.Input
+                  type="text"
+                  value={compStart.format('MMMM DD YYYY')}
+                  readOnly
+                  fluid
+                  label="Choose Start Date"
+                  placeholder="Start Date"
+                />
+              }
+              content={
+                <InputMoment
+                  moment={compStart}
+                  onChange={handleStartChange}
+                  minStep={5}
+                />
+              }
+              position="bottom center"
             />
-            <InputMoment
-              moment={compStart}
-              onChange={handleStartChange}
-              minStep={5}
-              onSave={handleCompStartSave}
-            />
-            <Form.Input
-              type="text"
-              value={compEnd.format('MMMM DD YYYY')}
-              readOnly
-              fluid
-              label="Choose End Date"
-              placeholder="End Date"
-            />
-            <InputMoment
-              moment={compEnd}
-              onChange={handleEndChange}
-              minStep={5}
-              onSave={handleCompEndSave}
+            <Popup
+              on="click"
+              trigger={
+                <Form.Input
+                  type="text"
+                  value={compEnd.format('MMMM DD YYYY')}
+                  readOnly
+                  fluid
+                  label="Choose End Date"
+                  placeholder="End Date"
+                />
+              }
+              content={
+                <InputMoment
+                  moment={compEnd}
+                  onChange={handleEndChange}
+                  minStep={5}
+                />
+              }
+              position="top left"
             />
           </Form.Group>
           <Form.Button
@@ -91,9 +105,6 @@ const CreateCompetition = ({
             type="submit"
           />
         </Form>
-        {isHidden && (
-          <Redirect to={'/competitionsfullpage'}/>
-        )}
       </Modal.Content>
     </Modal>
   )

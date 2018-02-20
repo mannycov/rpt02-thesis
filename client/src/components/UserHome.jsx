@@ -12,7 +12,7 @@ import UserFeed from './UserFeed.jsx'
 
 class UserHome extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       competitionData: [],
       goals: ['test1', 'test2'],
@@ -20,10 +20,9 @@ class UserHome extends Component {
       compName: '',
       compCat: '',
       compStart: moment(),
-      compStartSaveClick: false,
+      compStartClick: false,
       compEnd: moment(),
-      compEndSaveClick: false,
-      m: moment()
+      compEndClick: true
     }
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
@@ -34,27 +33,26 @@ class UserHome extends Component {
     this.handleCompStartSave = this.handleCompStartSave.bind(this)
     this.handleCompEndSave = this.handleCompEndSave.bind(this)
   }
-
   componentDidMount () {
     this.fetchGoals()
     this.fetchCompetitions()
   }
 
   handleItemClick(name) {
-    this.setState({ activeItem: name });
+    this.setState({ activeItem: name })
   }
 
   competitionsHandleClick(isHidden) {
     this.setState({
       isHidden: !isHidden
-    });
+    })
   }
 
   handleCompName(compName) {
     console.log(compName);
     this.setState({
       compName: compName.target.value
-    });
+    })
   }
 
   handleCompCat(e, compCat) {
@@ -66,29 +64,28 @@ class UserHome extends Component {
   handleStartChange (m) {
     console.log('handle startchange in userhome m coming back', m)
     this.setState({
-      m: m,
       compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
     })
   }
 
   handleEndChange (m) {
-    console.log("end change in userhome", m)
+    console.log('end change in userhome', m)
     this.setState({
-      compEnd: m // date:  moment(selectedDate).format('DD/MM/YYYY')
+      compEnd: m
     })
   }
 
   handleCompStartSave () {
-    console.log("saving clicking changes components start date")
+    console.log('saving clicking changes components start date')
     this.setState({
       compStartSaveClick: true
     })
   }
 
-  handleCompEndSave () {
-    console.log("saving clicking changes components end date")
+  handleCompEndSave (falsey) {
+    console.log('saving clicking changes components end date')
     this.setState({
-      compEndSaveClick: true
+      compEndClick: !falsey
     })
   }
 
@@ -115,8 +112,8 @@ class UserHome extends Component {
         console.log("data from the db in user home", response.data);
       })
       .catch(error => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
   competitionsSubmit(
@@ -126,22 +123,27 @@ class UserHome extends Component {
     compsEnd,
     hiddenUserPage
   ) {
-    if (compsCat === "Build Muscle") {
-      compsCat = "Build_Muscle";
-    } else if (compsCat === "Lose Weight") {
-      compsCat = "Lose_Weight";
+    if (compsCat === 'Build Muscle') {
+      compsCat = 'Build_Muscle';
+    } else if (compsCat === 'Lose Weight') {
+      compsCat = 'Lose_Weight'
     } else {
-      compsCat = compsCat;
+      compsCat = compsCat
     }
     console.log(
       "what im submitting in the user component",
       compsName,
       compsCat,
       compsStart,
-      compsEnd
-    );
+      compsEnd,
+      hiddenUserPage
+    )
     this.setState({
-      isHidden: !hiddenUserPage
+      isHidden: !hiddenUserPage,
+      compStart: moment(),
+      compEnd: moment(),
+      compStartClick: false,
+      compEndClick: false
     })
     axios
       .post("/api/competitions", {
@@ -163,8 +165,8 @@ class UserHome extends Component {
   }
 
   render(props) {
-    console.log("parent component whats in m", this.state.m);
-    const { activeItem } = this.state || {};
+    console.log('ishidden value on start of app', this.state.isHidden)
+    const { activeItem } = this.state || {}
     if (this.state.isHidden) {
       return (
         <div>
@@ -287,13 +289,12 @@ class UserHome extends Component {
 				handleCompName={this.handleCompName}
 				handleCompCat={this.handleCompCat}
 				handleCompStartSave={this.handleCompStartSave} // this 1
-				compStartSaveClick={this.state.compStartSaveClick} // this 1
+				compStartClick={this.state.compStartClick} // this 1
 				handleCompEndSave={this.handleCompEndSave} // this 1
-        compEndSaveClick={this.state.compEndSaveClick} // this 1
+        compEndClick={this.state.compEndClick} // this 1
         handleStartChange={this.handleStartChange}
         handleEndChange={this.handleEndChange}
 				competitionsSubmit={this.competitionsSubmit}
-				m={this.state.m}
 			/>
 		)
 	}
