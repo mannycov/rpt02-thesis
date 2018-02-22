@@ -10,6 +10,9 @@ import { createStore, applyMiddleware } from 'redux'
 
 import Root from './Root.jsx'
 
+
+
+
 // const history = createBrowserHistory()
 // const store = createStore(reducers, applyMiddleware(routerMiddleware(history)))
 
