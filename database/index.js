@@ -55,10 +55,12 @@ export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 const checkInSchema = new Schema({
   checkin_id: Number,
   goal: { type: Schema.Types.ObjectId, ref: 'GoalsModel' },
+  date: String,
   weight: Number,
   reps: Number,
   sets: Number,
-  time: Number,
+  min: Number,
+  secs: Number,
   target: Number,
   check_in: Boolean
 })
