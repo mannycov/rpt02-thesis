@@ -83,5 +83,4 @@ const GoalTable = ({goals, handleRemoveGoal}) => (
   </div>
 )
 
-
 export default GoalTable
