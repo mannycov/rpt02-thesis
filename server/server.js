@@ -11,6 +11,7 @@ import { StaticRouter } from 'react-router-dom'
 import Root from '../client/Root.jsx'
 import {
   GoalsModel,
+  CheckInModel,
   CompetitionsModel,
   CategoriesModel
 } from '../database/index.js'
@@ -123,6 +124,16 @@ app.get('/api/getcompetitions', (req, res) => {
   })
 })
 
+app.get('/api/checkin/:id', (req, res) => {
+  CheckInModel.find({ goal: req.params.id }, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
 app.post('/api/competitions', (req, res) => {
   const competitionBody = req.body
   let matchingCategory = ''
@@ -190,8 +201,96 @@ app.post('/api/goal', (req, res) => {
   })
 })
 
+app.post('/api/checkin', (req, res) => {
+  const goalId = req.body.goalId
+  const checkInDate = req.body.date
+  const checkInWeight = req.body.weight
+  const checkInReps = req.body.reps
+  const checkInSets = req.body.sets
+  const checkInMin = req.body.min
+  const checkInSecs = req.body.secs
+
+  const checkIn = new CheckInModel({
+    goal: goalId,
+    date: checkInDate,
+    weight: checkInWeight,
+    reps: checkInReps,
+    sets: checkInSets,
+    min: checkInMin,
+    secs: checkInSecs
+  })
+
+  checkIn.save((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(201)
+    }
+  })
+})
+
+app.post('/api/checkin', (req, res) => {
+  const goalId = req.body.goalId
+  const checkInDate = req.body.date
+  const checkInWeight = req.body.weight
+  const checkInReps = req.body.reps
+  const checkInSets = req.body.sets
+  const checkInMin = req.body.min
+  const checkInSecs = req.body.secs
+
+  const checkIn = new CheckInModel({
+    goal: goalId,
+    date: checkInDate,
+    weight: checkInWeight,
+    reps: checkInReps,
+    sets: checkInSets,
+    min: checkInMin,
+    secs: checkInSecs
+  })
+
+  checkIn.save((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(201)
+    }
+  })
+})
+
 app.delete('/api/goal/:id', (req, res) => {
   GoalsModel.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      CheckInModel.remove({ goal: req.params.id }, () => {
+        if (err) {
+          console.log(err)
+        } else {
+          res.sendStatus(200)
+        }
+      })
+    }
+  })
+})
+
+app.delete('/api/checkin/:id', (req, res) => {
+  CheckInModel.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      CheckInModel.remove({ goal: req.params.id }, () => {
+        if (err) {
+          console.log(err)
+        } else {
+          res.sendStatus(200)
+        }
+      })
+    }
+  })
+})
+
+app.delete('/api/checkin/:id', (req, res) => {
+  CheckInModel.remove({ _id: req.params.id }, (err) => {
     if (err) {
       console.log(err)
     } else {

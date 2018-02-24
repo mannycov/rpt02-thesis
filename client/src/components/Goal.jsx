@@ -30,7 +30,6 @@ class Goal extends Component {
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this)
     this.handleRemoveGoal = this.handleRemoveGoal.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
-    this.handleTableCellClick = this.handleTableCellClick.bind(this)
     this.close = this.close.bind(this)
     this.show = this.show.bind(this)
   }
@@ -67,10 +66,6 @@ class Goal extends Component {
     this.setState({
       notes: value
     })
-  }
-
-  handleTableCellClick () {
-    console.log('table cell clicked')
   }
 
   handleSubmit () {
@@ -147,7 +142,6 @@ class Goal extends Component {
   }
 
   render () {
-    const { goals } = this.state
     return (
       <div>
 
@@ -158,7 +152,6 @@ class Goal extends Component {
         <br />
 
         <AddGoal
-          goals={goals}
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           handleDropDownChange={this.handleDropDownChange}
