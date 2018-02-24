@@ -3,6 +3,12 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    dns: 'empty',
+    tls: 'empty'
+  },
   devtool: 'inline-source-map',
   entry: [
     'react-hot-loader/patch',
@@ -26,6 +32,7 @@ module.exports = {
           path.join(__dirname, 'client/src')
         ]
       },
+      { test: /\.handlebars$/, loader: "handlebars-loader" },
       {
         test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$/,
         use: 'file-loader?name=[name].[ext]?[hash]'
