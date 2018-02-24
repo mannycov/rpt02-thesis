@@ -244,11 +244,13 @@ class CheckIn extends Component {
       min,
       secs,
       size,
-      open
+      open,
+      checkins
     } = this.state
     return (
-      <div>
 
+      <div>
+ {console.log('sate of the goals', this.props.location.state.goal)}
         <MenuBar />
 
         <h1 style={{ textAlign: 'center' }}>{today}</h1>
@@ -265,13 +267,11 @@ class CheckIn extends Component {
               data: { stroke: '#c43a31' },
               parent: { border: '1px solid #ccc' }
             }}
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 5 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 }
-            ]}
+            data={
+              checkins
+            }
+            x='date'
+            y='min'
           />
         </VictoryChart>
 
