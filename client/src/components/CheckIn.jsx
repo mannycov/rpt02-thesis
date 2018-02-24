@@ -35,6 +35,7 @@ class CheckIn extends Component {
     this.fetchCheckIns = this.fetchCheckIns.bind(this)
     this.handleRemoveCheckIn = this.handleRemoveCheckIn.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
+    this.renderVictoryChart = this.renderVictoryChart.bind(this)
     this.renderHeaderRow = this.renderHeaderRow.bind(this)
     this.renderTableRow = this.renderTableRow.bind(this)
   }
@@ -148,6 +149,44 @@ class CheckIn extends Component {
     }
   }
 
+  renderVictoryChart () {
+    const { goal, checkins } = this.state
+    
+    if (goal.category === 'Cardio') {
+      return (
+        <VictoryChart
+          theme={VictoryTheme.material}
+        >
+          <VictoryLine
+            style={{
+              data: { stroke: '#c43a31' },
+              parent: { border: '1px solid #ccc' }
+            }}
+            data={checkins}
+            x="date"
+            y="min"
+          />
+        </VictoryChart>
+      )
+    } else if (goal.category === 'Strength') {
+      return (
+        <VictoryChart
+          theme={VictoryTheme.material}
+        >
+          <VictoryLine
+            style={{
+              data: { stroke: '#c43a31' },
+              parent: { border: '1px solid #ccc' }
+            }}
+            data={checkins}
+            x="date"
+            y="weight"
+          />
+        </VictoryChart>
+      )
+    }
+  }
+
   renderHeaderRow() {
     const { goal } = this.state
 
@@ -237,6 +276,7 @@ class CheckIn extends Component {
       today,
       goal,
       goalId,
+      checkins,
       date,
       weight,
       reps,
@@ -244,8 +284,7 @@ class CheckIn extends Component {
       min,
       secs,
       size,
-      open,
-      checkins
+      open
     } = this.state
     return (
 
@@ -259,21 +298,7 @@ class CheckIn extends Component {
 
         <h2 style={{ textAlign: 'center' }}>Target: {goal.target}</h2>
 
-        <VictoryChart
-          theme={VictoryTheme.material}
-        >
-          <VictoryLine
-            style={{
-              data: { stroke: '#c43a31' },
-              parent: { border: '1px solid #ccc' }
-            }}
-            data={
-              checkins
-            }
-            x='date'
-            y='min'
-          />
-        </VictoryChart>
+        {this.renderVictoryChart()}
 
         <br /><br />
 
@@ -312,6 +337,10 @@ class CheckIn extends Component {
       </div>
     )
   }
+}
+
+CheckIn.contextTypes = {
+  router: () => React.PropTypes.func.isRequired
 }
 
 export default CheckIn
