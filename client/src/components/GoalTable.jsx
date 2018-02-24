@@ -16,7 +16,7 @@ const GoalTable = ({ goals, handleRemoveGoal }) => (
           <Table.HeaderCell>Remove</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-
+  
       <Table.Body>
         {goals.map(goal => (
           <Table.Row key={goal._id}>
