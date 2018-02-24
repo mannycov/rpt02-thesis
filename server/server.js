@@ -152,8 +152,52 @@ app.post('/api/checkin', (req, res) => {
   })
 })
 
+app.post('/api/checkin', (req, res) => {
+  const goalId = req.body.goalId
+  const checkInDate = req.body.date
+  const checkInWeight = req.body.weight
+  const checkInReps = req.body.reps
+  const checkInSets = req.body.sets
+  const checkInMin = req.body.min
+  const checkInSecs = req.body.secs
+
+  const checkIn = new CheckInModel({
+    goal: goalId,
+    date: checkInDate,
+    weight: checkInWeight,
+    reps: checkInReps,
+    sets: checkInSets,
+    min: checkInMin,
+    secs: checkInSecs
+  })
+
+  checkIn.save((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(201)
+    }
+  })
+})
+
 app.delete('/api/goal/:id', (req, res) => {
   GoalsModel.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      CheckInModel.remove({ goal: req.params.id }, () => {
+        if (err) {
+          console.log(err)
+        } else {
+          res.sendStatus(200)
+        }
+      })
+    }
+  })
+})
+
+app.delete('/api/checkin/:id', (req, res) => {
+  CheckInModel.remove({ _id: req.params.id }, (err) => {
     if (err) {
       console.log(err)
     } else {
@@ -192,8 +236,10 @@ app.get('*', (req, res) => {
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
       </head>
       <body>
+        <script src="//unpkg.com/moment@2.10.6/min/moment-with-locales.min.js"></script>
         <div id="root">${application}</div>
         <script src="http://localhost:3001/client.js"></script>
       </body>

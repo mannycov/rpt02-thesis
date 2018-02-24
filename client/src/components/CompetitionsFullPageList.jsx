@@ -1,6 +1,7 @@
 import React from 'react'
 import { Header, Image, Grid, Progress, Divider } from 'semantic-ui-react'
 import CompetitionsFriendsRank from './CompetitionsFriendsRank.jsx'
+import moment from 'moment'
 
 const CompetitionsFullPageList = ({ CompetitionsFp }) => {
   console.log('competitions fullpage list', CompetitionsFp)
@@ -21,9 +22,9 @@ const CompetitionsFullPageList = ({ CompetitionsFp }) => {
         </Grid.Column>
         <Grid.Column>
           <Header size="large">Started On</Header>
-          {CompetitionsFp.competitions_start_date}
+          {moment(CompetitionsFp.competitions_start_date).format('MMMM DD YYYY')}
           <Header size="large">Ends On</Header>
-          {CompetitionsFp.competitions_end_date}
+          {moment(CompetitionsFp.competitions_end_date).format('MMMM DD YYYY')}
           <Progress percent={CompetitionsFp.progress} progress />
         </Grid.Column>
       </Grid.Row>
