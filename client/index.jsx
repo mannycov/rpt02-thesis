@@ -6,8 +6,8 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import './src/override.css'
-import './src/override.less'
+// import './src/override.css'
+// import './src/override.less'
 
 // import reducers from './reducers'
 
