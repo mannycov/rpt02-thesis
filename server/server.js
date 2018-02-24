@@ -126,6 +126,7 @@ app.post('/api/goal', (req, res) => {
 
 app.post('/api/checkin', (req, res) => {
   const goalId = req.body.goalId
+  const checkInDate = req.body.date
   const checkInWeight = req.body.weight
   const checkInReps = req.body.reps
   const checkInSets = req.body.sets
@@ -134,6 +135,7 @@ app.post('/api/checkin', (req, res) => {
 
   const checkIn = new CheckInModel({
     goal: goalId,
+    date: checkInDate,
     weight: checkInWeight,
     reps: checkInReps,
     sets: checkInSets,
@@ -206,6 +208,16 @@ app.delete('/api/checkin/:id', (req, res) => {
           res.sendStatus(200)
         }
       })
+    }
+  })
+})
+
+app.delete('/api/checkin/:id', (req, res) => {
+  CheckInModel.remove({ _id: req.params.id }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(200)
     }
   })
 })
