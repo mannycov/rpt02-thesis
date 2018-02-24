@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Buttonimport, Header, Modal, Statistic, Form, Popup } from 'semantic-ui-react'
 import * as V from 'victory'
+import moment from 'moment'
+import InputMoment from 'input-moment'
 
 class CheckInForm extends Component {
   constructor (props) {
