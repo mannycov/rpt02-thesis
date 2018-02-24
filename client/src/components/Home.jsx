@@ -19,9 +19,9 @@ const Home = () => (
             <div className="row">
               <div className="ten center aligned wide column">
                 <h1 className="ui header" id="tagline">
-                  <span>To Be the Best, You Have to Beat the Best</span>
-                  <div className="sub header small white">
-                  <h2>"Start competing today!"</h2>
+                  <h1>To Be the Best, You Have to Beat the Best</h1>
+                  <div className="sub header small">
+                  Start competing today!
 
                   </div>
 
