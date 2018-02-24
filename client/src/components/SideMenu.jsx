@@ -2,18 +2,19 @@ import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import CompetitionsPopUp from './CompetitionsPopUp.jsx'
+import CompetitionsFullPage  from './CompetitionsPopUp.jsx'
 
 class SideMenu extends Component {
   handleItemClick (name) {
-    this.setState({ activeItem: name })
+    this.setState({ activeItem: name });
   }
-
-  render () {
+  render (props) {
+    console.log("is sidemenu component?", this.props.isHidden)
     const { activeItem } = this.state || {}
     return (
       <Menu style={{ width: 290 }} vertical>
         <Menu.Item>
-          <Menu.Header>Goals</Menu.Header>
+          <Menu.Header as={Link} to="/goals">Goals</Menu.Header>
           <Menu.Menu>
             {this.props.goals.map(goal => (
               <Menu.Item
@@ -27,7 +28,12 @@ class SideMenu extends Component {
           </Menu.Menu>
         </Menu.Item>
         <Menu.Item>
-          <CompetitionsPopUp />
+          <CompetitionsPopUp
+            goals={this.props.goals}
+            competitionsHandleClick={this.props.competitionsHandleClick}
+            isHidden={this.props.isHidden}
+            Data={this.props.Data}
+          />
         </Menu.Item>
         <Link to="/trophies">
           <Menu.Item>
@@ -35,7 +41,7 @@ class SideMenu extends Component {
           </Menu.Item>
         </Link>
       </Menu>
-    )
+    );
   }
 }
 

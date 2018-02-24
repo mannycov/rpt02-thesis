@@ -11,6 +11,7 @@ import SignupForm from './src/components/SignupForm.jsx'
 // import SignupForm from '../views/register.handlebars';
 import HomePageHeader from "./src/components/HomePageHeader.jsx"
 import NotFound from './src/components/NotFound.jsx'
+import Goal from './src/components/Goal.jsx'
 
 const Root = () => (
 	<Switch>
@@ -23,8 +24,10 @@ const Root = () => (
 		<Route path="/trophies" component={Trophies} />
 		<Route path="/signupform" component={SignupForm} />
 		<Route path="/homepageheader" component={HomePageHeader} />
+    <Route path="/goals" component={Goal} />
 		<Route component={NotFound} />
 	</Switch>
 );
+
 
 export default Root

@@ -1,32 +1,36 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Popup, Menu, Grid } from 'semantic-ui-react'
-import Data from '../../FakeData'
 import CompetitionsList from './CompetitionsList.jsx'
 
-const CompetitionsPopUp = () => {
+const CompetitionsPopUp =
+({
+  goals, competitionsHandleClick, isHidden, Data
+}) => {
   return (
-    <Link to="/competitionsfullpage">
-      <Popup
-        trigger={
-          <Menu.Header>Competitions
-          </Menu.Header>}
-        flowing hoverable
+    <Popup
+      trigger={
+        <Menu.Header onClick={() => competitionsHandleClick(isHidden)}>
+          Competitions
+        </Menu.Header>
+      }
+      flowing
+      hoverable
+    >
+      <Grid
+        onClick={() => competitionsHandleClick(isHidden)}
+        centered
+        divided
+        columns={Data.length}
       >
-        <Link to="/competitionsfullpage">
-          <Grid centered divided columns={Data.length}>
-            {Data.map((competition) => {
-              return (
-                <CompetitionsList
-                  key={competition.id}
-                  competitionName={competition}
-                />
-              )
-            })}
-          </Grid>
-        </Link>
-      </Popup>
-    </Link>
+        {Data.map((competition) => {
+          return (
+            <CompetitionsList
+              key={competition._id}
+              competitionName={competition}
+            />)
+        })}
+      </Grid>
+    </Popup>
   )
 }
 

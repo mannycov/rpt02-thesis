@@ -2,11 +2,15 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 var db = mongoose.connection
 
-mongoose.connect('mongodb://localhost/competely')
+mongoose.connect(
+  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
+)
 
-db.on('error', console.error.bind(console, 'connection error:'))
+//competely:Youcandoit@ds133796.mlab.com:33796/competely
+
+mongodb: db.on("error", console.error.bind(console, "connection error:"))
 db.once('open', function () {
-  console.log('you da man and connected in more ways than you know ')
+  console.log('you da man and connected in more ways than you know')
 })
 
 const userSchema = new Schema({
@@ -33,7 +37,12 @@ const userSchema = new Schema({
 const goalsSchema = new Schema({
   goals_id: Number,
   goals_name: String,
+  target: String,
+  category: String,
   category_id: Array,
+  start_date: String,
+  end_date: String,
+  notes: String,
   status: String,
   description: String,
   purpose: String,
@@ -41,29 +50,34 @@ const goalsSchema = new Schema({
   ongoing_goal: Boolean
 })
 
-export const GoalsModel = mongoose.model('GoalsModel', goalsSchema);
+export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
+  competitions_pictures: String,
   competitions_name: String,
-  start_date: Date,
-  end_date: Date,
+  competitions_category: String,
+  competitions_start_date: Date,
+  competitions_end_date: Date,
+  competitions_won: Array,
   category_id: Number,
   members: Array,
   winner: Number,
   ranking_list: Array,
-  trophies: Array,
   checkpoint_id: Number,
   checkpoint_name: String,
   status: String,
+  trophies: Array,
   trophy_id: Number,
   trophy_name: String
 })
 
-export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema);
+export const CompetitionsModel = mongoose.model("CompetitionsModel", competitionsSchema)
 
-const categorySchema = new Schema({
+const categoriesSchema = new Schema({
   category_id: Number,
-  category_name: String
-})
+  competitions_pictures: Array
+});
 
+export const CategoriesModel = mongoose.model('CategoriesModel', categoriesSchema
+)

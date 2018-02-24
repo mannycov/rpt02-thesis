@@ -145,48 +145,48 @@ class Trophies extends Component {
         <Grid.Row>
           <Grid.Column>
               <Card>
-              <div class="ui tiny image" >
+              <div className="ui tiny image" >
                 <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size='small' />
               </div>
               <div class="content">
-                <div class="header">Get Huge</div>
-                <div class="meta">First Place</div>
+                <div className="header">Get Huge</div>
+                <div className="meta">First Place</div>
               </div>
               </Card>
           </Grid.Column>
 
           <Grid.Column>
             <Card>
-            <div class="ui tiny image" >
+            <div className="ui tiny image" >
               <Image src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg" title="Second Place" size='small' />
             </div>
-            <div class="content">
-              <div class="header">You Can Do It</div>
-              <div class="meta">Second Place</div>
+            <div className="content">
+              <div className="header">You Can Do It</div>
+              <div className="meta">Second Place</div>
             </div>
             </Card>
           </Grid.Column>
 
           <Grid.Column>
             <Card>
-            <div class="ui tiny image" >
+            <div className="ui tiny image" >
               <Image src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png" title="No Place" size='small' />
             </div>
-            <div class="content">
-              <div class="header">Lose Weight</div>
-              <div class="meta">Didn't Place</div>
+            <div className="content">
+              <div className="header">Lose Weight</div>
+              <div className="meta">Didn't Place</div>
             </div>
             </Card>
           </Grid.Column>
 
           <Grid.Column>
             <Card>
-            <div class="ui tiny image" >
+            <div className="ui tiny image" >
               <Image src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png" title="No Place" size='small' />
             </div>
-            <div class="content">
-              <div class="header">Beat the Lake Run</div>
-              <div class="meta">Didn't Place</div>
+            <div className="content">
+              <div className="header">Beat the Lake Run</div>
+              <div className="meta">Didn't Place</div>
             </div>
             </Card>
           </Grid.Column>

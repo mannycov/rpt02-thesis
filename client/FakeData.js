@@ -55,3 +55,13 @@ module.exports = [
 		endDate: 11 / 2 / 17
 	}
 ];
+
+
+// db.competitionCategories.insert({
+// 	categoryName: "Endurance",
+// 	categoryName: "Strength",
+// 	categoryName: "Build Muscle",
+// 	categoryName: "Cardio",
+//   categoryName: "Lose Weight",
+//   categoryName: ''
+// });

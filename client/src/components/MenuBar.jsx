@@ -7,14 +7,25 @@ class MenuBar extends Component {
     this.setState({ activeItem: name })
   }
 
-  render () {
+  render (props) {
     const { activeItem } = this.state || {}
     return (
       <div>
         <Menu secondary>
-          <Link to="/userhome">
-            <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick} />
-          </Link>
+          <Menu.Item
+            as={Link}
+            to="/userhome"
+            name="home"
+            active={activeItem === 'home'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            as={Link}
+            to="/goals"
+            name="goals"
+            active={activeItem === 'goals'}
+            onClick={this.handleItemClick}
+          />
           <Menu.Item name="messages" active={activeItem === 'messages'} onClick={this.handleItemClick} />
           <Menu.Item name="friends" active={activeItem === 'friends'} onClick={this.handleItemClick} />
           <Menu.Menu position="right">

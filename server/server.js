@@ -5,11 +5,14 @@ import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
+
 // import App from '../client/src/components/App.jsx'
+
 import Root from '../client/Root.jsx'
 import {
   GoalsModel,
-  CompetitionsModel
+  CompetitionsModel,
+  CategoriesModel
 } from '../database/index.js'
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -20,6 +23,8 @@ import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 
+// import GoalsModel from '../database/models/goals'
+// import CompetitionsModel from '../database/models/competitions.js'
 const db = require('../database/index.js')
 // const routes = require('../routes/index');
 // const users = require('../routes/users');
@@ -96,12 +101,20 @@ app.use('/users' , usersRouter)
 
 
 
-app.get('/testendpoints', (req, res) => {
-  res.send('Hello homeboy g money')
-})
+const emptyObj = []
 
 app.get('/api/goal', (req, res) => {
-  GoalsModel.find({}, function (err, data) {
+  GoalsModel.find({}, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+app.get('/api/getcompetitions', (req, res) => {
+  CompetitionsModel.find({}, (err, data) => {
     if (err) {
       console.log(err)
     } else {
@@ -111,32 +124,78 @@ app.get('/api/goal', (req, res) => {
 })
 
 app.post('/api/competitions', (req, res) => {
-  const competitionName = req.body.competitionName
-  const competitionsModelInstance = new CompetitionsModel({
-    competitions_name: competitionName,
+  const competitionBody = req.body
+  let matchingCategory = ''
+
+  CategoriesModel.find({}, (err, defaultPics) => {
+    let defaultPicsInDb = defaultPics[0].competitions_pictures
+    let userSubbedCategory = competitionBody.competitionCategory
+
+    for (let i = 0; i <= defaultPicsInDb.length -1; i++) {
+      if (userSubbedCategory == Object.keys(defaultPicsInDb[i])) {
+        matchingCategory = defaultPicsInDb[i][userSubbedCategory]
+      }
+    }
+    if (err) {
+      console.log(err)
+    } else {
+      const competitionsModelInstance = new CompetitionsModel({
+        competitions_name: competitionBody.comptetionName,
+        competitions_category: competitionBody.competitionCategory,
+        competitions_start_date: competitionBody.competitionStart,
+        competitions_end_date: competitionBody.competitionEnd,
+        competitions_pictures: matchingCategory
+      })
+      competitionsModelInstance.save((err) => {
+        if (err) {
+          console.log('competitions not saved', err)
+        } else {
+          CompetitionsModel.find({}, function (err, data) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log('from server file data coming back from DB', data)
+              res.status(201).json(data)
+            }
+          })
+        }
+      })   //find the categor in category model save it to a variable
+    }
+  })
+})
+
+app.post('/api/goal', (req, res) => {
+  const goalTitle = req.body.goal
+  const goalTarget = req.body.target
+  const goalCategory = req.body.category
+  const goalStartDate = req.body.startDate
+  const goalEndDate = req.body.endDate
+  const goalNotes = req.body.notes
+
+  const goalModelInstance = new GoalsModel({
+    goals_name: goalTitle,
+    target: goalTarget,
+    category: goalCategory,
+    start_date: goalStartDate,
+    end_date: goalEndDate,
+    notes: goalNotes
   })
 
-  competitionsModelInstance.save(function (err) {
+  goalModelInstance.save((err) => {
     if (err) {
-      console.log('competitions not saved', err)
+      console.log(err)
     } else {
       res.sendStatus(201)
     }
   })
 })
 
-app.post('/api/goal', (req, res) => {
-
-  const goalTitle = req.body.goal
-  const goalModelInstance = new GoalsModel({
-    goals_name: goalTitle
-  })
-
-  goalModelInstance.save(function (err) {
+app.delete('/api/goal/:id', (req, res) => {
+  GoalsModel.remove({ _id: req.params.id }, (err) => {
     if (err) {
       console.log(err)
     } else {
-      res.sendStatus(201)
+      res.sendStatus(200)
     }
   })
 })
@@ -150,17 +209,19 @@ app.get('*', (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>HMR all the things!</title>
+        <title>Compete.ly</title>
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
       </head>
       <body>
+        <script src="//unpkg.com/moment@2.10.6/min/moment-with-locales.min.js"></script>
         <div id="root">${application}</div>
         <script src="http://localhost:3001/client.js"></script>
       </body>
-    </html>`;
+    </html>`
   res.send(html)
 })
 
