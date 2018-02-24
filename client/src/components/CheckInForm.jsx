@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Button } from 'semantic-ui-react'
+import * as V from 'victory'
 
 class CheckInForm extends Component {
   constructor (props) {
@@ -7,6 +8,7 @@ class CheckInForm extends Component {
 
     this.state = {
       goal: this.props.goal,
+      date: this.props.date,
       weight: this.props.weight,
       reps: this.props.reps,
       sets: this.props.sets,
@@ -18,6 +20,7 @@ class CheckInForm extends Component {
   renderFormInputs () {
     const {
       goal,
+      date,
       weight,
       reps,
       sets,
@@ -26,6 +29,13 @@ class CheckInForm extends Component {
     if (goal.category === 'Strength') {
       return (
         <Form.Group>
+          <Form.Input
+            width="3"
+            fluid
+            label="Date"
+            name="date"
+            value={date}
+          />
           <Form.Input
             width="3"
             fluid
@@ -61,6 +71,13 @@ class CheckInForm extends Component {
           <Form.Input
             width="3"
             fluid
+            label="Date"
+            name="date"
+            value={date}
+          />
+          <Form.Input
+            width="3"
+            fluid
             label="Minutes"
             name="min"
             value={this.props.min}
@@ -84,11 +101,9 @@ class CheckInForm extends Component {
           <Form.Input
             width="3"
             fluid
-            label="Time"
-            name="time"
-            value={time}
-            onChange={handleChange}
-            placeholder="0:00"
+            label="Date"
+            name="date"
+            value={date}
           />
         </Form.Group>
       )

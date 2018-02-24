@@ -19,6 +19,7 @@ const AddCheckIn = props => (
         <CheckInForm
           goal={props.goal}
           close={props.close}
+          date={props.date}
           handleChange={props.handleChange}
           handleSubmit={props.handleSubmit}
           min={props.min}
