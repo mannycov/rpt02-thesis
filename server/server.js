@@ -129,14 +129,16 @@ app.post('/api/checkin', (req, res) => {
   const checkInWeight = req.body.weight
   const checkInReps = req.body.reps
   const checkInSets = req.body.sets
-  const checkInTime = req.body.time
+  const checkInMin = req.body.min
+  const checkInSecs = req.body.secs
 
   const checkIn = new CheckInModel({
     goal: goalId,
     weight: checkInWeight,
     reps: checkInReps,
     sets: checkInSets,
-    time: checkInTime
+    min: checkInMin,
+    secs: checkInSecs
   })
 
   checkIn.save((err) => {
