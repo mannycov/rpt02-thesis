@@ -19,10 +19,13 @@ import flash from 'connect-flash';
 import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-const db = require('../database/index.js')
 
-const routes = require('../routes/index');
-const users = require('../routes/users');
+const db = require('../database/index.js')
+// const routes = require('../routes/index');
+// const users = require('../routes/users');
+
+import usersRouter from '../routes/users';
+
 
 //Init App
 const app = express();
@@ -34,12 +37,12 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 //View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-app.set('view engine', 'handlebars');
+// app.set('views', path.join(__dirname, 'views'));
+// app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+// app.set('view engine', 'handlebars');
 
 //Set Public Folder
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 //Express Session
 app.use(session({
@@ -82,21 +85,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-/*
 
-DEPRECATE THIS SECTION
-
+app.use('/users' , usersRouter)
 // app.use('/', Root);
-// app.use('/userhome', Root);
-
-// Set Port
-// app.set('port', (process.env.PORT || 3000));
-
-// app.listen(app.get('port'), function(){
-//   console.log('Server started on port '+app.get('port'));
+// app.use('/users', (req, res) => {
+//   res.send('Hello homeboy g money')
 // });
-
-*/
 
 
 

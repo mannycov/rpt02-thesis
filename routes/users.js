@@ -5,19 +5,23 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+var userRouter = express.Router();
+
+
 // Register
-router.get('/register', function(req, res){
-	res.render('register');
+userRouter.get('/', function(req, res){
+	console.log("😀");
 });
 
-// Login
-router.get('/login', function(req, res){
-	res.render('login');
-});
+// // Login
+// router.get('/api/login', function(req, res){
+// 	res.render('login');
+// });
 
 // Register User
-router.post('/register', function(req, res){
-	var name = req.body.name;
+userRouter.post('/register', function(req, res){
+	console.log("🤪🤪");
+  var name = req.body.name;
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
@@ -31,6 +35,8 @@ router.post('/register', function(req, res){
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
+  console.log("😎😎😎");
+
 	var errors = req.validationErrors();
 
 	if(errors){
@@ -40,7 +46,7 @@ router.post('/register', function(req, res){
 	} else {
 		var newUser = new User({
 			name: name,
-			email:email,
+			email: email,
 			username: username,
 			password: password
 		});
@@ -99,4 +105,4 @@ router.get('/logout', function(req, res){
 	res.redirect('/users/login');
 });
 
-module.exports = router;
+module.exports = userRouter;
