@@ -43,6 +43,10 @@ class CheckIn extends Component {
     this.fetchCheckIns()
   }
 
+  componentDidMount () {
+    this.fetchCheckIns()
+  }
+
   toggle () {
     const { checked } = this.state
 
@@ -133,6 +137,20 @@ class CheckIn extends Component {
       .delete(`/api/checkin/${id}`)
       .then((response) => {
         this.fetchCheckIns()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  fetchCheckIns () {
+    const { goalId } = this.state
+    axios
+      .get(`/api/checkin/${goalId}`)
+      .then((response) => {
+        this.setState({
+          checkins: response.data
+        })
       })
       .catch((error) => {
         console.log(error)
