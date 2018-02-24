@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const GoalTable = ({ goals, handleRemoveGoal }) => (
+const GoalTable = ({goals, handleRemoveGoal}) => (
   <div>
     <Table celled structured>
       <Table.Header>
@@ -16,7 +16,7 @@ const GoalTable = ({ goals, handleRemoveGoal }) => (
           <Table.HeaderCell>Remove</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-  
+
       <Table.Body>
         {goals.map(goal => (
           <Table.Row key={goal._id}>
@@ -82,5 +82,6 @@ const GoalTable = ({ goals, handleRemoveGoal }) => (
     <br /><br /><br />
   </div>
 )
+
 
 export default GoalTable
