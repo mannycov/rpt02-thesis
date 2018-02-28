@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('../models/user');
+var User = require('../database/models/users');
 
 var userRouter = express.Router();
 
@@ -14,32 +14,32 @@ userRouter.get('/', function(req, res){
 });
 
 // // Login
-// router.get('/api/login', function(req, res){
-// 	res.render('login');
-// });
+router.get('/api/login', function(req, res){
+	res.render('login');
+});
 
 // Register User
 userRouter.post('/register', function(req, res){
-	console.log("🤪🤪");
+	console.log("🤪🤪:" + req +" , " + res);
   var name = req.body.name;
 	var email = req.body.email;
 	var username = req.body.username;
-	var password = req.body.password;
-	var password2 = req.body.password2;
+	// var password = req.body.password;
+	// var password2 = req.body.password2;
 
 	// Validation
-	req.checkBody('name', 'Name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('username', 'Username is required').notEmpty();
-	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+	// req.checkBody('name', 'Name is required').notEmpty();
+	// req.checkBody('email', 'Email is required').notEmpty();
+	// req.checkBody('email', 'Email is not valid').isEmail();
+	// req.checkBody('username', 'Username is required').notEmpty();
+	// req.checkBody('password', 'Password is required').notEmpty();
+	// req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-  console.log("😎😎😎");
+  console.log("Register User Name:" + name);
 
-	var errors = req.validationErrors();
+	// var errors = req.validationErrors();
 
-	if(errors){
+	if(!req.body.name){
 		res.render('register',{
 			errors:errors
 		});
@@ -47,8 +47,9 @@ userRouter.post('/register', function(req, res){
 		var newUser = new User({
 			name: name,
 			email: email,
-			username: username,
-			password: password
+			username: username
+      // ,
+			// password: password
 		});
 
 		User.createUser(newUser, function(err, user){
@@ -56,9 +57,9 @@ userRouter.post('/register', function(req, res){
 			console.log(user);
 		});
 
-		req.flash('success_msg', 'You are registered and can now login');
+		// req.flash('success_msg', 'You are registered and can now login');
 
-		res.redirect('/users/login');
+		// res.redirect('/users/login');
 	}
 });
 

@@ -17,7 +17,7 @@ import {
 } from '../database/index.js'
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import exphbs from 'express-handlebars';
+// import exphbs from 'express-handlebars';
 import expressValidator from 'express-validator';
 import flash from 'connect-flash';
 import session from 'express-session';
@@ -62,34 +62,34 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Express Validator
-app.use(expressValidator({
-  errorFormatter: function(param, msg, value){
-    var namespace = param.split('.')
-    , root = namespace.shift()
-    , formParam = root;
+// app.use(expressValidator({
+//   errorFormatter: function(param, msg, value){
+//     var namespace = param.split('.')
+//     , root = namespace.shift()
+//     , formParam = root;
 
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return{
-      param : formParam,
-      msg : msg,
-      value : value
-    };
-  }
-}));
+//     while(namespace.length) {
+//       formParam += '[' + namespace.shift() + ']';
+//     }
+//     return{
+//       param : formParam,
+//       msg : msg,
+//       value : value
+//     };
+//   }
+// }));
 
 // Connect Flash
-app.use(flash());
+// app.use(flash());
 
 // Global Vars
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  res.locals.user = req.user || null;
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.locals.success_msg = req.flash('success_msg');
+//   res.locals.error_msg = req.flash('error_msg');
+//   res.locals.error = req.flash('error');
+//   res.locals.user = req.user || null;
+//   next();
+// });
 
 
 app.use('/users' , usersRouter)
