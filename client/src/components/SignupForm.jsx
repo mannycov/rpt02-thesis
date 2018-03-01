@@ -26,11 +26,13 @@ class SignupForm extends Component {
  	}
 
   handleSubmit () {
-    const { name, email, username } = this.state
+    const { name, email, username, password } = this.state
     axios
     	.post('/users/register', {
     		name,
-    		email
+    		email,
+        username,
+        password
     	})
     	.then((response)=> {
     		console.log(response)
@@ -54,6 +56,8 @@ class SignupForm extends Component {
             <Form.Input placeholder='Name' name='name' value={name} onChange={this.handleChange} />
             <Form.Input placeholder='Email' name='email' value={email} onChange={this.handleChange} />
             <Form.Input placeholder='Username' name='username' value={username} onChange={this.handleChange} />
+            <Form.Input placeholder='Password' name='password' value={password} onChange={this.handleChange} />
+            <Form.Input placeholder='Confirm Password' name='password2' value={password2} onChange={this.handleChange} />
 
             <Form.Button content='Submit' />
           </Form.Group>

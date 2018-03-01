@@ -31,32 +31,66 @@ var userSchema = mongoose.Schema({
     type: String,
     index:true
   },
-  password: {
-    type: String
-  },
+  // password: {
+  //   type: String
+  // },
   email: {
     type: String
   },
   name: {
     type: String
+  },
+  salt: {
+    type: String
+  },
+  hash: {
+    type: String
   }
+
 });
 
-var user = module.exports = mongoose.model('User', userSchema);
+var User = module.exports = mongoose.model('User', userSchema);
 
 
-module.exports.createUser = function(newUser, callback){
+module.exports.createUser = function(userProps, callback){
+  console.log("newuser:"  + userProps)
   bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(newUser.password, salt, function(err, hash) {
-          newUser.password = hash;
-          newUser.save(callback);
+      bcrypt.hash(userProps.password, salt, function(err, hash) {
+          // newUser.password = hash;
+          var newUser = new User({
+              name: userProps.name,
+              email: userProps.email,
+              username: userProps.username,
+              salt: salt,
+              hash: hash
+          })
+          newUser.save()
+
       });
   });
 }
 
 module.exports.getUserByUsername = function(username, callback){
+  console.log("getusername"  + username)
   var query = {username: username};
-  User.findOne(query, callback);
+
+  return User.findOne(query);
+}
+
+module.exports.checkUser = function(userCredentials){
+  //destructure user credentials
+    //use credentials to find record in db
+    //record no exist = false (getuserbyusername)
+    //exists = true sends them to userhome
+    //one received user object, pass into bcrypt(hash & salt)
+
+  bcrypt.compare({userCredentials}, hash, function(err, res) {
+      // res == true
+  });
+
+  bcrypt.compare(someOtherPlaintextPassword, hash, function(err, res) {
+      // res == false
+  });
 }
 
 module.exports.getUserById = function(id, callback){

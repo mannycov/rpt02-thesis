@@ -14,18 +14,18 @@ userRouter.get('/', function(req, res){
 });
 
 // // Login
-router.get('/api/login', function(req, res){
+userRouter.get('/login', function(req, res){
 	res.render('login');
 });
 
 // Register User
-userRouter.post('/register', function(req, res){
+userRouter.post('/register', function(req, res, err){
 	console.log("🤪🤪:" + req +" , " + res);
   var name = req.body.name;
 	var email = req.body.email;
 	var username = req.body.username;
-	// var password = req.body.password;
-	// var password2 = req.body.password2;
+	var password = req.body.password;
+	var password2 = req.body.password2;
 
 	// Validation
 	// req.checkBody('name', 'Name is required').notEmpty();
@@ -35,24 +35,23 @@ userRouter.post('/register', function(req, res){
 	// req.checkBody('password', 'Password is required').notEmpty();
 	// req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-  console.log("Register User Name:" + name);
+  console.log("Register User Name:" + name,password,email,username);
 
 	// var errors = req.validationErrors();
 
 	if(!req.body.name){
-		res.render('register',{
-			errors:errors
-		});
+		res.render('register',
+			"Error in user router post"
+		);
 	} else {
-		var newUser = new User({
+		var userProps = {
 			name: name,
 			email: email,
-			username: username
-      // ,
-			// password: password
-		});
+			username: username,
+			password: password
+		};
 
-		User.createUser(newUser, function(err, user){
+		User.createUser(userProps, function(err, user){
 			if(err) throw err;
 			console.log(user);
 		});
@@ -63,46 +62,18 @@ userRouter.post('/register', function(req, res){
 	}
 });
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-   User.getUserByUsername(username, function(err, user){
-   	if(err) throw err;
-   	if(!user){
-   		return done(null, false, {message: 'Unknown User'});
-   	}
 
-   	User.comparePassword(password, user.password, function(err, isMatch){
-   		if(err) throw err;
-   		if(isMatch){
-   			return done(null, user);
-   		} else {
-   			return done(null, false, {message: 'Invalid password'});
-   		}
-   	});
-   });
-  }));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.getUserById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-router.post('/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
+userRouter.post('/login',
+  // passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login'})
   function(req, res) {
+    console.log("REACHING THE LOGIN");
+
     res.redirect('/');
-  });
+});
 
-router.get('/logout', function(req, res){
+userRouter.get('/logout', function(req, res){
 	req.logout();
-
 	req.flash('success_msg', 'You are logged out');
-
 	res.redirect('/users/login');
 });
 
