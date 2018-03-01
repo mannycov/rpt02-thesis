@@ -5,13 +5,16 @@ import { Button, Modal } from 'semantic-ui-react'
 import CheckInForm from './CheckInForm.jsx'
 
 const AddCheckIn = props => (
-  <div>
+  <div>{console.log('hello smarty', props.date)}
     <Button primary onClick={() => { props.show('large') }}>
       <i className="plus icon" />
           Check In
     </Button>
-
-    <Modal open={props.open} onClose={props.close}>
+    <Modal
+      dimmer={false}
+      open={props.open}
+      onClose={props.close}
+    >
       <Modal.Header>
           Enter Check In
       </Modal.Header>
@@ -24,6 +27,7 @@ const AddCheckIn = props => (
           handleSubmit={props.handleSubmit}
           min={props.min}
           secs={props.secs}
+          handleCheckInCalChange={props.handleCheckInCalChange}
         />
       </Modal.Content>
     </Modal>

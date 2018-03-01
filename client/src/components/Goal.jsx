@@ -100,7 +100,9 @@ class Goal extends Component {
       goal: '',
       target: '',
       category: '',
-      notes: ''
+      notes: '',
+      startDate: moment(),
+      endDate: moment()
     })
   }
 
