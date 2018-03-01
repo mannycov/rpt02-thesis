@@ -38,9 +38,9 @@ const app = express();
 
 //BodyParser Middlewar
 app.use(expressLogging(logger));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(cookieParser())
 
 //View Engine
 // app.set('views', path.join(__dirname, 'views'));

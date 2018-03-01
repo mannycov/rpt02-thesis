@@ -124,7 +124,7 @@ class UserHome extends Component {
     hiddenUserPage
   ) {
     if (compsCat === 'Build Muscle') {
-      compsCat = 'Build_Muscle';
+      compsCat = 'Build_Muscle'
     } else if (compsCat === 'Lose Weight') {
       compsCat = 'Lose_Weight'
     } else {

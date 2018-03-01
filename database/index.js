@@ -3,7 +3,8 @@ var Schema = mongoose.Schema
 var db = mongoose.connection
 
 mongoose.connect(
-  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
+  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely',
+  { server: { reconnectTries: Number.MAX_VALUE } }
 )
 
 //competely:Youcandoit@ds133796.mlab.com:33796/competely
