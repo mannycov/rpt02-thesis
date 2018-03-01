@@ -5,6 +5,8 @@ import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
+import fs from 'fs'
+import multer from 'multer'
 
 // import App from '../client/src/components/App.jsx'
 
