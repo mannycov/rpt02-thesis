@@ -7,6 +7,7 @@ const userSchema = new Schema({
   last_name: String,
   username: String,
   email: String,
+  img: { data: Buffer, contentType: String },
   // comments: [{ body: String, date: Date }],
   date_of_birth: { type: Date },
   about_me: String,
