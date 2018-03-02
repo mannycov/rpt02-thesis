@@ -37,6 +37,7 @@ db.once('open', function () {
 
 const goalsSchema = new Schema({
   goals_id: Number,
+  goals_user: Number,
   goals_name: String,
   target: String,
   category: String,
@@ -54,22 +55,24 @@ const goalsSchema = new Schema({
 export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 
 const checkInSchema = new Schema({
-  checkin_id: Number,
-  goal: { type: Schema.Types.ObjectId, ref: 'GoalsModel' },
-  date: String,
-  weight: Number,
-  reps: Number,
-  sets: Number,
-  min: Number,
-  secs: Number,
-  target: Number,
-  check_in: Boolean
-})
+	checkin_id: Number,
+	checkin_user: Number,
+	goal: { type: Schema.Types.ObjectId, ref: "GoalsModel" },
+	date: String,
+	weight: Number,
+	reps: Number,
+	sets: Number,
+	min: Number,
+	secs: Number,
+	target: Number,
+	check_in: Boolean
+});
 
 export const CheckInModel = mongoose.model('CheckInModel', checkInSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
+  competitions_user: Number,
   competitions_pictures: String,
   competitions_name: String,
   competitions_category: String,
