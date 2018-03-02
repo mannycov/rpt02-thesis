@@ -14,11 +14,17 @@ class Goal extends Component {
     this.state = {
       goal: '',
       category: '',
-      target: '',
+      weightTarget: '',
+      repTarget: '',
+      minTarget: '',
+      secsTarget: '',
+      daysTarget: '',
       size: '',
       startDate: moment(),
       endDate: moment(),
       notes: '',
+      complete: false,
+      accomplishments: [],
       goals: [],
       open: false
     }
@@ -71,21 +77,31 @@ class Goal extends Component {
   handleSubmit () {
     const {
       goal,
-      target,
+      weightTarget,
+      repTarget,
+      minTarget,
+      secsTarget,
+      daysTarget,
       category,
       startDate,
       endDate,
-      notes
+      notes,
+      complete
     } = this.state
 
     axios
       .post('/api/goal', {
         goal,
-        target,
+        weightTarget,
+        repTarget,
+        minTarget,
+        secsTarget,
+        daysTarget,
         category,
         startDate,
         endDate,
-        notes
+        notes,
+        complete
       })
       .then((response) => {
         this.fetchGoals()
@@ -98,7 +114,11 @@ class Goal extends Component {
 
     this.setState({
       goal: '',
-      target: '',
+      weightTarget: '',
+      repTarget: '',
+      minTarget: '',
+      secsTarget: '',
+      daysTarget: '',
       category: '',
       notes: ''
     })
@@ -147,7 +167,7 @@ class Goal extends Component {
 
         <MenuBar />
 
-        <h1>My Goals</h1>
+        {/* <h1>My Goals</h1> */}
 
         <br />
 
@@ -159,11 +179,16 @@ class Goal extends Component {
           handleEndDateChange={this.handleEndDateChange}
           handleTextAreaChange={this.handleTextAreaChange}
           goal={this.state.goal}
-          target={this.state.target}
+          weightTarget={this.state.weightTarget}
+          repTarget={this.state.repTarget}
+          minTarget={this.state.minTarget}
+          secsTarget={this.state.secsTarget}
+          daysTarget={this.state.daysTarget}
           category={this.state.category}
           startDate={this.state.startDate}
           endDate={this.state.endDate}
           notes={this.state.notes}
+          complete={this.state.complete}
           close={this.close}
           open={this.state.open}
           show={this.show}
