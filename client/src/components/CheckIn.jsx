@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Checkbox, Icon } from 'semantic-ui-react'
+import { Table, Checkbox, Icon, Modal, Button, Header } from 'semantic-ui-react'
 import axios from 'axios'
 import { VictoryChart, VictoryLine, VictoryTheme } from 'victory'
 import moment from 'moment'
@@ -24,6 +24,7 @@ class CheckIn extends Component {
       sets: '',
       min: '',
       secs: '',
+      goalTime: '',
       size: '',
       open: false
     }
@@ -34,6 +35,10 @@ class CheckIn extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.fetchCheckIns = this.fetchCheckIns.bind(this)
     this.handleRemoveCheckIn = this.handleRemoveCheckIn.bind(this)
+    this.handleCardioGoal = this.handleCardioGoal.bind(this)
+    this.handleCompletedGoal = this.handleCompletedGoal.bind(this)
+    this.handleGoalUpdate = this.handleGoalUpdate.bind(this)
+    this.renderCompleteMessage = this.renderCompleteMessage.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
     this.renderVictoryChart = this.renderVictoryChart.bind(this)
     this.renderHeaderRow = this.renderHeaderRow.bind(this)
@@ -42,6 +47,7 @@ class CheckIn extends Component {
 
   componentDidMount () {
     this.fetchCheckIns()
+    this.handleCardioGoal()
   }
 
   toggle () {
@@ -82,10 +88,6 @@ class CheckIn extends Component {
       secs
     } = this.state
 
-    // check if number properties are appropriate values
-    // check if secs properties are appropriate
-    // if secs >= 60 alert the user tht input is invalid
-
     axios
       .post('/api/checkin/', {
         goalId,
@@ -122,7 +124,7 @@ class CheckIn extends Component {
       .then((response) => {
         this.setState({
           checkins: response.data
-        })
+        }, () => { this.handleCompletedGoal() })
       })
       .catch((error) => {
         console.log(error)
@@ -140,6 +142,105 @@ class CheckIn extends Component {
       })
   }
 
+  handleCardioGoal () {
+    const { goal, goalTime } = this.state
+
+    if (goal.category === 'Cardio') {
+      console.log('handling cardio goal')
+      if (goal.min) {
+        if (goal.secs) {
+          this.setState({ goalTime: `${goal.min}.${goal.secs}` })
+        } else {
+          this.setState({ goalTime: `${goal.min} + 00` })
+        }
+      }
+    }
+  }
+
+  handleCompletedGoal () {
+    const { goal, checkins } = this.state
+
+    const newGoalState = Object.assign({}, goal)
+
+    // check goal by category
+    if (goal.category === 'Strength') {
+      for (let i = 0; i < checkins.length; i += 1) {
+        if (checkins[i].weight) {
+          if (checkins[i].weight >= goal.weightTarget) {
+            newGoalState.complete = true
+          }
+        }
+
+        if (checkins[i].reps) {
+          if (checkins[i].reps >= goal.repTarget) {
+            newGoalState.complete = true
+          }
+        }
+        
+        // TODO in goal target: setTarget
+        // if (checkins[i].sets) {
+        //   if (checkins[i].sets >= goal.setTarget) {
+        //     newGoalState.complete = true
+        //   }
+        // }
+      }
+    }
+
+    if (goal.category === 'Cardio') {
+      for (let i = 0; i < checkins.length; i += 1) {
+        if (checkins[i].min) {
+          if (checkins[i].min <= goal.minTarget) {
+            newGoalState.complete = true
+          }
+        }
+
+        if (checkins[i].secs) {
+          if (checkins[i].secs <= goal.secsTarget) {
+            newGoalState.complete = true
+          }
+        }
+      }
+    }
+
+    if (goal.category === 'Habit') {
+      for (let i = 0; i < checkins.length; i += 1) {
+        if (checkins[i].days) {
+          if (checkins[i].days >= goal.target) {
+            newGoalState.complete = true
+          }
+        }
+      }
+    }
+
+    this.setState({
+      goal: newGoalState
+    }, () => { this.handleGoalUpdate() })
+  }
+
+  handleGoalUpdate () {
+    const { goal, goalId } = this.state
+    if (goal.complete) {
+      axios
+        .patch(`/api/goal/${goalId}`, {
+          complete: goal.complete
+        })
+        .then((response) => {
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }
+
+  renderCompleteMessage () {
+    const { goal } = this.state
+    if (goal.complete) {
+      return (
+        <h1 style={{ textAlign: 'center' }}>Congratulations! You've reached your goal!</h1>
+      )
+    }
+  }
+
   renderIcon () {
     const { checked } = this.state
     if (checked) {
@@ -151,7 +252,6 @@ class CheckIn extends Component {
 
   renderVictoryChart () {
     const { goal, checkins } = this.state
-    
     if (goal.category === 'Cardio') {
       return (
         <VictoryChart
@@ -246,7 +346,7 @@ class CheckIn extends Component {
           {checkins.map(checkin => (
             <Table.Row key={checkin._id}>
               <Table.Cell>{checkin.date}</Table.Cell>
-              <Table.Cell>{`${checkin.min}:${checkin.secs}`}</Table.Cell>
+              <Table.Cell>{checkin.secs === null || checkin.secs === 0 ? `${checkin.min}:00` : `${checkin.min}:${checkin.secs}`}</Table.Cell>
               <Table.Cell>{this.renderIcon()}</Table.Cell>
               <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
             </Table.Row>
@@ -286,17 +386,23 @@ class CheckIn extends Component {
       size,
       open
     } = this.state
+
+    const textStyle = { textAlign: 'center' }
+
     return (
 
       <div>
- {console.log('sate of the goals', this.props.location.state.goal)}
         <MenuBar />
 
-        <h1 style={{ textAlign: 'center' }}>{today}</h1>
+        <br /><br />
 
-        <h2 style={{ textAlign: 'center' }}>{goal.goals_name}</h2>
+        {this.renderCompleteMessage()}
 
-        <h2 style={{ textAlign: 'center' }}>Target: {goal.target}</h2>
+        <h2 style={textStyle}>{today}</h2>
+
+        <h2 style={textStyle}>{goal.goals_name}</h2>
+
+        <h2 style={textStyle}>Target: {goal.target}</h2>
 
         {this.renderVictoryChart()}
 
@@ -337,10 +443,6 @@ class CheckIn extends Component {
       </div>
     )
   }
-}
-
-CheckIn.contextTypes = {
-  router: () => React.PropTypes.func.isRequired
 }
 
 export default CheckIn

@@ -8,14 +8,16 @@ import CompetitionsFullPage from './CompetitionsFullPage.jsx'
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
-import UserFeed from './UserFeed.jsx'
+import Goal from './Goal.jsx'
+import Accomplishments from './Accomplishments.jsx'
 
 class UserHome extends Component {
   constructor(props) {
     super(props)
     this.state = {
       competitionData: [],
-      goals: ['test1', 'test2'],
+      goals: [],
+      accomplishments: [],
       isHidden: true,
       compName: '',
       compCat: '',
@@ -30,6 +32,7 @@ class UserHome extends Component {
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
     this.handleStartChange = this.handleStartChange.bind(this)
     this.handleEndChange = this.handleEndChange.bind(this)
+    this.handleAccomplishments = this.handleAccomplishments.bind(this)
     this.handleCompStartSave = this.handleCompStartSave.bind(this)
     this.handleCompEndSave = this.handleCompEndSave.bind(this)
   }
@@ -92,12 +95,12 @@ class UserHome extends Component {
   fetchGoals () {
     axios
       .get("/api/goal")
-      .then(response => {
+      .then((response) => {
         this.setState({
           goals: response.data
-        })
+        }, () => { this.handleAccomplishments() })
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       })
   }
@@ -114,6 +117,20 @@ class UserHome extends Component {
       .catch(error => {
         console.log(error)
       })
+  }
+
+  handleAccomplishments () {
+    const { goals, accomplishments } = this.state
+
+    const copyOfAccomplishments = accomplishments.slice()
+
+    for (let i = 0; i < goals.length; i += 1) {
+      if (goals[i].complete) {
+        copyOfAccomplishments.push(goals[i])
+      }
+    }
+
+    this.setState({ accomplishments: copyOfAccomplishments })
   }
 
   competitionsSubmit(
@@ -214,90 +231,41 @@ class UserHome extends Component {
             <br />
             <br />
             <Grid.Column width={7}>
-              <h1>Feed</h1>
+              <h1>Goals</h1>
               <Grid.Row>
-                <UserFeed />
+                <Goal />
               </Grid.Row>
             </Grid.Column>
             <Grid.Column width={3}>
-              <h1>Trophies</h1>
-              <Card>
-                <div className="ui tiny image">
-                  <Image
-                    src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg"
-                    title="First Place"
-                    size="small"
-                  />
-                </div>
-                <div className="content">
-                  <div className="header">Get Huge</div>
-                  <div className="meta">First Place</div>
-                </div>
-							</Card>
-							<Card>
-								<div className="ui tiny image">
-									<Image
-										src="https://laurenswrittenword.files.wordpress.com/2013/11/bigstock-silver-trophy-vector-13932809.jpg"
-										title="Second Place"
-										size="small"
-									/>
-								</div>
-								<div className="content">
-									<div className="header">You Can Do It</div>
-									<div className="meta">Second Place</div>
-								</div>
-							</Card>
-							<Card>
-								<div className="ui tiny image">
-									<Image
-										src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
-										title="No Place"
-										size="small"
-									/>
-								</div>
-								<div className="content">
-									<div className="header">Lose Weight</div>
-									<div className="meta">Didn't Place</div>
-								</div>
-							</Card>
-							<Card>
-								<div className="ui tiny image">
-									<Image
-										src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-59-256.png"
-										title="No Place"
-										size="small"
-									/>
-								</div>
-								<div className="content">
-									<div className="header">Beat the Lake Run</div>
-									<div className="meta">Didn't Place</div>
-								</div>
-							</Card>
-						</Grid.Column>
-					</Grid>
-				</div>
-			);
-		}
-		return (
-			<CompetitionsFullPage
-				Data={this.state.competitionData}
-				isHidden={this.state.isHidden}
-				compName={this.state.compName}
-				compCat={this.state.compCat}
-				compStart={this.state.compStart}
-				compEnd={this.state.compEnd}
-				handleCompName={this.handleCompName}
-				handleCompCat={this.handleCompCat}
-				handleCompStartSave={this.handleCompStartSave} // this 1
-				compStartClick={this.state.compStartClick} // this 1
-				handleCompEndSave={this.handleCompEndSave} // this 1
+              <h1>Accomplishments</h1>
+              <Accomplishments
+                accomplishments={this.state.accomplishments}
+              />
+            </Grid.Column>
+          </Grid>
+        </div>
+      );
+    }
+    return (
+      <CompetitionsFullPage
+        Data={this.state.competitionData}
+        isHidden={this.state.isHidden}
+        compName={this.state.compName}
+        compCat={this.state.compCat}
+        compStart={this.state.compStart}
+        compEnd={this.state.compEnd}
+        handleCompName={this.handleCompName}
+        handleCompCat={this.handleCompCat}
+        handleCompStartSave={this.handleCompStartSave} // this 1
+        compStartClick={this.state.compStartClick} // this 1
+        handleCompEndSave={this.handleCompEndSave} // this 1
         compEndClick={this.state.compEndClick} // this 1
         handleStartChange={this.handleStartChange}
         handleEndChange={this.handleEndChange}
-				competitionsSubmit={this.competitionsSubmit}
-			/>
-		)
-	}
+        competitionsSubmit={this.competitionsSubmit}
+      />
+    )
+  }
 }
 
 export default UserHome
