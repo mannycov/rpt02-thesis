@@ -18,8 +18,7 @@ import {
   CategoriesModel
 } from '../database/index.js'
 import path from 'path';
-import cookieParser from 'cookie-parser';
-// import exphbs from 'express-handlebars';
+import cookieParser from 'cookie-parser'
 import expressValidator from 'express-validator';
 import flash from 'connect-flash';
 import session from 'express-session';
@@ -57,7 +56,7 @@ app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: true
-}));
+}))
 
 // Passport init
 app.use(passport.initialize());
@@ -79,10 +78,10 @@ app.use(passport.session());
 //       value : value
 //     };
 //   }
-// }));
+// }))
 
 // Connect Flash
-// app.use(flash());
+// app.use(flash())
 
 // Global Vars
 // app.use(function (req, res, next) {
@@ -115,6 +114,30 @@ app.get('/api/goal', (req, res) => {
     }
   })
 })
+
+// app.use(multer({ dest: './uploads/',
+//  rename: function (fieldname, filename) {
+//    return filename;
+//  },
+// }))
+
+// app.post('/api/photo',function(req,res){
+//  var newProfilePic = new userSchema()
+//  newProfilePic.img.data = fs.readFileSync(req.files.userPhoto.path)
+//  newProfilePic.img.contentType = 'image/png'
+//  newProfilePic.save();
+// })
+// if (err) {
+//       console.log(err)
+//     } else {
+//       const competitionsModelInstance = new CompetitionsModel({
+//         competitions_name: competitionBody.comptetionName,
+//         competitions_category: competitionBody.competitionCategory,
+//         competitions_start_date: competitionBody.competitionStart,
+//         competitions_end_date: competitionBody.competitionEnd,
+//         competitions_pictures: matchingCategory
+//       })
+
 
 app.get('/api/getcompetitions', (req, res) => {
   CompetitionsModel.find({}, (err, data) => {
