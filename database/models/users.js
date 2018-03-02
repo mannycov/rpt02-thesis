@@ -7,7 +7,6 @@ const userSchema = new Schema({
   last_name: String,
   username: String,
   email: String,
-  img: { data: Buffer, contentType: String },
   // comments: [{ body: String, date: Date }],
   date_of_birth: { type: Date },
   about_me: String,
@@ -22,85 +21,3 @@ const userSchema = new Schema({
   postal: Number,
   trophies: Number
 })
-
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
-
-// User Schema
-var userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    index:true
-  },
-  // password: {
-  //   type: String
-  // },
-  email: {
-    type: String
-  },
-  name: {
-    type: String
-  },
-  salt: {
-    type: String
-  },
-  hash: {
-    type: String
-  }
-
-});
-
-var User = module.exports = mongoose.model('User', userSchema);
-
-
-module.exports.createUser = function(userProps, callback){
-  console.log("newuser:"  + userProps)
-  bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(userProps.password, salt, function(err, hash) {
-          // newUser.password = hash;
-          var newUser = new User({
-              name: userProps.name,
-              email: userProps.email,
-              username: userProps.username,
-              salt: salt,
-              hash: hash
-          })
-          newUser.save()
-
-      });
-  });
-}
-
-module.exports.getUserByUsername = function(username, callback){
-  console.log("getusername"  + username)
-  var query = {username: username};
-
-  return User.findOne(query);
-}
-
-module.exports.checkUser = function(userCredentials){
-  //destructure user credentials
-    //use credentials to find record in db
-    //record no exist = false (getuserbyusername)
-    //exists = true sends them to userhome
-    //one received user object, pass into bcrypt(hash & salt)
-
-  bcrypt.compare({userCredentials}, hash, function(err, res) {
-      // res == true
-  });
-
-  bcrypt.compare(someOtherPlaintextPassword, hash, function(err, res) {
-      // res == false
-  });
-}
-
-module.exports.getUserById = function(id, callback){
-  User.findById(id, callback);
-}
-
-module.exports.comparePassword = function(candidatePassword, hash, callback){
-  bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-      if(err) throw err;
-      callback(null, isMatch);
-  });
-}
