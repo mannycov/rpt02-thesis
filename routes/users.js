@@ -64,16 +64,34 @@ userRouter.post('/register', function(req, res, err){
 
 
 userRouter.post('/login',
-  // passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login'})
+  // passport.authenticate('local', {successRedirect:'/userhome', failureRedirect:'/users/login'})
   function(req, res) {
     console.log("REACHING THE LOGIN");
 
-    res.redirect('/');
-});
+    User.find({username:req.body.username}, function(err, user){
+      if(err) throw err;
+      var newHash = user[0].hash
+      console.log("Hash from Routes file: " + newHash)
+
+      User.checkUser(req.body.password, newHash,  function(result) {
+        console.log("reaching the final redirect step?:" + result)
+        res.redirect('/users/userhome');
+      })
+
+    })
+  }
+  // ,
+  // function(req, res) {
+  //   console.log("reaching the final redirect step?:" + res)
+  //   res.redirect('/userhome');
+  // }
+);
+
+
 
 userRouter.get('/logout', function(req, res){
 	req.logout();
-	req.flash('success_msg', 'You are logged out');
+	// req.flash('success_msg', 'You are logged out');
 	res.redirect('/users/login');
 });
 
