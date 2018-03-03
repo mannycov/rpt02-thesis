@@ -140,7 +140,8 @@ class UserHome extends Component {
     compsCat,
     compsStart,
     compsEnd,
-    hiddenUserPage
+    hiddenUserPage,
+    userIdComp
   ) {
     if (compsCat === 'Build Muscle') {
       compsCat = 'Build_Muscle';
@@ -155,7 +156,8 @@ class UserHome extends Component {
       compsCat,
       compsStart,
       compsEnd,
-      hiddenUserPage
+      hiddenUserPage,
+      userIdComp
     )
     this.setState({
       isHidden: !hiddenUserPage,
