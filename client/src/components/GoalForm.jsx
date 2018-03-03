@@ -70,7 +70,6 @@ class GoalForm extends Component {
             name="daysTarget"
             value={this.props.daysTarget}
             onChange={this.props.handleChange}
-            placeholder="(e.g. 30 days)"
           />
         </Form.Group>
       )
@@ -90,7 +89,6 @@ class GoalForm extends Component {
               name="goal"
               value={this.props.goal}
               onChange={this.props.handleChange}
-              placeholder="(e.g. lose 10lbs.)"
             />
           </Form.Group>
 
