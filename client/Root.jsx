@@ -15,16 +15,16 @@ import Goal from './src/components/Goal.jsx'
 import CheckIn from './src/components/CheckIn.jsx'
 
 const Root = () => (
-	<Switch>
-		<Route exact path="/" component={Home} />
-		<Route path="/userhome" component={UserHome} />
-		<Route path="/login" component={UserHome} />
-		<Route path="/friends" component={Friends} />
-		<Route path="/competitionsfullpage" component={CompetitionsFullPage} />
-		<Route path="/competitionspopup" component={CompetitionsPopUp} />
-		<Route path="/trophies" component={Trophies} />
-		<Route path="/signupform" component={SignupForm} />
-		<Route path="/homepageheader" component={HomePageHeader} />
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route path="/userhome" component={UserHome} />
+    <Route path="/login" component={UserHome} />
+    <Route path="/friends" component={Friends} />
+    <Route path="/competitionsfullpage" component={CompetitionsFullPage} />
+    <Route path="/competitionspopup" component={CompetitionsPopUp} />
+    <Route path="/trophies" component={Trophies} />
+    <Route path="/signupform" component={SignupForm} />
+    <Route path="/homepageheader" component={HomePageHeader} />
     <Route path="/goals" component={Goal} />
     <Route path="/goal/:id" component={CheckIn} />
     <Route component={NotFound} />

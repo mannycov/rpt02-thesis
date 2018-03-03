@@ -38,6 +38,9 @@ class CheckIn extends Component {
     this.handleCardioGoal = this.handleCardioGoal.bind(this)
     this.handleCompletedGoal = this.handleCompletedGoal.bind(this)
     this.handleGoalUpdate = this.handleGoalUpdate.bind(this)
+    this.renderWeightGoalTarget = this.renderWeightGoalTarget.bind(this)
+    this.renderCardioGoalTarget = this.renderCardioGoalTarget.bind(this)
+    this.renderGoalTarget = this.renderGoalTarget.bind(this)
     this.renderCompleteMessage = this.renderCompleteMessage.bind(this)
     this.renderIcon = this.renderIcon.bind(this)
     this.renderVictoryChart = this.renderVictoryChart.bind(this)
@@ -162,47 +165,47 @@ class CheckIn extends Component {
 
     const newGoalState = Object.assign({}, goal)
 
-    // check goal by category
     if (goal.category === 'Strength') {
-      for (let i = 0; i < checkins.length; i += 1) {
-        if (checkins[i].weight) {
+      if (goal.weightTarget && goal.repTarget) {
+        for (let i = 0; i < checkins.length; i += 1) {
+          if (checkins[i].weight >= goal.weightTarget && checkins[i].reps >= goal.repTarget) {
+            newGoalState.complete = true
+          }
+        }
+      } else if (goal.weightTarget && goal.repTarget === null) {
+        for (let i = 0; i < checkins.length; i += 1) {
           if (checkins[i].weight >= goal.weightTarget) {
             newGoalState.complete = true
           }
         }
-
-        if (checkins[i].reps) {
+      } else if (goal.weightTarget === null && goal.repTarget) {
+        for (let i = 0; i < checkins.length; i += 1) {
           if (checkins[i].reps >= goal.repTarget) {
             newGoalState.complete = true
           }
         }
-        
-        // TODO in goal target: setTarget
-        // if (checkins[i].sets) {
-        //   if (checkins[i].sets >= goal.setTarget) {
-        //     newGoalState.complete = true
-        //   }
-        // }
       }
-    }
-
-    if (goal.category === 'Cardio') {
-      for (let i = 0; i < checkins.length; i += 1) {
-        if (checkins[i].min) {
-          if (checkins[i].min <= goal.minTarget) {
+    } else if (goal.category === 'Cardio') {
+      if (goal.minTarget && goal.secsTarget) {
+        for (let i = 0; i < checkins.length; i += 1) {
+          if (checkins[i].min <= goal.minTarget && checkins[i].secs <= goal.secsTarget) {
             newGoalState.complete = true
           }
         }
-
-        if (checkins[i].secs) {
+      } else if (goal.minTarget === null && goal.secsTarget) {
+        for (let i = 0; i < checkins.length; i += 1) {
           if (checkins[i].secs <= goal.secsTarget) {
             newGoalState.complete = true
           }
         }
+      } else if (goal.minTarget && goal.secsTarget === null) {
+        for (let i = 0; i < checkins.length; i += 1) {
+          if (checkins[i].min <= goal.minTarget) {
+            newGoalState.complete = true
+          }
+        }
       }
-    }
-
-    if (goal.category === 'Habit') {
+    } else if (goal.category === 'Habit') {
       for (let i = 0; i < checkins.length; i += 1) {
         if (checkins[i].days) {
           if (checkins[i].days >= goal.target) {
@@ -232,6 +235,54 @@ class CheckIn extends Component {
     }
   }
 
+  renderWeightGoalTarget (goal) {
+    if (goal.weightTarget && goal.repTarget) {
+      return (
+        `${goal.weightTarget} lbs. ${goal.repTarget} reps`
+      )
+    } else if (goal.weightTarget && goal.repTarget === null) {
+      return (
+        `${goal.weightTarget} lbs.`
+      )
+    } else if (goal.weightTarget === null && goal.repTarget) {
+      return (
+        `${goal.repTarget} reps`
+      )
+    }
+  }
+
+  renderCardioGoalTarget (goal) {
+    if (goal.minTarget && goal.secsTarget) {
+      return (
+        `${goal.minTarget}:${goal.secsTarget}`
+      )
+    } else if (goal.minTarget === null && goal.secsTarget) {
+      return (
+        `00:${goal.secsTarget}`
+      )
+    } else if (goal.minTarget && goal.secsTarget === null) {
+      return (
+        `${goal.minTarget}:00`
+      )
+    }
+  }
+
+  renderGoalTarget (goal) {
+    if (goal.category === 'Strength') {
+      return (
+        this.renderWeightGoalTarget(goal)
+      )
+    } else if (goal.category === 'Cardio') {
+      return (
+        this.renderCardioGoalTarget(goal)
+      )
+    } else if (goal.category === 'Habit') {
+      return (
+        `${goal.daysTarget} days`
+      )
+    }
+  }
+
   renderCompleteMessage () {
     const { goal } = this.state
     if (goal.complete) {
@@ -252,38 +303,42 @@ class CheckIn extends Component {
 
   renderVictoryChart () {
     const { goal, checkins } = this.state
-    if (goal.category === 'Cardio') {
-      return (
-        <VictoryChart
-          theme={VictoryTheme.material}
-        >
-          <VictoryLine
-            style={{
-              data: { stroke: '#c43a31' },
-              parent: { border: '1px solid #ccc' }
-            }}
-            data={checkins}
-            x="date"
-            y="min"
-          />
-        </VictoryChart>
-      )
-    } else if (goal.category === 'Strength') {
-      return (
-        <VictoryChart
-          theme={VictoryTheme.material}
-        >
-          <VictoryLine
-            style={{
-              data: { stroke: '#c43a31' },
-              parent: { border: '1px solid #ccc' }
-            }}
-            data={checkins}
-            x="date"
-            y="weight"
-          />
-        </VictoryChart>
-      )
+    const noCheckins = !Array.isArray(checkins) || !checkins.length
+
+    if (!noCheckins) {
+      if (goal.category === 'Cardio') {
+        return (
+          <VictoryChart
+            theme={VictoryTheme.material}
+          >
+            <VictoryLine
+              style={{
+                data: { stroke: '#c43a31' },
+                parent: { border: '1px solid #ccc' }
+              }}
+              data={checkins}
+              x="date"
+              y="min"
+            />
+          </VictoryChart>
+        )
+      } else if (goal.category === 'Strength') {
+        return (
+          <VictoryChart
+            theme={VictoryTheme.material}
+          >
+            <VictoryLine
+              style={{
+                data: { stroke: '#c43a31' },
+                parent: { border: '1px solid #ccc' }
+              }}
+              data={checkins}
+              x="date"
+              y="weight"
+            />
+          </VictoryChart>
+        )
+      }
     }
   }
 
@@ -402,7 +457,7 @@ class CheckIn extends Component {
 
         <h2 style={textStyle}>{goal.goals_name}</h2>
 
-        <h2 style={textStyle}>Target: {goal.target}</h2>
+        <h2 style={textStyle}>Target: {this.renderGoalTarget(goal)}</h2>
 
         {this.renderVictoryChart()}
 
