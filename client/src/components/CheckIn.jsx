@@ -11,7 +11,7 @@ import AddCheckIn from "./AddCheckIn.jsx";
 
 class CheckIn extends Component {
 	constructor(props) {
-		super(props);
+		super(props)
 
 		this.state = {
 			checked: false,
