@@ -11,11 +11,12 @@ import SideMenu from './SideMenu.jsx'
 import UserFeed from './UserFeed.jsx'
 
 class UserHome extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			competitionData: [],
-			goals: ["test1", "test2"],
+  constructor (props) {
+    super(props)
+    this.state = {
+      userId: null,
+      competitionData: [],
+      goals: [],
 			isHidden: true,
 			compName: "",
 			compCat: "",
@@ -23,7 +24,7 @@ class UserHome extends Component {
 			compStartClick: false,
 			compEnd: moment(),
 			compEndClick: true
-		};
+		}
 		this.competitionsHandleClick = this.competitionsHandleClick.bind(this);
 		this.handleCompName = this.handleCompName.bind(this);
 		this.handleCompCat = this.handleCompCat.bind(this);
@@ -105,9 +106,11 @@ class UserHome extends Component {
 		axios
 			.get("/api/getGoalsCompetitionsUserId")
 			.then(response => {
-				// this.setState({
-				// 	competitionData: response.data
-				// })
+				this.setState({
+          userId: response.data[0],
+          competitionData: response.data[1],
+          goals: response.data[2]
+				})
 				console.log("data from the db in user home", response)
 			})
 			.catch(error => {
@@ -115,17 +118,11 @@ class UserHome extends Component {
 			});
 	}
 
-	competitionsSubmit(
-		compsName,
-		compsCat,
-		compsStart,
-		compsEnd,
-		hiddenUserPage
-	) {
-		if (compsCat === "Build Muscle") {
-			compsCat = "Build_Muscle";
-		} else if (compsCat === "Lose Weight") {
-			compsCat = "Lose_Weight";
+	competitionsSubmit(compsName, compsCat, compsStart, compsEnd, hiddenUserPage, userIdComp) {
+		if (compsCat === 'Build Muscle') {
+			compsCat = 'Build_Muscle'
+		} else if (compsCat === 'Lose Weight') {
+			compsCat = 'Lose_Weight'
 		} else {
 			compsCat = compsCat;
 		}
@@ -142,7 +139,8 @@ class UserHome extends Component {
 			compStart: moment(),
 			compEnd: moment(),
 			compStartClick: false,
-			compEndClick: false
+      compEndClick: false,
+      userId: null
 		});
 		axios
 			.post("/api/competitions", {
@@ -150,13 +148,12 @@ class UserHome extends Component {
 				competitionCategory: compsCat,
 				competitionStart: compsStart,
 				competitionEnd: compsEnd,
-				competitionPic: ""
+				competitionPic: "",
+				userIdComp: userIdComp
 			})
 			.then(response => {
 				console.log("in userHome file data back from server", response.data);
-				this.setState({
-					competitionData: response.data
-				});
+				this.setState({ competitionData: response.data });
 			})
 			.catch(error => {
 				console.log("this is the error after a post submit request", error);
@@ -279,7 +276,8 @@ class UserHome extends Component {
 		}
 		return (
 			<CompetitionsFullPage
-				Data={this.state.competitionData}
+        Data={this.state.competitionData}
+        userId={this.state.userId}
 				isHidden={this.state.isHidden}
 				compName={this.state.compName}
 				compCat={this.state.compCat}

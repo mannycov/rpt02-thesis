@@ -151,13 +151,13 @@ app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
 
   dataCompUserGoals.push(userIdInDB)
 
-CompetitionsModel.find({ competitions_user: userIdInDB })
-  .then(function(data) {
-    dataCompUserGoals.push(data);
+  CompetitionsModel.find({ competitions_user: userIdInDB })
+    .then(function(data) {
+    dataCompUserGoals.push(data)
     return GoalsModel.find({goals_user: userIdInDB})
    })
    .then(function(data) {
-     dataCompUserGoals.push(data);
+     dataCompUserGoals.push(data)
      res.send(dataCompUserGoals)
    })
   .catch(function(err) {
@@ -205,12 +205,13 @@ app.post('/api/competitions', (req, res) => {
       console.log(err)
     } else {
       const competitionsModelInstance = new CompetitionsModel({
-        competitions_name: competitionBody.comptetionName,
-        competitions_category: competitionBody.competitionCategory,
-        competitions_start_date: competitionBody.competitionStart,
-        competitions_end_date: competitionBody.competitionEnd,
-        competitions_pictures: matchingCategory
-      })
+				competitions_name: competitionBody.comptetionName,
+				competitions_category: competitionBody.competitionCategory,
+				competitions_start_date: competitionBody.competitionStart,
+				competitions_end_date: competitionBody.competitionEnd,
+				competitions_pictures: matchingCategory,
+				competitions_user: competitionBody.userIdComp
+			});
       competitionsModelInstance.save((err) => {
         if (err) {
           console.log('competitions not saved', err)
@@ -236,6 +237,7 @@ app.post('/api/goal', (req, res) => {
   const goalStartDate = req.body.startDate
   const goalEndDate = req.body.endDate
   const goalNotes = req.body.notes
+  let userId = req.body.userId
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
@@ -243,7 +245,8 @@ app.post('/api/goal', (req, res) => {
     category: goalCategory,
     start_date: goalStartDate,
     end_date: goalEndDate,
-    notes: goalNotes
+    notes: goalNotes,
+    goals_user: userId
   })
 
   goalModelInstance.save((err) => {
