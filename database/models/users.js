@@ -92,7 +92,8 @@ module.exports.checkUser = function(userCredentials, hash, callback){
 //   });
 }
 
-module.exports.userAccess = function(userId) {
+module.exports.userAccess = function(userId, cb) {
+  console.log('in the userjs file useraccess', userId)
 	let dataCompUserGoals = [];
 	let userIdInDB = userId;
 
@@ -105,9 +106,8 @@ module.exports.userAccess = function(userId) {
 		})
 		.then(function(data) {
 			dataCompUserGoals.push(data);
-			callback(null, dataCompUserGoals);
+			cb(dataCompUserGoals);
 		})
-
 		.catch(function(err) {
 			console.log(err, "this is the promise error");
 		})
