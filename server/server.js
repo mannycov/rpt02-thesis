@@ -92,16 +92,11 @@ app.use(passport.session());
 //   next();
 // });
 
-
 app.use('/users' , usersRouter)
 // app.use('/', Root);
 // app.use('/users', (req, res) => {
 //   res.send('Hello homeboy g money')
 // });
-
-
-
-
 
 const emptyObj = []
 
@@ -147,6 +142,40 @@ app.get('/api/getcompetitions', (req, res) => {
       res.send(data)
     }
   })
+})
+
+/*function that has to map into login and/or registers user id*/
+app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
+  let dataCompUserGoals = []
+  let userIdInDB = "5a989cc204ac7563fae85f68"
+
+  dataCompUserGoals.push(userIdInDB)
+
+CompetitionsModel.find({ competitions_user: userIdInDB })
+  .then(function(data) {
+    dataCompUserGoals.push(data);
+    return GoalsModel.find({goals_user: userIdInDB})
+   })
+   .then(function(data) {
+     dataCompUserGoals.push(data);
+     res.send(dataCompUserGoals)
+   })
+  .catch(function(err) {
+    console.log(err, 'this is the promise error')
+    res.send(err)
+  })
+
+
+  // , (err, data) => {
+	// 	if (err) {
+	// 		console.log(err)
+	// 	} else {
+  //     //
+  //     console.log('newest data from sercer', data)
+  //     dataCompUserGoals.push(data)
+	// 	}
+  // }).
+  // res.send(dataCompUserGoals)
 })
 
 app.get('/api/checkin/:id', (req, res) => {
