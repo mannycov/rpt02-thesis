@@ -536,7 +536,7 @@ class CheckIn extends Component {
 
         <h2 style={textStyle}>Target: {this.renderGoalTarget(goal)}</h2>
 
-        <h2 style={textStyle}>{goal.notes ? goal.notes : ''}</h2>
+        <h2 style={textStyle}>{goal.notes ? `Notes: ${goal.notes}` : ''}</h2>
 
         <Grid celled>
           <Grid.Row centered columns={2}>
