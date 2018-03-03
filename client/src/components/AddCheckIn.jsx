@@ -5,7 +5,7 @@ import { Button, Modal } from 'semantic-ui-react'
 import CheckInForm from './CheckInForm.jsx'
 
 const AddCheckIn = props => (
-  <div>{console.log('hello smarty', props.date)}
+  <div>
     <Button primary onClick={() => { props.show('large') }}>
       <i className="plus icon" />
           Check In

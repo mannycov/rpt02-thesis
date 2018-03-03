@@ -13,9 +13,7 @@ class CheckInForm extends Component {
       weight: this.props.weight,
       reps: this.props.reps,
       sets: this.props.sets,
-      open: false,
-      handleChange: this.props.handleChange,
-      handleCheckInCalChange: this.props.handleCheckInCalChange
+      handleChange: this.props.handleChange
     }
     this.renderFormInputs = this.renderFormInputs.bind(this)
     this.checkSecs = this.checkSecs.bind(this)
@@ -91,33 +89,6 @@ class CheckInForm extends Component {
       </Form.Group>)
     } else if (goal.category === 'Cardio') {
       return (
-        // <Form.Group>
-        //   <Form.Input
-        //     width="3"
-        //     fluid
-        //     label="Date"
-        //     name="date"
-        //     value={this.checkInDate}
-        //   />
-        //   <Form.Input
-        //     width="3"
-        //     fluid
-        //     label="Minutes"
-        //     name="min"
-        //     value={this.props.min}
-        //     onChange={handleChange}
-        //     placeholder="00"
-        //   />
-        //   <Form.Input
-        //     width="3"
-        //     fluid
-        //     label="Seconds"
-        //     name="secs"
-        //     value={this.props.secs}
-        //     onChange={handleChange}
-        //     placeholder="00"
-        //   />
-        // </Form.Group>
         <Form.Group>
           <Popup
             on="click"
@@ -125,7 +96,7 @@ class CheckInForm extends Component {
               <Form.Input
                 width="3"
                 type="text"
-                value={this.state.checkInDate.format('MMMM DD YYYY')}
+                value={date.format('MMMM Do YYYY')}
                 readOnly fluid
                 label="Date"
                 placeholder="Date"
@@ -134,8 +105,8 @@ class CheckInForm extends Component {
             content={
               <InputMoment
                 width="3"
-                moment={this.state.checkInDate}
-                onChange={this.handleCheckInCalChange}
+                moment={date}
+                onChange={handleCheckInCalChange}
                 minStep={5}
               />
             }
@@ -162,15 +133,6 @@ class CheckInForm extends Component {
         </Form.Group>)
     } else if (goal.category === 'Habit') {
       return (
-        // <Form.Group>
-        //   <Form.Input
-        //     width="3"
-        //     fluid
-        //     label="Date"
-        //     name="date"
-        //     value={this.checkInDate}
-        //   />
-        // </Form.Group>
         <Form.Group>
           <Popup
             on="click"
@@ -178,7 +140,7 @@ class CheckInForm extends Component {
               <Form.Input
                 width="3"
                 type="text"
-                value={this.state.checkInDate.format('MMMM DD YYYY')}
+                value={date.format('MMMM Do YYYY')}
                 readOnly fluid
                 label="Date"
                 placeholder="Date"
@@ -187,8 +149,8 @@ class CheckInForm extends Component {
             content={
               <InputMoment
                 width="3"
-                moment={this.state.checkInDate}
-                onChange={this.handleCheckInCalChange}
+                moment={date}
+                onChange={handleCheckInCalChange}
                 minStep={5}
               />
             }
