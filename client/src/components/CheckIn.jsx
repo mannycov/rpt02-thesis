@@ -14,7 +14,7 @@ class CheckIn extends Component {
 
     this.state = {
       checked: false,
-      today: new Date().toDateString(),
+      today: moment(),
       goal: this.props.location.state.goal,
       goalId: this.props.match.params.id,
       checkins: [],
@@ -24,6 +24,7 @@ class CheckIn extends Component {
       sets: '',
       min: '',
       secs: '',
+      days: 0,
       goalTime: '',
       size: '',
       open: false
@@ -208,7 +209,7 @@ class CheckIn extends Component {
     } else if (goal.category === 'Habit') {
       for (let i = 0; i < checkins.length; i += 1) {
         if (checkins[i].days) {
-          if (checkins[i].days >= goal.target) {
+          if (checkins[i].days >= goal.daysTarget) {
             newGoalState.complete = true
           }
         }
@@ -358,7 +359,6 @@ class CheckIn extends Component {
         <Table.Row>
           <Table.HeaderCell rowSpan="2">Date</Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Time</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Check In</Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Remove</Table.HeaderCell>
         </Table.Row>
       )
@@ -369,7 +369,6 @@ class CheckIn extends Component {
           <Table.HeaderCell rowSpan="2">Weight</Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Reps</Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Sets</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Check In</Table.HeaderCell>
           <Table.HeaderCell rowSpan="2">Remove</Table.HeaderCell>
         </Table.Row>
       )
@@ -402,7 +401,6 @@ class CheckIn extends Component {
             <Table.Row key={checkin._id}>
               <Table.Cell>{checkin.date}</Table.Cell>
               <Table.Cell>{checkin.secs === null || checkin.secs === 0 ? `${checkin.min}:00` : `${checkin.min}:${checkin.secs}`}</Table.Cell>
-              <Table.Cell>{this.renderIcon()}</Table.Cell>
               <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
             </Table.Row>
           ))}
@@ -417,7 +415,6 @@ class CheckIn extends Component {
               <Table.Cell>{checkin.weight} lbs.</Table.Cell>
               <Table.Cell>{checkin.reps}</Table.Cell>
               <Table.Cell>{checkin.sets}</Table.Cell>
-              <Table.Cell>{this.renderIcon()}</Table.Cell>
               <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
             </Table.Row>
           ))}
