@@ -106,19 +106,19 @@ class UserHome extends Component {
 	// }
 
 	fetchGoalsCompetitionsUserId() {
-		axios
-			.get("/api/getGoalsCompetitionsUserId")
-			.then(response => {
-				this.setState({
-          userId: response.data[0],
-          competitionData: response.data[1],
-          goals: response.data[2]
-				}, () => { this.handleAccomplishments() })
-				console.log("data from the db in user home", response)
-			})
-			.catch(error => {
-				console.log(error)
-			});
+		// axios
+		// 	.get("/api/getGoalsCompetitionsUserId")
+		// 	.then(response => {
+		// 		this.setState({
+    //       userId: response.data[0],
+    //       competitionData: response.data[1],
+    //       goals: response.data[2]
+		// 		}, () => { this.handleAccomplishments() })
+		// 		console.log('🙄', response)
+		// 	})
+		// 	.catch(error => {
+		// 		console.log(error)
+    // 	});
 	}
 
   handleAccomplishments () {

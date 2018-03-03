@@ -76,10 +76,10 @@ userRouter.post('/login',
       User.checkUser(req.body.password, newHash,  function(result) {
         console.log("reaching the final redirect step?:" + result)
         //import userAccess then pass unique id into func
-        User.userAccess(req.body.username)
-        res.redirect('/users/userhome')
+        User.userAccess(user[0].id, function(data) {
+          res.send(data)
+        })
       })
-
     })
   }
   // ,

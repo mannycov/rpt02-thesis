@@ -33,9 +33,11 @@ class LoginForm extends Component {
     		password
     	})
     	.then((response)=> {
-    		console.log(response)
-        this.props.history.push("/userhome")
+        console.log('🏁', response.data)
+        // Window['userId'] = response.data
 
+        console.log()
+        this.props.history.push("/userhome")
     	})
     	.catch((err)=> {
     		console.log(err)
