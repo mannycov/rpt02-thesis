@@ -7,6 +7,47 @@
 .ui.form .fields>.field {
   padding-right: 0;
 }
-/* table {
-  background-color: blue;
-} */
+
+.ui.grid {
+  margin-right: 4%;
+  margin-left: 4%;
+  margin-top: 1%;
+}
+
+h1 {
+  color: dimgray;
+  margin-bottom: 45px;
+}
+
+.ui.secondary.menu {
+  margin-top: 23px;
+  margin-left: 1%;
+}
+
+button.ui.button {
+  margin-top: 4px;
+}
+
+.right.item,
+.ui.menu:not(.vertical) .right.menu {
+  margin-left: 50% !important;
+}
+
+table.ui.celled.structured.table {
+  width: 125%;
+  margin-left: -3%;
+}
+
+thead {
+  color: dimgray;
+}
+
+button.ui.circular.icon.primary.button {
+  position: relative;
+  top: 81px;
+  right: 11%;
+}
+
+.seven.wide.column {
+  position: relative;
+}
