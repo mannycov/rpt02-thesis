@@ -8,14 +8,11 @@ const HomePageHeader = () => (
 		<div className="ui attached stackable menu">
 			<div className="ui container">
 				<a className="ui small image">
-					  <Image src="/../assets/weightlifting.svg" />
+					  <Image src="../assets/weightlifting.svg" />
 				</a>
 
 				<a className="item">
 					<i className="grid layout icon" /> Browse
-				</a>
-				<a className="item">
-					<i className="mail icon" /> Messages
 				</a>
 
 				<div className="ui simple dropdown item">
