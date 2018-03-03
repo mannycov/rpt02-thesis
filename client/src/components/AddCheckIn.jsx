@@ -23,11 +23,11 @@ const AddCheckIn = props => (
           goal={props.goal}
           close={props.close}
           date={props.date}
+          handleCheckInCalChange={props.handleCheckInCalChange}
           handleChange={props.handleChange}
           handleSubmit={props.handleSubmit}
           min={props.min}
           secs={props.secs}
-          handleCheckInCalChange={props.handleCheckInCalChange}
         />
       </Modal.Content>
     </Modal>

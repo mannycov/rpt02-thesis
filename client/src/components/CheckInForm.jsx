@@ -10,7 +10,6 @@ class CheckInForm extends Component {
 
     this.state = {
       goal: this.props.goal,
-      checkInDate: moment(),
       weight: this.props.weight,
       reps: this.props.reps,
       sets: this.props.sets,
@@ -20,7 +19,6 @@ class CheckInForm extends Component {
     }
     this.renderFormInputs = this.renderFormInputs.bind(this)
     this.checkSecs = this.checkSecs.bind(this)
-    this.handleCheckInCalChange = this.handleCheckInCalChange.bind(this)
   }
 
   checkSecs () {
@@ -30,22 +28,15 @@ class CheckInForm extends Component {
     }
   }
 
-  handleCheckInCalChange (m) {
-    this.setState({
-      checkInDate: m // date:  moment(selectedDate).format('DD/MM/YYYY')
-    })
-  }
-
   renderFormInputs () {
-    console.log('whats in the handlchange in checkinform', this.state.checkInDate)
     const {
       goal,
-      date,
       weight,
       reps,
       sets,
       handleChange
     } = this.state
+    const { date, handleCheckInCalChange } = this.props
     if (goal.category === 'Strength') {
       return (<Form.Group>
         <Popup
@@ -54,7 +45,7 @@ class CheckInForm extends Component {
             <Form.Input
               width="3"
               type="text"
-              value={this.state.checkInDate.format('MMMM DD YYYY')}
+              value={date.format('MMMM Do YYYY')}
               readOnly fluid
               label="Date"
               placeholder="Date"
@@ -63,8 +54,8 @@ class CheckInForm extends Component {
           content={
             <InputMoment
               width="3"
-              moment={this.state.checkInDate}
-              onChange={this.handleCheckInCalChange}
+              moment={date}
+              onChange={handleCheckInCalChange}
               minStep={5}
             />
           }
@@ -128,47 +119,47 @@ class CheckInForm extends Component {
         //   />
         // </Form.Group>
         <Form.Group>
-        <Popup
-          on="click"
-          trigger={
-            <Form.Input
-              width="3"
-              type="text"
-              value={this.state.checkInDate.format('MMMM DD YYYY')}
-              readOnly fluid
-              label="Date"
-              placeholder="Date"
-            />
-          }
-          content={
-            <InputMoment
-              width="3"
-              moment={this.state.checkInDate}
-              onChange={this.handleCheckInCalChange}
-              minStep={5}
-            />
-          }
-          position="bottom center"
-        />
-        <Form.Input
-          width="3"
-          fluid
-          label="Minutes"
-          name="min"
-          value={this.props.min}
-          onChange={handleChange}
-          placeholder="00"
-        />
-        <Form.Input
-          width="3"
-          fluid
-          label="Seconds"
-          name="secs"
-          value={this.props.secs}
-          onChange={handleChange}
-          placeholder="00"
-        />
-      </Form.Group>)
+          <Popup
+            on="click"
+            trigger={
+              <Form.Input
+                width="3"
+                type="text"
+                value={this.state.checkInDate.format('MMMM DD YYYY')}
+                readOnly fluid
+                label="Date"
+                placeholder="Date"
+              />
+            }
+            content={
+              <InputMoment
+                width="3"
+                moment={this.state.checkInDate}
+                onChange={this.handleCheckInCalChange}
+                minStep={5}
+              />
+            }
+            position="bottom center"
+          />
+          <Form.Input
+            width="3"
+            fluid
+            label="Minutes"
+            name="min"
+            value={this.props.min}
+            onChange={handleChange}
+            placeholder="00"
+          />
+          <Form.Input
+            width="3"
+            fluid
+            label="Seconds"
+            name="secs"
+            value={this.props.secs}
+            onChange={handleChange}
+            placeholder="00"
+          />
+        </Form.Group>)
     } else if (goal.category === 'Habit') {
       return (
         // <Form.Group>
@@ -181,29 +172,29 @@ class CheckInForm extends Component {
         //   />
         // </Form.Group>
         <Form.Group>
-        <Popup
-          on="click"
-          trigger={
-            <Form.Input
-              width="3"
-              type="text"
-              value={this.state.checkInDate.format('MMMM DD YYYY')}
-              readOnly fluid
-              label="Date"
-              placeholder="Date"
-            />
-          }
-          content={
-            <InputMoment
-              width="3"
-              moment={this.state.checkInDate}
-              onChange={this.handleCheckInCalChange}
-              minStep={5}
-            />
-          }
-          position="bottom center"
-        />
-      </Form.Group>)
+          <Popup
+            on="click"
+            trigger={
+              <Form.Input
+                width="3"
+                type="text"
+                value={this.state.checkInDate.format('MMMM DD YYYY')}
+                readOnly fluid
+                label="Date"
+                placeholder="Date"
+              />
+            }
+            content={
+              <InputMoment
+                width="3"
+                moment={this.state.checkInDate}
+                onChange={this.handleCheckInCalChange}
+                minStep={5}
+              />
+            }
+            position="bottom center"
+          />
+        </Form.Group>)
     }
   }
 

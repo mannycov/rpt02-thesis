@@ -14,11 +14,11 @@ class CheckIn extends Component {
 
     this.state = {
       checked: false,
-      today: moment(),
+      today: moment().format('MMMM Do YYYY'),
       goal: this.props.location.state.goal,
       goalId: this.props.match.params.id,
       checkins: [],
-      date: new Date().toDateString(),
+      date: moment(),
       weight: '',
       reps: '',
       sets: '',
@@ -33,6 +33,7 @@ class CheckIn extends Component {
     this.show = this.show.bind(this)
     this.close = this.close.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleCheckInCalChange = this.handleCheckInCalChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.fetchCheckIns = this.fetchCheckIns.bind(this)
     this.handleRemoveCheckIn = this.handleRemoveCheckIn.bind(this)
@@ -52,6 +53,7 @@ class CheckIn extends Component {
   componentDidMount () {
     this.fetchCheckIns()
     this.handleCardioGoal()
+    console.log(this.state.today === this.state.date)
   }
 
   toggle () {
@@ -78,6 +80,12 @@ class CheckIn extends Component {
   handleChange (e, { name, value }) {
     this.setState({
       [name]: value
+    })
+  }
+
+  handleCheckInCalChange (m) {
+    this.setState({
+      date: m
     })
   }
 
@@ -387,7 +395,7 @@ class CheckIn extends Component {
         <Table.Body>
           {checkins.map(checkin => (
             <Table.Row key={checkin._id}>
-              <Table.Cell>{checkin.date}</Table.Cell>
+              <Table.Cell>{checkin.date ? checkin.date.slice(0, 10) : ''}</Table.Cell>
               <Table.Cell>{this.renderIcon()}</Table.Cell>
               <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
             </Table.Row>
@@ -399,7 +407,7 @@ class CheckIn extends Component {
         <Table.Body>
           {checkins.map(checkin => (
             <Table.Row key={checkin._id}>
-              <Table.Cell>{checkin.date}</Table.Cell>
+              <Table.Cell>{checkin.date ? checkin.date.slice(0, 10) : ''}</Table.Cell>
               <Table.Cell>{checkin.secs === null || checkin.secs === 0 ? `${checkin.min}:00` : `${checkin.min}:${checkin.secs}`}</Table.Cell>
               <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
             </Table.Row>
@@ -411,7 +419,7 @@ class CheckIn extends Component {
         <Table.Body>
           {checkins.map(checkin => (
             <Table.Row key={checkin._id}>
-              <Table.Cell>{checkin.date}</Table.Cell>
+              <Table.Cell>{checkin.date ? checkin.date.slice(0, 10) : ''}</Table.Cell>
               <Table.Cell>{checkin.weight} lbs.</Table.Cell>
               <Table.Cell>{checkin.reps}</Table.Cell>
               <Table.Cell>{checkin.sets}</Table.Cell>
@@ -472,6 +480,7 @@ class CheckIn extends Component {
           size={size}
           open={open}
           handleChange={this.handleChange}
+          handleCheckInCalChange={this.handleCheckInCalChange}
           handleSubmit={this.handleSubmit}
           show={this.show}
           close={this.close}
