@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('../database/models/users');
+var User = require('../database/models/users')
 
 var userRouter = express.Router();
 
@@ -75,7 +75,9 @@ userRouter.post('/login',
 
       User.checkUser(req.body.password, newHash,  function(result) {
         console.log("reaching the final redirect step?:" + result)
-        res.redirect('/users/userhome');
+        //import userAccess then pass unique id into func
+        User.userAccess(req.body.username)
+        res.redirect('/users/userhome')
       })
 
     })

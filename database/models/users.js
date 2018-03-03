@@ -88,3 +88,24 @@ module.exports.checkUser = function(userCredentials, hash, callback){
 //       callback(null, isMatch);
 //   });
 }
+
+module.exports.userAccess = function(userId) {
+	let dataCompUserGoals = [];
+	let userIdInDB = userId;
+
+	dataCompUserGoals.push(userIdInDB);
+
+	CompetitionsModel.find({ competitions_user: userIdInDB })
+		.then(function(data) {
+			dataCompUserGoals.push(data);
+			return GoalsModel.find({ goals_user: userIdInDB });
+		})
+		.then(function(data) {
+			dataCompUserGoals.push(data);
+			callback(null, dataCompUserGoals);
+		})
+
+		.catch(function(err) {
+			console.log(err, "this is the promise error");
+		})
+};
