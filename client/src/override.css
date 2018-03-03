@@ -34,7 +34,7 @@ button.ui.button {
 }
 
 table.ui.celled.structured.table {
-  width: 125%;
+  width: 108%;
   margin-left: -3%;
 }
 
@@ -50,4 +50,20 @@ button.ui.circular.icon.primary.button {
 
 .seven.wide.column {
   position: relative;
+}
+
+.ui.container {
+  margin-left: 3% !important;
+}
+
+img.ui.image {
+  display: block !important;
+  width: 86% !important;
+  height: auto !important;
+  margin-left: 5%;
+  opacity: .9;
+}
+
+.winning {
+  color: white;
 }
