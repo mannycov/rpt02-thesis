@@ -3,7 +3,8 @@ var Schema = mongoose.Schema
 var db = mongoose.connection
 
 mongoose.connect(
-  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely'
+  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely',
+  { server: { reconnectTries: Number.MAX_VALUE } }
 )
 
 //competely:Youcandoit@ds133796.mlab.com:33796/competely
@@ -13,29 +14,30 @@ db.once('open', function () {
   console.log('you da man and connected in more ways than you know')
 })
 
-const userSchema = new Schema({
-  user_id: Number,
-  first_name: String,
-  last_name: String,
-  username: String,
-  email: String,
-  // comments: [{ body: String, date: Date }],
-  date_of_birth: { type: Date },
-  about_me: String,
-  password: String,
-  friends_id: Array,
-  goals_id: Array,
-  competitions_id: Array,
-  public_profile: Boolean,
-  country: String,
-  state: String,
-  city: String,
-  postal: Number,
-  trophies: Number
-})
+// const userSchema = new Schema({
+//   user_id: Number,
+//   first_name: String,
+//   last_name: String,
+//   username: String,
+//   email: String,
+//   // comments: [{ body: String, date: Date }],
+//   date_of_birth: { type: Date },
+//   about_me: String,
+//   password: String,
+//   friends_id: Array,
+//   goals_id: Array,
+//   competitions_id: Array,
+//   public_profile: Boolean,
+//   country: String,
+//   state: String,
+//   city: String,
+//   postal: Number,
+//   trophies: Number
+// })
 
 const goalsSchema = new Schema({
   goals_id: Number,
+  goals_user: String,
   goals_name: String,
   weightTarget: Number,
   repTarget: Number,
@@ -55,22 +57,24 @@ const goalsSchema = new Schema({
 export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 
 const checkInSchema = new Schema({
-  checkin_id: Number,
-  goal: { type: Schema.Types.ObjectId, ref: 'GoalsModel' },
-  date: String,
-  weight: Number,
-  reps: Number,
-  sets: Number,
-  min: Number,
-  secs: Number,
-  target: Number,
-  check_in: Boolean
-})
+	checkin_id: Number,
+	checkin_user: Number,
+	goal: { type: Schema.Types.ObjectId, ref: "GoalsModel" },
+	date: String,
+	weight: Number,
+	reps: Number,
+	sets: Number,
+	min: Number,
+	secs: Number,
+	target: Number,
+	check_in: Boolean
+});
 
 export const CheckInModel = mongoose.model('CheckInModel', checkInSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
+  competitions_user: String,
   competitions_pictures: String,
   competitions_name: String,
   competitions_category: String,

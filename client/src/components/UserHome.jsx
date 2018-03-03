@@ -12,112 +12,114 @@ import Goal from './Goal.jsx'
 import Accomplishments from './Accomplishments.jsx'
 
 class UserHome extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
+      userId: null,
       competitionData: [],
       goals: [],
       accomplishments: [],
-      isHidden: true,
-      compName: '',
-      compCat: '',
-      compStart: moment(),
-      compStartClick: false,
-      compEnd: moment(),
-      compEndClick: true
-    }
-    this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
-    this.handleCompName = this.handleCompName.bind(this)
-    this.handleCompCat = this.handleCompCat.bind(this)
-    this.competitionsSubmit = this.competitionsSubmit.bind(this)
-    this.handleStartChange = this.handleStartChange.bind(this)
-    this.handleEndChange = this.handleEndChange.bind(this)
+			isHidden: true,
+			compName: "",
+			compCat: "",
+			compStart: moment(),
+			compStartClick: false,
+			compEnd: moment(),
+			compEndClick: true
+		}
+		this.competitionsHandleClick = this.competitionsHandleClick.bind(this);
+		this.handleCompName = this.handleCompName.bind(this);
+		this.handleCompCat = this.handleCompCat.bind(this);
+		this.competitionsSubmit = this.competitionsSubmit.bind(this);
+		this.handleStartChange = this.handleStartChange.bind(this);
+		this.handleEndChange = this.handleEndChange.bind(this);
     this.handleAccomplishments = this.handleAccomplishments.bind(this)
-    this.handleCompStartSave = this.handleCompStartSave.bind(this)
-    this.handleCompEndSave = this.handleCompEndSave.bind(this)
-  }
-  componentDidMount () {
-    this.fetchGoals()
-    this.fetchCompetitions()
-  }
+		this.handleCompStartSave = this.handleCompStartSave.bind(this);
+		this.handleCompEndSave = this.handleCompEndSave.bind(this);
+	}
+	componentDidMount() {
+		this.fetchGoalsCompetitionsUserId()
+	}
 
-  handleItemClick(name) {
-    this.setState({ activeItem: name })
-  }
+	handleItemClick(name) {
+		this.setState({ activeItem: name });
+	}
 
-  competitionsHandleClick(isHidden) {
-    this.setState({
-      isHidden: !isHidden
-    })
-  }
+	competitionsHandleClick(isHidden) {
+		this.setState({
+			isHidden: !isHidden
+		});
+	}
 
-  handleCompName(compName) {
-    console.log(compName);
-    this.setState({
-      compName: compName.target.value
-    })
-  }
+	handleCompName(compName) {
+		console.log(compName);
+		this.setState({
+			compName: compName.target.value
+		});
+	}
 
-  handleCompCat(e, compCat) {
-    this.setState({
-      compCat: compCat.value
-    })
-  }
+	handleCompCat(e, compCat) {
+		this.setState({
+			compCat: compCat.value
+		});
+	}
 
-  handleStartChange (m) {
-    console.log('handle startchange in userhome m coming back', m)
-    this.setState({
-      compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
-    })
-  }
+	handleStartChange(m) {
+		console.log("handle startchange in userhome m coming back", m);
+		this.setState({
+			compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
+		});
+	}
 
-  handleEndChange (m) {
-    console.log('end change in userhome', m)
-    this.setState({
-      compEnd: m
-    })
-  }
+	handleEndChange(m) {
+		console.log("end change in userhome", m);
+		this.setState({
+			compEnd: m
+		});
+	}
 
-  handleCompStartSave () {
-    console.log('saving clicking changes components start date')
-    this.setState({
-      compStartSaveClick: true
-    })
-  }
+	handleCompStartSave() {
+		console.log("saving clicking changes components start date");
+		this.setState({
+			compStartSaveClick: true
+		});
+	}
 
-  handleCompEndSave (falsey) {
-    console.log('saving clicking changes components end date')
-    this.setState({
-      compEndClick: !falsey
-    })
-  }
+	handleCompEndSave(falsey) {
+		console.log("saving clicking changes components end date");
+		this.setState({
+			compEndClick: !falsey
+		});
+	}
 
-  fetchGoals () {
-    axios
-      .get("/api/goal")
-      .then((response) => {
-        this.setState({
-          goals: response.data
-        }, () => { this.handleAccomplishments() })
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+	// fetchGoals() {
+	// 	axios
+	// 		.get("/api/goal")
+	// 		.then(response => {
+	// 			this.setState({
+	// 				goals: response.data
+	// 			});
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error);
+	// 		});
+	// }
 
-  fetchCompetitions() {
-    axios
-      .get("/api/getcompetitions")
-      .then(response => {
-        this.setState({
-          competitionData: response.data
-        });
-        console.log("data from the db in user home", response.data);
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+	fetchGoalsCompetitionsUserId() {
+		axios
+			.get("/api/getGoalsCompetitionsUserId")
+			.then(response => {
+				this.setState({
+          userId: response.data[0],
+          competitionData: response.data[1],
+          goals: response.data[2]
+				}, () => { this.handleAccomplishments() })
+				console.log("data from the db in user home", response)
+			})
+			.catch(error => {
+				console.log(error)
+			});
+	}
 
   handleAccomplishments () {
     const { goals, accomplishments } = this.state
@@ -160,7 +162,8 @@ class UserHome extends Component {
       compStart: moment(),
       compEnd: moment(),
       compStartClick: false,
-      compEndClick: false
+      compEndClick: false,
+      userId: null
     })
     axios
       .post("/api/competitions", {
@@ -168,7 +171,8 @@ class UserHome extends Component {
         competitionCategory: compsCat,
         competitionStart: compsStart,
         competitionEnd: compsEnd,
-        competitionPic: ""
+        competitionPic: "",
+        userIdComp: userIdComp
       })
       .then(response => {
         console.log("in userHome file data back from server", response.data);
@@ -247,6 +251,7 @@ class UserHome extends Component {
     return (
       <CompetitionsFullPage
         Data={this.state.competitionData}
+        userId={this.state.userId}
         isHidden={this.state.isHidden}
         compName={this.state.compName}
         compCat={this.state.compCat}

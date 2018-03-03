@@ -5,6 +5,8 @@ import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
+import fs from 'fs'
+import multer from 'multer'
 
 // import App from '../client/src/components/App.jsx'
 
@@ -16,8 +18,7 @@ import {
   CategoriesModel
 } from '../database/index.js'
 import path from 'path';
-import cookieParser from 'cookie-parser';
-import exphbs from 'express-handlebars';
+import cookieParser from 'cookie-parser'
 import expressValidator from 'express-validator';
 import flash from 'connect-flash';
 import session from 'express-session';
@@ -39,9 +40,9 @@ const app = express();
 
 //BodyParser Middlewar
 app.use(expressLogging(logger));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(cookieParser())
 
 //View Engine
 // app.set('views', path.join(__dirname, 'views'));
@@ -56,52 +57,48 @@ app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: true
-}));
+}))
 
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());
 
 //Express Validator
-app.use(expressValidator({
-  errorFormatter(param, msg, value){
-    var namespace = param.split('.')
-    , root = namespace.shift()
-    , formParam = root;
 
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return{
-      param : formParam,
-      msg : msg,
-      value : value
-    };
-  }
-}));
+// app.use(expressValidator({
+//   errorFormatter: function(param, msg, value){
+//     var namespace = param.split('.')
+//     , root = namespace.shift()
+//     , formParam = root;
+
+//     while(namespace.length) {
+//       formParam += '[' + namespace.shift() + ']';
+//     }
+//     return{
+//       param : formParam,
+//       msg : msg,
+//       value : value
+//     };
+//   }
+// }))
 
 // Connect Flash
-app.use(flash());
+// app.use(flash())
 
 // Global Vars
-app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  res.locals.user = req.user || null;
-  next();
-});
-
+// app.use(function (req, res, next) {
+//   res.locals.success_msg = req.flash('success_msg');
+//   res.locals.error_msg = req.flash('error_msg');
+//   res.locals.error = req.flash('error');
+//   res.locals.user = req.user || null;
+//   next();
+// });
 
 app.use('/users' , usersRouter)
 // app.use('/', Root);
 // app.use('/users', (req, res) => {
 //   res.send('Hello homeboy g money')
 // });
-
-
-
-
 
 const emptyObj = []
 
@@ -115,6 +112,30 @@ app.get('/api/goal', (req, res) => {
   })
 })
 
+// app.use(multer({ dest: './uploads/',
+//  rename: function (fieldname, filename) {
+//    return filename;
+//  },
+// }))
+
+// app.post('/api/photo',function(req,res){
+//  var newProfilePic = new userSchema()
+//  newProfilePic.img.data = fs.readFileSync(req.files.userPhoto.path)
+//  newProfilePic.img.contentType = 'image/png'
+//  newProfilePic.save();
+// })
+// if (err) {
+//       console.log(err)
+//     } else {
+//       const competitionsModelInstance = new CompetitionsModel({
+//         competitions_name: competitionBody.comptetionName,
+//         competitions_category: competitionBody.competitionCategory,
+//         competitions_start_date: competitionBody.competitionStart,
+//         competitions_end_date: competitionBody.competitionEnd,
+//         competitions_pictures: matchingCategory
+//       })
+
+
 app.get('/api/getcompetitions', (req, res) => {
   CompetitionsModel.find({}, (err, data) => {
     if (err) {
@@ -123,6 +144,40 @@ app.get('/api/getcompetitions', (req, res) => {
       res.send(data)
     }
   })
+})
+
+/*function that has to map into login and/or registers user id*/
+app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
+  let dataCompUserGoals = []
+  let userIdInDB = "5a989cc204ac7563fae85f68"
+
+  dataCompUserGoals.push(userIdInDB)
+
+  CompetitionsModel.find({ competitions_user: userIdInDB })
+    .then(function(data) {
+    dataCompUserGoals.push(data)
+    return GoalsModel.find({goals_user: userIdInDB})
+   })
+   .then(function(data) {
+     dataCompUserGoals.push(data)
+     res.send(dataCompUserGoals)
+   })
+  .catch(function(err) {
+    console.log(err, 'this is the promise error')
+    res.send(err)
+  })
+
+
+  // , (err, data) => {
+	// 	if (err) {
+	// 		console.log(err)
+	// 	} else {
+  //     //
+  //     console.log('newest data from sercer', data)
+  //     dataCompUserGoals.push(data)
+	// 	}
+  // }).
+  // res.send(dataCompUserGoals)
 })
 
 app.get('/api/checkin/:id', (req, res) => {
@@ -152,12 +207,13 @@ app.post('/api/competitions', (req, res) => {
       console.log(err)
     } else {
       const competitionsModelInstance = new CompetitionsModel({
-        competitions_name: competitionBody.comptetionName,
-        competitions_category: competitionBody.competitionCategory,
-        competitions_start_date: competitionBody.competitionStart,
-        competitions_end_date: competitionBody.competitionEnd,
-        competitions_pictures: matchingCategory
-      })
+				competitions_name: competitionBody.comptetionName,
+				competitions_category: competitionBody.competitionCategory,
+				competitions_start_date: competitionBody.competitionStart,
+				competitions_end_date: competitionBody.competitionEnd,
+				competitions_pictures: matchingCategory,
+				competitions_user: competitionBody.userIdComp
+			});
       competitionsModelInstance.save((err) => {
         if (err) {
           console.log('competitions not saved', err)
@@ -188,6 +244,7 @@ app.post('/api/goal', (req, res) => {
   const goalEndDate = req.body.endDate
   const goalNotes = req.body.notes
   const goalComplete = req.body.complete
+  let userId = req.body.userId
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
@@ -200,7 +257,8 @@ app.post('/api/goal', (req, res) => {
     start_date: goalStartDate,
     end_date: goalEndDate,
     notes: goalNotes,
-    complete: goalComplete
+    complete: goalComplete,
+    goals_user: userId
   })
 
   goalModelInstance.save((err) => {

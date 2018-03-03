@@ -13,6 +13,7 @@ class Goal extends Component {
     super(props)
 
     this.state = {
+      userId: null,
       goal: '',
       goalIDtoDelete: '',
       category: '',
@@ -40,16 +41,16 @@ class Goal extends Component {
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this)
     this.handleRemoveGoal = this.handleRemoveGoal.bind(this)
     this.checkGoalComplete = this.checkGoalComplete.bind(this)
-    this.fetchGoals = this.fetchGoals.bind(this)
     this.closeCancel = this.closeCancel.bind(this)
     this.closeConfirm = this.closeConfirm.bind(this)
+    // this.fetchGoals = this.fetchGoals.bind(this)
     this.close = this.close.bind(this)
     this.showConfirmDeleteModal = this.showConfirmDeleteModal.bind(this)
     this.show = this.show.bind(this)
   }
 
   componentDidMount () {
-    this.fetchGoals()
+    this.fetchGoalsCompetitionsUserId()
   }
 
   handleChange (e, { name, value }) {
@@ -94,7 +95,8 @@ class Goal extends Component {
       startDate,
       endDate,
       notes,
-      complete
+      complete,
+      userId
     } = this.state
 
     axios
@@ -109,10 +111,11 @@ class Goal extends Component {
         startDate,
         endDate,
         notes,
-        complete
+        complete,
+        userId
       })
       .then((response) => {
-        this.fetchGoals()
+        this.fetchGoalsCompetitionsUserId()
       })
       .catch((error) => {
         console.log(error)
@@ -128,7 +131,9 @@ class Goal extends Component {
       secsTarget: '',
       daysTarget: '',
       category: '',
-      notes: ''
+      notes: '',
+      startDate: moment(),
+      endDate: moment()
     })
   }
 
@@ -136,7 +141,7 @@ class Goal extends Component {
     axios
       .delete(`/api/goal/${id}`)
       .then((response) => {
-        this.fetchGoals()
+        this.fetchGoalsCompetitionsUserId()
       }, () => { this.checkGoalComplete() })
       .catch((error) => {
         console.log(error)
@@ -152,18 +157,33 @@ class Goal extends Component {
     }
   }
 
-  fetchGoals () {
-    axios
-      .get('/api/goal')
-      .then((response) => {
-        this.setState({
-          goals: response.data
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+  // fetchGoals () {
+  //   axios
+  //     .get('/api/goal')
+  //     .then((response) => {
+  //       this.setState({
+  //         goals: response.data
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }
+
+  fetchGoalsCompetitionsUserId() {
+		axios
+			.get("/api/getGoalsCompetitionsUserId")
+			.then(response => {
+				this.setState({
+          userId: response.data[0],
+          goals: response.data[2]
+				})
+				console.log("goals api call cox", response)
+			})
+			.catch(error => {
+				console.log(error)
+			})
+	}
 
   showConfirmDeleteModal (size, id) {
     this.setState({
