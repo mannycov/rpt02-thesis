@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcryptjs')
+
+ var dB = require('../../database/index.js')
+
 
 // User Schema
 var userSchema = mongoose.Schema({
@@ -95,10 +98,10 @@ module.exports.userAccess = function(userId) {
 
 	dataCompUserGoals.push(userIdInDB);
 
-	CompetitionsModel.find({ competitions_user: userIdInDB })
+	dB.CompetitionsModel.find({ competitions_user: userIdInDB })
 		.then(function(data) {
 			dataCompUserGoals.push(data);
-			return GoalsModel.find({ goals_user: userIdInDB });
+			return dB.GoalsModel.find({ goals_user: userIdInDB })
 		})
 		.then(function(data) {
 			dataCompUserGoals.push(data);
