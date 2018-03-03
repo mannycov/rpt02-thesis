@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Modal, Button, Icon } from 'semantic-ui-react'
 import moment from 'moment'
 import axios from 'axios'
 
@@ -14,14 +15,23 @@ class Goal extends Component {
     this.state = {
       userId: null,
       goal: '',
+      goalIDtoDelete: '',
       category: '',
-      target: '',
+      weightTarget: '',
+      repTarget: '',
+      minTarget: '',
+      secsTarget: '',
+      daysTarget: '',
       size: '',
+      sizeConfirm: '',
       startDate: moment(),
       endDate: moment(),
       notes: '',
+      complete: false,
+      accomplishments: [],
       goals: [],
-      open: false
+      open: false,
+      openConfirm: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -30,8 +40,12 @@ class Goal extends Component {
     this.handleDropDownChange = this.handleDropDownChange.bind(this)
     this.handleTextAreaChange = this.handleTextAreaChange.bind(this)
     this.handleRemoveGoal = this.handleRemoveGoal.bind(this)
+    this.checkGoalComplete = this.checkGoalComplete.bind(this)
+    this.closeCancel = this.closeCancel.bind(this)
+    this.closeConfirm = this.closeConfirm.bind(this)
     // this.fetchGoals = this.fetchGoals.bind(this)
     this.close = this.close.bind(this)
+    this.showConfirmDeleteModal = this.showConfirmDeleteModal.bind(this)
     this.show = this.show.bind(this)
   }
 
@@ -72,22 +86,32 @@ class Goal extends Component {
   handleSubmit () {
     const {
       goal,
-      target,
+      weightTarget,
+      repTarget,
+      minTarget,
+      secsTarget,
+      daysTarget,
       category,
       startDate,
       endDate,
       notes,
+      complete,
       userId
     } = this.state
 
     axios
       .post('/api/goal', {
         goal,
-        target,
+        weightTarget,
+        repTarget,
+        minTarget,
+        secsTarget,
+        daysTarget,
         category,
         startDate,
         endDate,
         notes,
+        complete,
         userId
       })
       .then((response) => {
@@ -101,7 +125,11 @@ class Goal extends Component {
 
     this.setState({
       goal: '',
-      target: '',
+      weightTarget: '',
+      repTarget: '',
+      minTarget: '',
+      secsTarget: '',
+      daysTarget: '',
       category: '',
       notes: '',
       startDate: moment(),
@@ -114,10 +142,19 @@ class Goal extends Component {
       .delete(`/api/goal/${id}`)
       .then((response) => {
         this.fetchGoalsCompetitionsUserId()
-      })
+      }, () => { this.checkGoalComplete() })
       .catch((error) => {
         console.log(error)
       })
+  }
+
+  checkGoalComplete () {
+    const { goals } = this.state
+    for (let i = 0; i < goals.length; i += 1) {
+      if (goals[i].complete) {
+        console.log('this goal is complete: ', goals[i])
+      }
+    }
   }
 
   // fetchGoals () {
@@ -148,10 +185,32 @@ class Goal extends Component {
 			})
 	}
 
+  showConfirmDeleteModal (size, id) {
+    this.setState({
+      sizeConfirm: size,
+      openConfirm: true,
+      goalIDtoDelete: id
+    })
+  }
+
   show (size) {
     this.setState({
       size,
       open: true
+    })
+  }
+
+  closeCancel () {
+    this.setState({
+      openConfirm: false
+    })
+  }
+
+  closeConfirm () {
+    const { goalIDtoDelete } = this.state
+    this.handleRemoveGoal(goalIDtoDelete)
+    this.setState({
+      openConfirm: false
     })
   }
 
@@ -165,10 +224,6 @@ class Goal extends Component {
     return (
       <div>
 
-        <MenuBar />
-
-        <h1>My Goals</h1>
-
         <br />
 
         <AddGoal
@@ -179,11 +234,16 @@ class Goal extends Component {
           handleEndDateChange={this.handleEndDateChange}
           handleTextAreaChange={this.handleTextAreaChange}
           goal={this.state.goal}
-          target={this.state.target}
+          weightTarget={this.state.weightTarget}
+          repTarget={this.state.repTarget}
+          minTarget={this.state.minTarget}
+          secsTarget={this.state.secsTarget}
+          daysTarget={this.state.daysTarget}
           category={this.state.category}
           startDate={this.state.startDate}
           endDate={this.state.endDate}
           notes={this.state.notes}
+          complete={this.state.complete}
           close={this.close}
           open={this.state.open}
           show={this.show}
@@ -196,6 +256,12 @@ class Goal extends Component {
           goals={this.state.goals}
           handleRemoveGoal={this.handleRemoveGoal}
           handleTableCellClick={this.handleTableCellClick}
+          renderModal={this.renderModal}
+          openConfirm={this.state.openConfirm}
+          closeCancel={this.closeCancel}
+          closeConfirm={this.closeConfirm}
+          show={this.showConfirmDeleteModal}
+          size={this.state.sizeConfirm}
         />
 
       </div>

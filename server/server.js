@@ -32,6 +32,7 @@ const db = require('../database/index.js')
 // const users = require('../routes/users');
 
 import usersRouter from '../routes/users';
+// import Goal from '../client/src/components/Goal';
 
 
 //Init App
@@ -63,6 +64,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Express Validator
+
 // app.use(expressValidator({
 //   errorFormatter: function(param, msg, value){
 //     var namespace = param.split('.')
@@ -232,20 +234,30 @@ app.post('/api/competitions', (req, res) => {
 
 app.post('/api/goal', (req, res) => {
   const goalTitle = req.body.goal
-  const goalTarget = req.body.target
+  const weightTarget = req.body.weightTarget
+  const repTarget = req.body.repTarget
+  const minTarget = req.body.minTarget
+  const secsTarget = req.body.secsTarget
+  const daysTarget = req.body.daysTarget
   const goalCategory = req.body.category
   const goalStartDate = req.body.startDate
   const goalEndDate = req.body.endDate
   const goalNotes = req.body.notes
+  const goalComplete = req.body.complete
   let userId = req.body.userId
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
-    target: goalTarget,
+    weightTarget,
+    repTarget,
+    minTarget,
+    secsTarget,
+    daysTarget,
     category: goalCategory,
     start_date: goalStartDate,
     end_date: goalEndDate,
     notes: goalNotes,
+    complete: goalComplete,
     goals_user: userId
   })
 
@@ -310,6 +322,18 @@ app.post('/api/checkin', (req, res) => {
       console.log(err)
     } else {
       res.sendStatus(201)
+    }
+  })
+})
+
+app.patch('/api/goal/:id', (req, res) => {
+  const complete = req.body.complete
+
+  GoalsModel.update({ _id: req.params.id }, { $set: { complete } }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(202)
     }
   })
 })

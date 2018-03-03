@@ -39,17 +39,19 @@ const goalsSchema = new Schema({
   goals_id: Number,
   goals_user: String,
   goals_name: String,
-  target: String,
+  weightTarget: Number,
+  repTarget: Number,
+  minTarget: Number,
+  secsTarget: Number,
+  daysTarget: Number,
   category: String,
   category_id: Array,
   start_date: String,
   end_date: String,
   notes: String,
-  status: String,
+  complete: Boolean,
   description: String,
-  purpose: String,
-  checkIns: [{ type: Schema.Types.ObjectId, ref: 'CheckInModel' }],
-  ongoing_goal: Boolean
+  checkIns: [{ type: Schema.Types.ObjectId, ref: 'CheckInModel' }]
 })
 
 export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
