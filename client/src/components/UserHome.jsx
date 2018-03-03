@@ -194,7 +194,7 @@ class UserHome extends Component {
           <Grid>
             <Grid.Column width={5}>
               <h1>Bio</h1>
-              <Grid.Row>
+              <Grid.Row style={{ width: 290 }}>
                 <Card>
                   <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
                   <Card.Content>
@@ -216,35 +216,33 @@ class UserHome extends Component {
               </Grid.Row>
 
               <br />
-              <br />
 
-              <Grid.Row>
+              <Grid.Row style={{ width: 290 }}>
                 <SideMenu
                   Data={this.state.competitionData}
                   goals={this.state.goals}
+                  accomplishments={this.state.accomplishments}
                   competitionsHandleClick={this.competitionsHandleClick}
                   isHidden={this.state.isHidden}
                   // {...props}
                 />
               </Grid.Row>
             </Grid.Column>
-            <br />
-            <br />
             <Grid.Column width={7}>
-              <h1>Goals</h1>
+              <h1 style={{ textAlign: 'center' }}>Goals</h1>
               <Grid.Row>
                 <Goal />
               </Grid.Row>
             </Grid.Column>
             <Grid.Column width={3}>
-              <h1>Accomplishments</h1>
+              <h1 style={{ textAlign: 'right' }}>Accomplishments</h1>
               <Accomplishments
                 accomplishments={this.state.accomplishments}
               />
             </Grid.Column>
           </Grid>
         </div>
-      );
+      )
     }
     return (
       <CompetitionsFullPage
