@@ -37,7 +37,7 @@ db.once('open', function () {
 
 const goalsSchema = new Schema({
   goals_id: Number,
-  goals_user: Number,
+  goals_user: String,
   goals_name: String,
   target: String,
   category: String,
@@ -72,7 +72,7 @@ export const CheckInModel = mongoose.model('CheckInModel', checkInSchema)
 
 const competitionsSchema = new Schema({
   competitions_id: Number,
-  competitions_user: Number,
+  competitions_user: String,
   competitions_pictures: String,
   competitions_name: String,
   competitions_category: String,
