@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Checkbox, Icon, Statistic } from 'semantic-ui-react'
+import { Table, Grid, Icon, Statistic } from 'semantic-ui-react'
 import axios from 'axios'
 import { VictoryChart, VictoryLine, VictoryTheme } from 'victory'
 import moment from 'moment'
@@ -526,8 +526,6 @@ class CheckIn extends Component {
 
         <br /><br />
 
-        {this.renderDayStatistic()}
-
         <br />
 
         {this.renderCompleteMessage()}
@@ -538,36 +536,49 @@ class CheckIn extends Component {
 
         <h2 style={textStyle}>Target: {this.renderGoalTarget(goal)}</h2>
 
-        {this.renderVictoryChart()}
+        <h2 style={textStyle}>{goal.notes ? goal.notes : ''}</h2>
+
+        <Grid celled>
+          <Grid.Row centered columns={2}>
+            <Grid.Column>
+              {this.renderDayStatistic()}
+              {this.renderVictoryChart()}
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row centered columns={2}>
+            <Grid.Column>
+              <AddCheckIn
+                goal={goal}
+                goalId={goalId}
+                date={date}
+                weight={weight}
+                reps={reps}
+                sets={sets}
+                min={min}
+                secs={secs}
+                size={size}
+                open={open}
+                handleChange={this.handleChange}
+                handleCheckInCalChange={this.handleCheckInCalChange}
+                handleSubmit={this.handleSubmit}
+                show={this.show}
+                close={this.close}
+              />
+
+              <br /><br />
+
+              <Table>
+                <Table.Header>
+                  {this.renderHeaderRow()}
+                </Table.Header>
+                {this.renderTableRow()}
+              </Table>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
         <br /><br />
-
-        <AddCheckIn
-          goal={goal}
-          goalId={goalId}
-          date={date}
-          weight={weight}
-          reps={reps}
-          sets={sets}
-          min={min}
-          secs={secs}
-          size={size}
-          open={open}
-          handleChange={this.handleChange}
-          handleCheckInCalChange={this.handleCheckInCalChange}
-          handleSubmit={this.handleSubmit}
-          show={this.show}
-          close={this.close}
-        />
-
-        <br /><br />
-
-        <Table>
-          <Table.Header>
-            {this.renderHeaderRow()}
-          </Table.Header>
-          {this.renderTableRow()}
-        </Table>
 
       </div>
     )
