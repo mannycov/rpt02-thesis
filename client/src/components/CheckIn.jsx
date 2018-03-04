@@ -316,7 +316,7 @@ class CheckIn extends Component {
         `00:${checkin.secs}`
       )
     } else if (checkin.secs === null || checkin.secs === 0) {
-      return ( 
+      return (
         `${checkin.min}:00`
       )
     } else {
@@ -539,7 +539,7 @@ class CheckIn extends Component {
         <h2 style={textStyle}>{goal.notes ? `Notes: ${goal.notes}` : ''}</h2>
 
         <Grid celled>
-          <Grid.Row centered columns={2}>
+          <Grid.Row centered columns={3}>
             <Grid.Column>
               {this.renderDayStatistic()}
               {this.renderVictoryChart()}

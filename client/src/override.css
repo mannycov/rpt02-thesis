@@ -56,7 +56,7 @@ button.ui.circular.icon.primary.button {
   margin-left: 3% !important;
 }
 
-img.ui.image {
+#home-squat {
   display: block !important;
   width: 86% !important;
   height: auto !important;
@@ -66,4 +66,25 @@ img.ui.image {
 
 .winning {
   color: white;
+}
+
+element.style {
+  pointer-events: all;
+  height: 69%;
+}
+
+.ui.card.trophy {
+  width: 43%;
+  padding-left: 25px;
+  padding-top: 27px;
+  margin-left: 41%;
+}
+
+img.ui.image.app-icon {
+    height: 58px;
+}
+
+.right.item,
+.ui.menu:not(.vertical) .right.menu {
+  margin-left: 80% !important;
 }

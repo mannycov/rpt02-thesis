@@ -8,7 +8,7 @@ const HomePageHeader = () => (
 		<div className="ui attached stackable menu">
 			<div className="ui container">
 				<a className="ui small image">
-					  <Image src="../assets/weightlifting.svg" />
+					<Image className="app-icon" src="https://image.flaticon.com/icons/svg/185/185590.svg" />
 				</a>
 
 				<a className="item">
