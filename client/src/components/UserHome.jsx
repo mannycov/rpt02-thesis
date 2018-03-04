@@ -106,19 +106,19 @@ class UserHome extends Component {
 	// }
 
 	fetchGoalsCompetitionsUserId() {
-		// axios
-		// 	.get("/api/getGoalsCompetitionsUserId")
-		// 	.then(response => {
-		// 		this.setState({
-    //       userId: response.data[0],
-    //       competitionData: response.data[1],
-    //       goals: response.data[2]
-		// 		}, () => { this.handleAccomplishments() })
-		// 		console.log('🙄', response)
-		// 	})
-		// 	.catch(error => {
-		// 		console.log(error)
-    // 	});
+		axios
+		.get("/api/getGoalsCompetitionsUserId")
+		.then(response => {
+		this.setState({
+    userId: response.data[0],
+    competitionData: response.data[1],
+          goals: response.data[2]
+				}, () => { this.handleAccomplishments() })
+				console.log('🙄', response)
+			})
+			.catch(error => {
+				console.log(error)
+    	});
 	}
 
   handleAccomplishments () {
@@ -191,64 +191,44 @@ class UserHome extends Component {
     console.log('ishidden value on start of app', this.state.isHidden)
     const { activeItem } = this.state || {}
     if (this.state.isHidden) {
-      return (
-        <div>
-          <MenuBar
-            isHidden={this.state.isHidden}
-            competitionsHandleClick={this.competitionsHandleClick}
-          />
-          <Grid>
-            <Grid.Column width={5}>
-              <h1>Bio</h1>
-              <Grid.Row style={{ width: 290 }}>
-                <Card>
-                  <Image src="https://react.semantic-ui.com/assets/images/avatar/large/matthew.png" />
-                  <Card.Content>
-                    <Card.Header>Manny</Card.Header>
-                    <Card.Meta>
-                      <span className="date">Joined in 2018</span>
-                    </Card.Meta>
-                    <Card.Description>
-                      Manny is some dude living in the Bay.
-                    </Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <a>
-                      <Icon name="user" />
-                      22 Friends
-                    </a>
-                  </Card.Content>
-                </Card>
-              </Grid.Row>
+      return <div>
+					<MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} />
+					<Grid>
+						<Grid.Column width={5}>
+							<h1>Bio</h1>
+							<Grid.Row style={{ width: 290 }}>
+								<Card>
+									<Image src="https://s3-us-west-1.amazonaws.com/co-directory-images/bobbymathew1.jpg" />
+									<Card.Content>
+										<Card.Header>Bobby</Card.Header>
+										<Card.Meta>
+											<span className="date">Joined in 2018</span>
+										</Card.Meta>
+										<Card.Description>
+											Bobby's in the Bay Area getting healthier
+										</Card.Description>
+									</Card.Content>
+								</Card>
+							</Grid.Row>
 
-              <br />
+							<br />
 
-              <Grid.Row style={{ width: 290 }}>
-                <SideMenu
-                  Data={this.state.competitionData}
-                  goals={this.state.goals}
-                  accomplishments={this.state.accomplishments}
-                  competitionsHandleClick={this.competitionsHandleClick}
-                  isHidden={this.state.isHidden}
-                  // {...props}
-                />
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <h1 style={{ textAlign: 'center' }}>Goals</h1>
-              <Grid.Row>
-                <Goal />
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <h1 style={{ textAlign: 'right' }}>Accomplishments</h1>
-              <Accomplishments
-                accomplishments={this.state.accomplishments}
-              />
-            </Grid.Column>
-          </Grid>
-        </div>
-      )
+							<Grid.Row style={{ width: 290 }}>
+								<SideMenu Data={this.state.competitionData} goals={this.state.goals} accomplishments={this.state.accomplishments} competitionsHandleClick={this.competitionsHandleClick} isHidden={this.state.isHidden} />
+							</Grid.Row>
+						</Grid.Column>
+						<Grid.Column width={7}>
+							<h1 style={{ textAlign: "center" }}>Goals</h1>
+							<Grid.Row>
+								<Goal />
+							</Grid.Row>
+						</Grid.Column>
+						<Grid.Column width={3}>
+							<h1 style={{ textAlign: "right" }}>Accomplishments</h1>
+							<Accomplishments accomplishments={this.state.accomplishments} />
+						</Grid.Column>
+					</Grid>
+				</div>;
     }
     return (
       <CompetitionsFullPage

@@ -29,8 +29,9 @@ const CompetitionsFullPage = ({
       <MenuBar />
       <Header as="h2">{console.log('ishidden value in comps fullpage', isHidden)}
         <Image
+          id="comp-image"
           circular
-          src="https://react.semantic-ui.com/assets/images/avatar/large/patrick.png"
+          src="https://s3-us-west-1.amazonaws.com/co-directory-images/bobbymathew1.jpg"
         />{' '}
         My Competitions
       </Header>
