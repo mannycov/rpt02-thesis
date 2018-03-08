@@ -385,8 +385,14 @@ app.delete('/api/checkin/:id', (req, res) => {
 
 app.get('*', (req, res) => {
   const context = {}
-  const application = renderToString(<StaticRouter location={req.url} context={context} ><Root /></StaticRouter>)
-
+  const application = renderToString(
+    <StaticRouter 
+      location={req.url} 
+      context={context} 
+    >
+      <Root />
+    </StaticRouter>
+  )
   const html = `<!doctype html>
     <html class="no-js" lang="">
       <head>
