@@ -10,17 +10,14 @@ const Home = () => (
     <div className="ui masthead masthead-main segment ">
 
       <div className="ui fluid image">
-        <a className="ui right corner label">
-          <i className="facebook icon"></i>
-        </a>
-        <Image src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
+        <Image id="home-squat" src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
         <div className="ui middle aligned centered stackable grid container">
           <div style={{position: 'absolute', bottom: 0, top: 55, width: 'auto', height: 'auto' }} >
             <div className="row">
               <div className="ten center aligned wide column">
                 <h1 className="ui header" id="tagline">
-                  <h1>To Be the Best, You Have to Beat the Best</h1>
-                  <div className="sub header small">
+                  <h1 className="winning">To Be the Best, You Have to Beat the Best</h1>
+                  <div className="sub header small winning">
                   Start competing today!
 
                   </div>

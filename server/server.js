@@ -17,6 +17,8 @@ import {
   CompetitionsModel,
   CategoriesModel
 } from '../database/index.js'
+
+import userAccess from '../database/models/users.js'
 import path from 'path';
 import cookieParser from 'cookie-parser'
 import expressValidator from 'express-validator';
@@ -60,8 +62,9 @@ app.use(session({
 }))
 
 // Passport init
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize())
+app.use(passport.session())
+console.log("useraccess in server 😪", userAccess())
 
 //Express Validator
 
@@ -94,7 +97,7 @@ app.use(passport.session());
 //   next();
 // });
 
-app.use('/users' , usersRouter)
+app.use('/users', usersRouter)
 // app.use('/', Root);
 // app.use('/users', (req, res) => {
 //   res.send('Hello homeboy g money')
@@ -136,6 +139,7 @@ app.get('/api/goal', (req, res) => {
 //       })
 
 
+
 app.get('/api/getcompetitions', (req, res) => {
   CompetitionsModel.find({}, (err, data) => {
     if (err) {
@@ -146,7 +150,6 @@ app.get('/api/getcompetitions', (req, res) => {
   })
 })
 
-/*function that has to map into login and/or registers user id*/
 app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
   let dataCompUserGoals = []
   let userIdInDB = "5a989cc204ac7563fae85f68"
@@ -382,8 +385,14 @@ app.delete('/api/checkin/:id', (req, res) => {
 
 app.get('*', (req, res) => {
   const context = {}
-  const application = renderToString(<StaticRouter location={req.url} context={context} ><Root /></StaticRouter>)
-
+  const application = renderToString(
+    <StaticRouter 
+      location={req.url} 
+      context={context} 
+    >
+      <Root />
+    </StaticRouter>
+  )
   const html = `<!doctype html>
     <html class="no-js" lang="">
       <head>

@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('../database/models/users');
+var User = require('../database/models/users')
 
 var userRouter = express.Router();
 
@@ -64,16 +64,36 @@ userRouter.post('/register', function(req, res, err){
 
 
 userRouter.post('/login',
-  // passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login'})
+  // passport.authenticate('local', {successRedirect:'/userhome', failureRedirect:'/users/login'})
   function(req, res) {
     console.log("REACHING THE LOGIN");
 
-    res.redirect('/');
-});
+    User.find({username:req.body.username}, function(err, user){
+      if(err) throw err;
+      var newHash = user[0].hash
+      console.log("Hash from Routes file: " + newHash)
+
+      User.checkUser(req.body.password, newHash,  function(result) {
+        console.log("reaching the final redirect step?:" + result)
+        //import userAccess then pass unique id into func
+        User.userAccess(user[0].id, function(data) {
+          res.send(data)
+        })
+      })
+    })
+  }
+  // ,
+  // function(req, res) {
+  //   console.log("reaching the final redirect step?:" + res)
+  //   res.redirect('/userhome');
+  // }
+);
+
+
 
 userRouter.get('/logout', function(req, res){
 	req.logout();
-	req.flash('success_msg', 'You are logged out');
+	// req.flash('success_msg', 'You are logged out');
 	res.redirect('/users/login');
 });
 

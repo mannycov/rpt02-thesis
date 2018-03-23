@@ -5,7 +5,7 @@ import { Button, Modal } from 'semantic-ui-react'
 import CheckInForm from './CheckInForm.jsx'
 
 const AddCheckIn = props => (
-  <div>{console.log('hello smarty', props.date)}
+  <div>
     <Button primary onClick={() => { props.show('large') }}>
       <i className="plus icon" />
           Check In
@@ -23,11 +23,11 @@ const AddCheckIn = props => (
           goal={props.goal}
           close={props.close}
           date={props.date}
+          handleCheckInCalChange={props.handleCheckInCalChange}
           handleChange={props.handleChange}
           handleSubmit={props.handleSubmit}
           min={props.min}
           secs={props.secs}
-          handleCheckInCalChange={props.handleCheckInCalChange}
         />
       </Modal.Content>
     </Modal>

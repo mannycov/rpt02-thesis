@@ -36,18 +36,20 @@ module.exports = {
         loader: 'url-loader?limit=10000&mimetype=application/fontwoff'
       },
       {
-        test: /\.less$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'less-loader'
-          }
-        ]
+				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				loader: "url-loader?limit=10000&mimetype=application/fontwoff"
+			},
+			{
+				test: /\.scss$/,
+				use: ["style-loader", "css-loader", "sass-loader"]
+			},
+			{
+				test: /\.less$/,
+				use: ["style-loader", "css-loader", "less-loader"]
+			},
+			{
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
