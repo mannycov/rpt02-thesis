@@ -106,6 +106,7 @@
     "resolve-from": "^4.0.0",
     "semantic-ui-less": "^2.2.12",
     "semantic-ui-react": "^0.77.2",
+    "style-loader": "^0.20.3",
     "url-loader": "^0.6.2",
     "victory": "^0.25.6"
   }
