@@ -3,8 +3,8 @@ import { Card, Icon, Image, Grid } from 'semantic-ui-react'
 import axios from 'axios'
 import moment from 'moment'
 import InputMoment from 'input-moment'
-
 import CompetitionsFullPage from './CompetitionsFullPage.jsx'
+
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
@@ -19,107 +19,108 @@ class UserHome extends Component {
       competitionData: [],
       goals: [],
       accomplishments: [],
-			isHidden: true,
-			compName: "",
-			compCat: "",
-			compStart: moment(),
-			compStartClick: false,
-			compEnd: moment(),
-			compEndClick: true
-		}
-		this.competitionsHandleClick = this.competitionsHandleClick.bind(this);
-		this.handleCompName = this.handleCompName.bind(this);
-		this.handleCompCat = this.handleCompCat.bind(this);
-		this.competitionsSubmit = this.competitionsSubmit.bind(this);
-		this.handleStartChange = this.handleStartChange.bind(this);
-		this.handleEndChange = this.handleEndChange.bind(this);
+      isHidden: true,
+      compName: '',
+      compCat: '',
+      compStart: moment(),
+      compStartClick: false,
+      compEnd: moment(),
+      compEndClick: true
+    }
+    this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
+    this.handleCompName = this.handleCompName.bind(this)
+    this.handleCompCat = this.handleCompCat.bind(this)
+    this.competitionsSubmit = this.competitionsSubmit.bind(this)
+    this.handleStartChange = this.handleStartChange.bind(this)
+    this.handleEndChange = this.handleEndChange.bind(this)
     this.handleAccomplishments = this.handleAccomplishments.bind(this)
-		this.handleCompStartSave = this.handleCompStartSave.bind(this);
-		this.handleCompEndSave = this.handleCompEndSave.bind(this);
-	}
-	componentDidMount() {
-		this.fetchGoalsCompetitionsUserId()
-	}
+    this.handleCompStartSave = this.handleCompStartSave.bind(this)
+    this.handleCompEndSave = this.handleCompEndSave.bind(this)
+  }
+  
+  componentDidMount () {
+    this.fetchGoalsCompetitionsUserId()
+  }
 
-	handleItemClick(name) {
-		this.setState({ activeItem: name });
-	}
+  handleItemClick (name) {
+    this.setState({ activeItem: name })
+  }
 
-	competitionsHandleClick(isHidden) {
-		this.setState({
-			isHidden: !isHidden
-		});
-	}
+  competitionsHandleClick (isHidden) {
+    this.setState({
+      isHidden: !isHidden
+    })
+  }
 
-	handleCompName(compName) {
-		console.log(compName);
-		this.setState({
-			compName: compName.target.value
-		});
-	}
+  handleCompName (compName) {
+    console.log(compName)
+    this.setState({
+      compName: compName.target.value
+    })
+  }
 
-	handleCompCat(e, compCat) {
-		this.setState({
-			compCat: compCat.value
-		});
-	}
+  handleCompCat (e, compCat) {
+    this.setState({
+      compCat: compCat.value
+    })
+  }
 
-	handleStartChange(m) {
-		console.log("handle startchange in userhome m coming back", m);
-		this.setState({
-			compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
-		});
-	}
+  handleStartChange (m) {
+    console.log('handle startchange in userhome m coming back', m)
+    this.setState({
+      compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
+    })
+  }
 
-	handleEndChange(m) {
-		console.log("end change in userhome", m);
-		this.setState({
-			compEnd: m
-		});
-	}
+  handleEndChange (m) {
+    console.log('end change in userhome', m)
+    this.setState({
+      compEnd: m
+    })
+  }
 
-	handleCompStartSave() {
-		console.log("saving clicking changes components start date");
-		this.setState({
-			compStartSaveClick: true
-		});
-	}
+  handleCompStartSave () {
+    console.log('saving clicking changes components start date')
+    this.setState({
+      compStartSaveClick: true
+    })
+  }
 
-	handleCompEndSave(falsey) {
-		console.log("saving clicking changes components end date");
-		this.setState({
-			compEndClick: !falsey
-		});
-	}
+  handleCompEndSave (falsey) {
+    console.log('saving clicking changes components end date')
+    this.setState({
+      compEndClick: !falsey
+    })
+  }
 
-	// fetchGoals() {
-	// 	axios
-	// 		.get("/api/goal")
-	// 		.then(response => {
-	// 			this.setState({
-	// 				goals: response.data
-	// 			});
-	// 		})
-	// 		.catch(error => {
-	// 			console.log(error);
-	// 		});
-	// }
+  // fetchGoals() {
+  // 	axios
+  // 		.get("/api/goal")
+  // 		.then(response => {
+  // 			this.setState({
+  // 				goals: response.data
+  // 			});
+  // 		})
+  // 		.catch(error => {
+  // 			console.log(error);
+  // 		});
+  // }
 
-	fetchGoalsCompetitionsUserId() {
-		axios
-		.get("/api/getGoalsCompetitionsUserId")
-		.then(response => {
-		this.setState({
-    userId: response.data[0],
-    competitionData: response.data[1],
+  fetchGoalsCompetitionsUserId () {
+    axios
+      .get('/api/getGoalsCompetitionsUserId')
+      .then((response) => {
+        this.setState({
+          userId: response.data[0],
+          competitionData: response.data[1],
           goals: response.data[2]
-				}, () => { this.handleAccomplishments() })
-				console.log('🙄', response)
-			})
-			.catch(error => {
-				console.log(error)
-    	});
-	}
+        }, () => { this.handleAccomplishments() })
+        console.log('🙄', response)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   handleAccomplishments () {
     const { goals, accomplishments } = this.state
@@ -135,7 +136,7 @@ class UserHome extends Component {
     this.setState({ accomplishments: copyOfAccomplishments })
   }
 
-  competitionsSubmit(
+  competitionsSubmit (
     compsName,
     compsCat,
     compsStart,
@@ -144,14 +145,14 @@ class UserHome extends Component {
     userIdComp
   ) {
     if (compsCat === 'Build Muscle') {
-      compsCat = 'Build_Muscle';
+      compsCat = 'Build_Muscle'
     } else if (compsCat === 'Lose Weight') {
       compsCat = 'Lose_Weight'
     } else {
       compsCat = compsCat
     }
     console.log(
-      "what im submitting in the user component",
+      'what im submitting in the user component',
       compsName,
       compsCat,
       compsStart,
@@ -168,67 +169,69 @@ class UserHome extends Component {
       userId: null
     })
     axios
-      .post("/api/competitions", {
+      .post('/api/competitions', {
         comptetionName: compsName,
         competitionCategory: compsCat,
         competitionStart: compsStart,
         competitionEnd: compsEnd,
-        competitionPic: "",
+        competitionPic: '',
         userIdComp: userIdComp
       })
-      .then(response => {
-        console.log("in userHome file data back from server", response.data);
+      .then((response) => {
+        console.log('in userHome file data back from server', response.data)
         this.setState({
           competitionData: response.data
         })
       })
-      .catch(error => {
-        console.log("this is the error after a post submit request", error);
+      .catch((error) => {
+        console.log('this is the error after a post submit request', error)
       })
   }
 
-  render(props) {
+  render (props) {
     console.log('ishidden value on start of app', this.state.isHidden)
     const { activeItem } = this.state || {}
     if (this.state.isHidden) {
-      return <div>
-					<MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} />
-					<Grid>
-						<Grid.Column width={5}>
-							<h1>Bio</h1>
-							<Grid.Row style={{ width: 290 }}>
-								<Card>
-									<Image src="https://s3-us-west-1.amazonaws.com/co-directory-images/bobbymathew1.jpg" />
-									<Card.Content>
-										<Card.Header>Bobby</Card.Header>
-										<Card.Meta>
-											<span className="date">Joined in 2018</span>
-										</Card.Meta>
-										<Card.Description>
+      return (
+        <div>
+          <MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} />
+          <Grid>
+            <Grid.Column width={5}>
+              <h1>Bio</h1>
+              <Grid.Row style={{ width: 290 }}>
+                <Card>
+                  <Image src="https://s3-us-west-1.amazonaws.com/co-directory-images/bobbymathew1.jpg" />
+                  <Card.Content>
+                    <Card.Header>Bobby</Card.Header>
+                    <Card.Meta>
+                      <span className="date">Joined in 2018</span>
+                    </Card.Meta>
+                    <Card.Description>
 											Bobby's in the Bay Area getting healthier
-										</Card.Description>
-									</Card.Content>
-								</Card>
-							</Grid.Row>
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              </Grid.Row>
 
-							<br />
+              <br />
 
-							<Grid.Row style={{ width: 290 }}>
-								<SideMenu Data={this.state.competitionData} goals={this.state.goals} accomplishments={this.state.accomplishments} competitionsHandleClick={this.competitionsHandleClick} isHidden={this.state.isHidden} />
-							</Grid.Row>
-						</Grid.Column>
-						<Grid.Column width={7}>
-							<h1 style={{ textAlign: "center" }}>Goals</h1>
-							<Grid.Row>
-								<Goal />
-							</Grid.Row>
-						</Grid.Column>
-						<Grid.Column width={3}>
-							<h1 style={{ textAlign: "right" }}>Accomplishments</h1>
-							<Accomplishments accomplishments={this.state.accomplishments} />
-						</Grid.Column>
-					</Grid>
-				</div>;
+              <Grid.Row style={{ width: 290 }}>
+                <SideMenu Data={this.state.competitionData} goals={this.state.goals} accomplishments={this.state.accomplishments} competitionsHandleClick={this.competitionsHandleClick} isHidden={this.state.isHidden} />
+              </Grid.Row>
+            </Grid.Column>
+            <Grid.Column width={7}>
+              <h1 style={{ textAlign: 'center' }}>Goals</h1>
+              <Grid.Row>
+                <Goal />
+              </Grid.Row>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <h1 style={{ textAlign: 'right' }}>Accomplishments</h1>
+              <Accomplishments accomplishments={this.state.accomplishments} />
+            </Grid.Column>
+          </Grid>
+        </div>
+      )
     }
     return (
       <CompetitionsFullPage

@@ -43,14 +43,14 @@ class Goal extends Component {
     this.checkGoalComplete = this.checkGoalComplete.bind(this)
     this.closeCancel = this.closeCancel.bind(this)
     this.closeConfirm = this.closeConfirm.bind(this)
-    // this.fetchGoals = this.fetchGoals.bind(this)
+    this.fetchGoals = this.fetchGoals.bind(this)
     this.close = this.close.bind(this)
     this.showConfirmDeleteModal = this.showConfirmDeleteModal.bind(this)
     this.show = this.show.bind(this)
   }
 
   componentDidMount () {
-    this.fetchGoalsCompetitionsUserId()
+    this.fetchGoals()
   }
 
   handleChange (e, { name, value }) {
@@ -157,33 +157,33 @@ class Goal extends Component {
     }
   }
 
-  // fetchGoals () {
-  //   axios
-  //     .get('/api/goal')
-  //     .then((response) => {
-  //       this.setState({
-  //         goals: response.data
-  //       })
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }
+  fetchGoals () {
+    axios
+      .get('/api/goal')
+      .then((response) => {
+        this.setState({
+          goals: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-  fetchGoalsCompetitionsUserId() {
-		axios
-			.get("/api/getGoalsCompetitionsUserId")
-			.then(response => {
-				this.setState({
-          userId: response.data[0],
-          goals: response.data[2]
-				})
-				console.log("goals api call cox", response)
-			})
-			.catch(error => {
-				console.log(error)
-			})
-	}
+  // fetchGoalsCompetitionsUserId() {
+	// 	axios
+	// 		.get("/api/getGoalsCompetitionsUserId")
+	// 		.then(response => {
+	// 			this.setState({
+  //         userId: response.data[0],
+  //         goals: response.data[2]
+	// 			})
+	// 			console.log("goals api call cox", response)
+	// 		})
+	// 		.catch(error => {
+	// 			console.log(error)
+	// 		})
+	// }
 
   showConfirmDeleteModal (size, id) {
     this.setState({

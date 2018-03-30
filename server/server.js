@@ -12,13 +12,13 @@ import multer from 'multer'
 
 import Root from '../client/Root.jsx'
 import {
-  GoalsModel,
   CheckInModel,
   CompetitionsModel,
   CategoriesModel
 } from '../database/index.js'
 
 import userAccess from '../database/models/users.js'
+import GoalsModel from '../database/models/goals.js'
 import path from 'path';
 import cookieParser from 'cookie-parser'
 import expressValidator from 'express-validator';
@@ -26,8 +26,6 @@ import flash from 'connect-flash';
 import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-
-// import GoalsModel from '../database/models/goals'
 // import CompetitionsModel from '../database/models/competitions.js'
 const db = require('../database/index.js')
 // const routes = require('../routes/index');
@@ -150,25 +148,25 @@ app.get('/api/getcompetitions', (req, res) => {
   })
 })
 
-app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
-  let dataCompUserGoals = []
-  let userIdInDB = "5a989cc204ac7563fae85f68"
+// app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
+//   let dataCompUserGoals = []
+//   let userIdInDB = "5a989cc204ac7563fae85f68"
 
-  dataCompUserGoals.push(userIdInDB)
+//   dataCompUserGoals.push(userIdInDB)
 
-  CompetitionsModel.find({ competitions_user: userIdInDB })
-    .then(function(data) {
-    dataCompUserGoals.push(data)
-    return GoalsModel.find({goals_user: userIdInDB})
-   })
-   .then(function(data) {
-     dataCompUserGoals.push(data)
-     res.send(dataCompUserGoals)
-   })
-  .catch(function(err) {
-    console.log(err, 'this is the promise error')
-    res.send(err)
-  })
+//   CompetitionsModel.find({ competitions_user: userIdInDB })
+//     .then(function(data) {
+//     dataCompUserGoals.push(data)
+//     return GoalsModel.find({goals_user: userIdInDB})
+//    })
+//    .then(function(data) {
+//      dataCompUserGoals.push(data)
+//      res.send(dataCompUserGoals)
+//    })
+//   .catch(function(err) {
+//     console.log(err, 'this is the promise error')
+//     res.send(err)
+//   })
 
 
   // , (err, data) => {
@@ -181,7 +179,7 @@ app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
 	// 	}
   // }).
   // res.send(dataCompUserGoals)
-})
+// })
 
 app.get('/api/checkin/:id', (req, res) => {
   CheckInModel.find({ goal: req.params.id }, (err, data) => {
