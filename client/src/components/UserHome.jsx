@@ -3,8 +3,8 @@ import { Card, Icon, Image, Grid } from 'semantic-ui-react'
 import axios from 'axios'
 import moment from 'moment'
 import InputMoment from 'input-moment'
-
 import CompetitionsFullPage from './CompetitionsFullPage.jsx'
+
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
@@ -37,6 +37,7 @@ class UserHome extends Component {
     this.handleCompStartSave = this.handleCompStartSave.bind(this)
     this.handleCompEndSave = this.handleCompEndSave.bind(this)
   }
+  
   componentDidMount () {
     this.fetchGoalsCompetitionsUserId()
   }

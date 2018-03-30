@@ -7,8 +7,6 @@ mongoose.connect(
   { server: { reconnectTries: Number.MAX_VALUE } }
 )
 
-//competely:Youcandoit@ds133796.mlab.com:33796/competely
-
 mongodb: db.on("error", console.error.bind(console, "connection error:"))
 db.once('open', function () {
   console.log('you da man and connected in more ways than you know')
@@ -57,18 +55,18 @@ const goalsSchema = new Schema({
 export const GoalsModel = mongoose.model('GoalsModel', goalsSchema)
 
 const checkInSchema = new Schema({
-	checkin_id: Number,
-	checkin_user: Number,
-	goal: { type: Schema.Types.ObjectId, ref: "GoalsModel" },
-	date: String,
-	weight: Number,
-	reps: Number,
-	sets: Number,
-	min: Number,
-	secs: Number,
-	target: Number,
-	check_in: Boolean
-});
+  checkin_id: Number,
+  checkin_user: Number,
+  goal: { type: Schema.Types.ObjectId, ref: "GoalsModel" },
+  date: String,
+  weight: Number,
+  reps: Number,
+  sets: Number,
+  min: Number,
+  secs: Number,
+  target: Number,
+  check_in: Boolean
+})
 
 export const CheckInModel = mongoose.model('CheckInModel', checkInSchema)
 
@@ -98,7 +96,7 @@ export const CompetitionsModel = mongoose.model('CompetitionsModel', competition
 const categoriesSchema = new Schema({
   category_id: Number,
   competitions_pictures: Array
-});
+})
 
 export const CategoriesModel = mongoose.model('CategoriesModel', categoriesSchema
 )
