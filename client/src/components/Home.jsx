@@ -12,7 +12,7 @@ const Home = () => (
         <Image id="home-squat" src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
         <div className="ui middle aligned centered stackable grid container">
           <div style={{
-            position: 'absolute', bottom: 0, top: 55, width: 'auto', height: 'auto' 
+            position: 'absolute', bottom: 0, top: 55, width: 'auto', height: 'auto'
           }}
           >
             <div className="row">

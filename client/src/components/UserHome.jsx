@@ -28,6 +28,7 @@ class UserHome extends Component {
       compEndClick: true
     }
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
+    this.fetchGoals = this.fetchGoals.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
@@ -39,7 +40,7 @@ class UserHome extends Component {
   }
   
   componentDidMount () {
-    this.fetchGoalsCompetitionsUserId()
+    this.fetchGoals()
   }
 
   handleItemClick (name) {
@@ -93,34 +94,34 @@ class UserHome extends Component {
     })
   }
 
-  // fetchGoals() {
-  // 	axios
-  // 		.get("/api/goal")
-  // 		.then(response => {
-  // 			this.setState({
-  // 				goals: response.data
-  // 			});
-  // 		})
-  // 		.catch(error => {
-  // 			console.log(error);
-  // 		});
-  // }
-
-  fetchGoalsCompetitionsUserId () {
+  fetchGoals () {
     axios
-      .get('/api/getGoalsCompetitionsUserId')
+      .get('/api/goal')
       .then((response) => {
         this.setState({
-          userId: response.data[0],
-          competitionData: response.data[1],
-          goals: response.data[2]
+          goals: response.data
         }, () => { this.handleAccomplishments() })
-        console.log('🙄', response)
       })
       .catch((error) => {
         console.log(error)
       })
   }
+
+  // fetchGoalsCompetitionsUserId () {
+  //   axios
+  //     .get('/api/getGoalsCompetitionsUserId')
+  //     .then((response) => {
+  //       this.setState({
+  //         userId: response.data[0],
+  //         competitionData: response.data[1],
+  //         goals: response.data[2]
+  //       }, () => { this.handleAccomplishments() })
+  //       console.log('🙄', response)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }
 
   handleAccomplishments () {
     const { goals, accomplishments } = this.state
@@ -189,7 +190,6 @@ class UserHome extends Component {
   }
 
   render (props) {
-    console.log('ishidden value on start of app', this.state.isHidden)
     const { activeItem } = this.state || {}
     if (this.state.isHidden) {
       return (
@@ -244,10 +244,10 @@ class UserHome extends Component {
         compEnd={this.state.compEnd}
         handleCompName={this.handleCompName}
         handleCompCat={this.handleCompCat}
-        handleCompStartSave={this.handleCompStartSave} // this 1
-        compStartClick={this.state.compStartClick} // this 1
-        handleCompEndSave={this.handleCompEndSave} // this 1
-        compEndClick={this.state.compEndClick} // this 1
+        handleCompStartSave={this.handleCompStartSave}
+        compStartClick={this.state.compStartClick}
+        handleCompEndSave={this.handleCompEndSave}
+        compEndClick={this.state.compEndClick}
         handleStartChange={this.handleStartChange}
         handleEndChange={this.handleEndChange}
         competitionsSubmit={this.competitionsSubmit}

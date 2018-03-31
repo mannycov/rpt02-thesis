@@ -115,7 +115,7 @@ class Goal extends Component {
         userId
       })
       .then((response) => {
-        this.fetchGoalsCompetitionsUserId()
+        this.fetchGoals()
       })
       .catch((error) => {
         console.log(error)
@@ -141,7 +141,7 @@ class Goal extends Component {
     axios
       .delete(`/api/goal/${id}`)
       .then((response) => {
-        this.fetchGoalsCompetitionsUserId()
+        this.fetchGoals()
       }, () => { this.checkGoalComplete() })
       .catch((error) => {
         console.log(error)
