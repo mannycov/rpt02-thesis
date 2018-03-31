@@ -12,13 +12,14 @@ import multer from 'multer'
 
 import Root from '../client/Root.jsx'
 import {
+  GoalsModel,
   CheckInModel,
   CompetitionsModel,
   CategoriesModel
 } from '../database/index.js'
 
 import userAccess from '../database/models/users.js'
-import GoalsModel from '../database/models/goals.js'
+// import GoalsModel from '../database/models/goals.js'
 import path from 'path';
 import cookieParser from 'cookie-parser'
 import expressValidator from 'express-validator';
@@ -34,9 +35,8 @@ const db = require('../database/index.js')
 import usersRouter from '../routes/users';
 // import Goal from '../client/src/components/Goal';
 
-
 //Init App
-const app = express();
+const app = express()
 
 //BodyParser Middlewar
 app.use(expressLogging(logger));
@@ -64,7 +64,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 console.log("useraccess in server 😪", userAccess())
 
-//Express Validator
+// Express Validator
 
 // app.use(expressValidator({
 //   errorFormatter: function(param, msg, value){
@@ -96,12 +96,6 @@ console.log("useraccess in server 😪", userAccess())
 // });
 
 app.use('/users', usersRouter)
-// app.use('/', Root);
-// app.use('/users', (req, res) => {
-//   res.send('Hello homeboy g money')
-// });
-
-const emptyObj = []
 
 app.get('/api/goal', (req, res) => {
   GoalsModel.find({}, (err, data) => {
@@ -135,8 +129,6 @@ app.get('/api/goal', (req, res) => {
 //         competitions_end_date: competitionBody.competitionEnd,
 //         competitions_pictures: matchingCategory
 //       })
-
-
 
 app.get('/api/getcompetitions', (req, res) => {
   CompetitionsModel.find({}, (err, data) => {
