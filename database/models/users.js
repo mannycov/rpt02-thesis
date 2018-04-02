@@ -1,14 +1,34 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs')
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
- var dB = require('../../database/index.js')
-
-
+ const dB = require('../../database/index.js')
 // User Schema
-var userSchema = mongoose.Schema({
+
+// const userSchema = new Schema({
+//   user_id: Number,
+//   first_name: String,
+//   last_name: String,
+//   username: String,
+//   email: String,
+//   // comments: [{ body: String, date: Date }],
+//   date_of_birth: { type: Date },
+//   about_me: String,
+//   password: String,
+//   friends_id: Array,
+//   goals_id: Array,
+//   competitions_id: Array,
+//   public_profile: Boolean,
+//   country: String,
+//   state: String,
+//   city: String,
+//   postal: Number,
+//   trophies: Number
+// })
+
+const userSchema = mongoose.Schema({
   username: {
     type: String,
-    index:true
+    index: true
   },
   // password: {
   //   type: String
@@ -26,17 +46,16 @@ var userSchema = mongoose.Schema({
     type: String
   }
 
-});
+})
 
-var User = module.exports = mongoose.model('User', userSchema);
-
+const User = module.exports = mongoose.model('User', userSchema);
 
 module.exports.createUser = function(userProps, callback){
   console.log("newuser:"  + userProps)
   bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(userProps.password, salt, function(err, hash) {
           // newUser.password = hash;
-          var newUser = new User({
+          const newUser = new User({
               name: userProps.name,
               email: userProps.email,
               username: userProps.username,
@@ -52,7 +71,7 @@ module.exports.createUser = function(userProps, callback){
 
 module.exports.getUserByUsername = function(username, callback){
   console.log("getusername"  + username)
-  var query = {username: username};
+  const query = {username: username};
 
   // console.log(User.find(query))
 
@@ -94,8 +113,8 @@ module.exports.checkUser = function(userCredentials, hash, callback){
 
 module.exports.userAccess = function(userId, cb) {
   console.log('in the userjs file useraccess', userId)
-	let dataCompUserGoals = [];
-	let userIdInDB = userId;
+	const dataCompUserGoals = [];
+	const userIdInDB = userId;
 
 	dataCompUserGoals.push(userIdInDB);
 
