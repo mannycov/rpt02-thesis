@@ -7,19 +7,14 @@ import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
 import fs from 'fs'
 import multer from 'multer'
-
-// import App from '../client/src/components/App.jsx'
-
 import Root from '../client/Root.jsx'
-import {
-  GoalsModel,
-  CheckInModel,
-  CompetitionsModel,
-  CategoriesModel
-} from '../database/index.js'
+import GoalsModel from '../database/models/goals'
+import CheckInModel from '../database/models/checkin'
+import CompetitionsModel from '../database/models/competitions'
+import CategoriesModel from '../database/models/categories'
 
 import userAccess from '../database/models/users.js'
-// import GoalsModel from '../database/models/goals.js'
+
 import path from 'path';
 import cookieParser from 'cookie-parser'
 import expressValidator from 'express-validator';
