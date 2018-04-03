@@ -1,63 +1,55 @@
 import express from 'express'
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
-import fs from 'fs'
-import multer from 'multer'
+// import fs from 'fs'
+// import multer from 'multer'
 import Root from '../client/Root.jsx'
 import GoalsModel from '../database/models/goals'
 import CheckInModel from '../database/models/checkin'
 import CompetitionsModel from '../database/models/competitions'
 import CategoriesModel from '../database/models/categories'
 
-import userAccess from '../database/models/users.js'
+import userAccess from '../database/models/users'
 
-import path from 'path';
-import cookieParser from 'cookie-parser'
-import expressValidator from 'express-validator';
-import flash from 'connect-flash';
-import session from 'express-session';
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
-// import CompetitionsModel from '../database/models/competitions.js'
-const db = require('../database/index.js')
+// import path from 'path'
+// import expressValidator from 'express-validator'
+// import flash from 'connect-flash'
+// import passport from 'passport'
+// import LocalStrategy from 'passport-local'
+
+// const db = require('../database/index.js')
 // const routes = require('../routes/index');
 // const users = require('../routes/users');
 
-import usersRouter from '../routes/users';
+import usersRouter from '../routes/users'
 // import Goal from '../client/src/components/Goal';
 
-//Init App
+// initialize app
 const app = express()
 
-//BodyParser Middlewar
+// BodyParser Middleware
 app.use(expressLogging(logger));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-//View Engine
-// app.set('views', path.join(__dirname, 'views'));
-// app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-// app.set('view engine', 'handlebars');
-
-//Set Public Folder
-// app.use(express.static(path.join(__dirname, 'public')));
-
-//Express Session
+// Express Session
 app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
 }))
 
 // Passport init
-app.use(passport.initialize())
-app.use(passport.session())
-console.log("useraccess in server 😪", userAccess())
+// app.use(passport.initialize())
+// app.use(passport.session())
+// console.log('useraccess in server', userAccess())
 
 // Express Validator
 
@@ -156,16 +148,16 @@ app.get('/api/getcompetitions', (req, res) => {
 //   })
 
 
-  // , (err, data) => {
-	// 	if (err) {
-	// 		console.log(err)
-	// 	} else {
-  //     //
-  //     console.log('newest data from sercer', data)
-  //     dataCompUserGoals.push(data)
-	// 	}
-  // }).
-  // res.send(dataCompUserGoals)
+// , (err, data) => {
+// 	if (err) {
+// 		console.log(err)
+// 	} else {
+//     //
+//     console.log('newest data from sercer', data)
+//     dataCompUserGoals.push(data)
+// 	}
+// }).
+// res.send(dataCompUserGoals)
 // })
 
 app.get('/api/checkin/:id', (req, res) => {
@@ -195,13 +187,13 @@ app.post('/api/competitions', (req, res) => {
       console.log(err)
     } else {
       const competitionsModelInstance = new CompetitionsModel({
-				competitions_name: competitionBody.comptetionName,
-				competitions_category: competitionBody.competitionCategory,
-				competitions_start_date: competitionBody.competitionStart,
-				competitions_end_date: competitionBody.competitionEnd,
-				competitions_pictures: matchingCategory,
-				competitions_user: competitionBody.userIdComp
-			});
+        competitions_name: competitionBody.comptetionName,
+        competitions_category: competitionBody.competitionCategory,
+        competitions_start_date: competitionBody.competitionStart,
+        competitions_end_date: competitionBody.competitionEnd,
+        competitions_pictures: matchingCategory,
+        competitions_user: competitionBody.userIdComp
+      });
       competitionsModelInstance.save((err) => {
         if (err) {
           console.log('competitions not saved', err)
@@ -371,9 +363,9 @@ app.delete('/api/checkin/:id', (req, res) => {
 app.get('*', (req, res) => {
   const context = {}
   const application = renderToString(
-    <StaticRouter 
-      location={req.url} 
-      context={context} 
+    <StaticRouter
+      location={req.url}
+      context={context}
     >
       <Root />
     </StaticRouter>
