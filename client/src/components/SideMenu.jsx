@@ -6,7 +6,7 @@ import CompetitionsFullPage  from './CompetitionsPopUp.jsx'
 
 class SideMenu extends Component {
   handleItemClick (name) {
-    this.setState({ activeItem: name });
+    this.setState({ activeItem: name })
   }
   render (props) {
     const { activeItem } = this.state || {}

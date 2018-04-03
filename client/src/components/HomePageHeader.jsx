@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Image } from "semantic-ui-react";
+import { Button, Image } from 'semantic-ui-react'
 
 const HomePageHeader = () => (
   <div>
@@ -11,16 +11,23 @@ const HomePageHeader = () => (
         </a>
       </div>
       <div className="item">
-        <Link to="/signupform">
+        <Link to="/userhome">
           <Button className="ui button" role="button">
-						Sign up
+          Guest
+          </Button>
+        </Link>
+      </div>
+      <div className="item">
+        <Link to="/signupform">
+          <Button className="ui button signup" role="button">
+          Sign up
           </Button>
         </Link>
       </div>
       <div className="item">
         <Link to="/userhome">
-          <Button className="ui button" role="button">
-						Log-in
+          <Button className="ui button login" role="button">
+          Log in
           </Button>
         </Link>
       </div>

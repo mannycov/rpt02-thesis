@@ -19,6 +19,16 @@ h1 {
   margin-bottom: 45px;
 }
 
+.ui.button.ui.button.login {
+  background: #1678c2;
+  color: #fff;
+}
+
+.ui.button.ui.button.signup {
+  background: #21ba45;
+  color: #fff;
+}
+
 .ui.secondary.menu {
   margin-top: 23px;
   margin-left: 1%;

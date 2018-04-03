@@ -7,45 +7,14 @@ const Home = () => (
   <div >
     <HomePageHeader />
     <div className="ui masthead masthead-main segment ">
-
       <div className="ui fluid image">
         <Image id="home-squat" src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
-        <div className="ui middle aligned centered stackable grid container">
-          <div style={{
-            position: 'absolute', bottom: 0, top: 55, width: 'auto', height: 'auto'
-          }}
-          >
-            <div className="row">
-              <div className="ten center aligned wide column">
-                <h1 className="ui header" id="tagline">
-                  <div className="sub header small winning">
-                  Start your journey today!
-                  </div>
-
-                  <div className="item"
-                    style={{
-                      position: 'absolute', bottom: 30, width: '100%', height: 'auto'
-                    }}
-                  >
-                    <Link to="/signupform">
-                      <Button className="ui button huge green" role="button">
-                      Sign up
-                      </Button>
-                    </Link><br /><br />
-                    Setup an account in seconds
-                  </div>
-                </h1>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
     <section className="mgb-alternating">
       <div className="ui container">
-        <div className="ui section divider">
-        </div>
+        <div className="ui section divider" />
         <div className="ui middle aligned equal width stackable grid">
           <div className="column">
             <img className="mgb-alternating-media ui image" src="http://perec.columbia.edu/files/content/Boxing%203.jpg" />
@@ -56,9 +25,7 @@ const Home = () => (
             </span>
             </h3>
             <a className="ui big primary fluid button" href="/signupform">
-
-                Try it
-
+              Try it
             </a>
           </div>
         </div>
