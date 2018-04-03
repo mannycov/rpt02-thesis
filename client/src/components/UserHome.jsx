@@ -10,6 +10,7 @@ import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
 import Goal from './Goal.jsx'
 import Accomplishments from './Accomplishments.jsx'
+import CardComponent from './CardComponent.jsx'
 
 class UserHome extends Component {
   constructor (props) {
@@ -199,8 +200,9 @@ class UserHome extends Component {
             <Grid.Column width={5}>
               <h1>Bio</h1>
               <Grid.Row style={{ width: 290 }}>
+                {/* Card Component here */}
                 <Card>
-                  <Image src="https://s3-us-west-1.amazonaws.com/co-directory-images/bobbymathew1.jpg" />
+
                   <Card.Content>
                     <Card.Header>Bobby</Card.Header>
                     <Card.Meta>

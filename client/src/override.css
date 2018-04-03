@@ -15,18 +15,23 @@
 }
 
 h1 {
-  color: rgba(4, 110, 124, 0.473);
+  color: #1678c2;
   margin-bottom: 45px;
 }
 
-.ui.button.ui.button.login {
+.ui.button.login {
   background: #1678c2;
   color: #fff;
 }
 
-.ui.button.ui.button.signup {
+.ui.button.signup {
   background: #21ba45;
   color: #fff;
+}
+
+.ui.button.logout {
+  background: black;
+  color: white;
 }
 
 .ui.secondary.menu {
@@ -54,8 +59,8 @@ thead {
 
 button.ui.circular.icon.primary.button {
   position: relative;
-  top: 81px;
-  right: 11%;
+  top: 80px;
+  right: 12%;
 }
 
 .seven.wide.column {
