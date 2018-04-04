@@ -18,10 +18,11 @@ class SideMenu extends Component {
             {this.props.accomplishments.map(goal => (
               <Menu.Item
                 as={Link}
-                to={`/goal/${goal._id}`}
+                to={{
+                  pathname: `/goal/${goal._id}`,
+                  state: { goal }
+                }}
                 name={goal.goals_name}
-                active={activeItem === goal}
-                onClick={this.handleItemClick}
               >
                 {goal.goals_name}
               </Menu.Item>

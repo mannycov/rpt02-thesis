@@ -106,8 +106,6 @@ class UserHome extends Component {
       .catch((error) => {
         console.log(error)
       })
-
-      // write function to only fetch incomplete goals here
   }
 
   handleAccomplishments () {
@@ -119,14 +117,11 @@ class UserHome extends Component {
     for (let i = 0; i < goals.length; i += 1) {
       if (goals[i].complete) {
         copyOfAccomplishments.push(goals[i])
-        copyOfGoals.splice(i, 1)
-        console.log(copyOfGoals)
       }
     }
 
     this.setState({
-      accomplishments: copyOfAccomplishments,
-      goals: copyOfGoals
+      accomplishments: copyOfAccomplishments
     })
   }
 
