@@ -107,72 +107,76 @@ class GoalTable extends Component {
           </Table.Header>
 
           <Table.Body>
-            {goals.map(goal => (
-              <Table.Row key={goal._id}>
-                <Table.Cell>
-                  {this.renderGoalName(goal)}
-                </Table.Cell>
-                <Table.Cell textAlign="left">
-                  {this.renderGoalTarget(goal)}
-                </Table.Cell>
-                <Table.Cell>
-                  <Link to={{
-                    pathname: `/goal/${goal._id}`,
-                    state: { goal }
-                  }}
-                  >
-                    {goal.category}
-                  </Link>
-                </Table.Cell>
-                <Table.Cell>
-                  <Link to={{
-                    pathname: `/goal/${goal._id}`,
-                    state: { goal }
-                  }}
-                  >
-                    {goal.start_date ? goal.start_date.slice(0, 10) : ''}
-                  </Link>
-                </Table.Cell>
-                <Table.Cell>
-                  <Link to={{
-                    pathname: `/goal/${goal._id}`,
-                    state: { goal }
-                  }}
-                  >
-                    {goal.end_date ? goal.end_date.slice(0, 10) : ''}
-                  </Link>
-                </Table.Cell>
-                <Table.Cell>
-                  <Link to={{
-                    pathname: `/goal/${goal._id}`,
-                    state: { goal }
-                  }}
-                  >
-                    {goal.notes}
-                  </Link>
-                </Table.Cell>
-                <td><input type="button" onClick={() => { this.props.show('large', goal._id) }} value="&times;" /></td>
-                <Modal
-                  open={this.props.openConfirm}
-                  onClose={this.props.closeCancel}
-                >
-                  <Modal.Header>
+            {goals.map((goal) => {
+              if (!goal.complete) {
+                return (
+                  <Table.Row key={goal._id}>
+                    <Table.Cell>
+                      {this.renderGoalName(goal)}
+                    </Table.Cell>
+                    <Table.Cell textAlign="left">
+                      {this.renderGoalTarget(goal)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Link to={{
+                        pathname: `/goal/${goal._id}`,
+                        state: { goal }
+                      }}
+                      >
+                        {goal.category}
+                      </Link>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Link to={{
+                        pathname: `/goal/${goal._id}`,
+                        state: { goal }
+                      }}
+                      >
+                        {goal.start_date ? goal.start_date.slice(0, 10) : ''}
+                      </Link>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Link to={{
+                        pathname: `/goal/${goal._id}`,
+                        state: { goal }
+                      }}
+                      >
+                        {goal.end_date ? goal.end_date.slice(0, 10) : ''}
+                      </Link>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Link to={{
+                        pathname: `/goal/${goal._id}`,
+                        state: { goal }
+                      }}
+                      >
+                        {goal.notes}
+                      </Link>
+                    </Table.Cell>
+                    <td><input type="button" onClick={() => { this.props.show('large', goal._id) }} value="&times;" /></td>
+                    <Modal
+                      open={this.props.openConfirm}
+                      onClose={this.props.closeCancel}
+                    >
+                      <Modal.Header>
                     Delete Your Goal
-                  </Modal.Header>
-                  <Modal.Content>
-                    <div>Are you sure you want to delete your goal?</div>
-                  </Modal.Content>
-                  <Modal.Actions>
-                    <Button onClick={() => { this.props.closeCancel() }} color="red" inverted>
-                      <Icon name="remove" /> No
-                    </Button>
-                    <Button onClick={() => { this.props.closeConfirm() }} color="green" inverted>
-                      <Icon name="checkmark" /> Yes
-                    </Button>
-                  </Modal.Actions>
-                </Modal>
-              </Table.Row>
-            ))}
+                      </Modal.Header>
+                      <Modal.Content>
+                        <div>Are you sure you want to delete your goal?</div>
+                      </Modal.Content>
+                      <Modal.Actions>
+                        <Button onClick={() => { this.props.closeCancel() }} color="red" inverted>
+                          <Icon name="remove" /> No
+                        </Button>
+                        <Button onClick={() => { this.props.closeConfirm() }} color="green" inverted>
+                          <Icon name="checkmark" /> Yes
+                        </Button>
+                      </Modal.Actions>
+                    </Modal>
+                  </Table.Row>
+                )
+              }
+            })}
           </Table.Body>
         </Table>
         <br /><br /><br />

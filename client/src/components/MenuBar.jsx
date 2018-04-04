@@ -23,7 +23,7 @@ class MenuBar extends Component {
           <Menu.Item name="friends" active={activeItem === 'friends'} onClick={this.handleItemClick} />
           <Menu.Menu position="right">
             <Link to="/">
-              <button className="ui button logout" type="submit">Log out</button>
+              <button className="ui button logout" type="submit">Logout</button>
             </Link>
           </Menu.Menu>
         </Menu>

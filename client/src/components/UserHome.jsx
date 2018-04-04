@@ -106,36 +106,28 @@ class UserHome extends Component {
       .catch((error) => {
         console.log(error)
       })
-  }
 
-  // fetchGoalsCompetitionsUserId () {
-  //   axios
-  //     .get('/api/getGoalsCompetitionsUserId')
-  //     .then((response) => {
-  //       this.setState({
-  //         userId: response.data[0],
-  //         competitionData: response.data[1],
-  //         goals: response.data[2]
-  //       }, () => { this.handleAccomplishments() })
-  //       console.log('🙄', response)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }
+      // write function to only fetch incomplete goals here
+  }
 
   handleAccomplishments () {
     const { goals, accomplishments } = this.state
 
     const copyOfAccomplishments = accomplishments.slice()
+    const copyOfGoals = goals.slice()
 
     for (let i = 0; i < goals.length; i += 1) {
       if (goals[i].complete) {
         copyOfAccomplishments.push(goals[i])
+        copyOfGoals.splice(i, 1)
+        console.log(copyOfGoals)
       }
     }
 
-    this.setState({ accomplishments: copyOfAccomplishments })
+    this.setState({
+      accomplishments: copyOfAccomplishments,
+      goals: copyOfGoals
+    })
   }
 
   competitionsSubmit (
