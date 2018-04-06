@@ -48,14 +48,39 @@ button.ui.button {
   margin-left: 50% !important;
 }
 
-table.ui.celled.structured.table {
+table.goaltable {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.remove-goal {
+  background: none;
+  border: 0;
+  line-height: 1;
+  opacity: 0;
+  /* &:hover
+    color red */
+}
+
+/* table.ui.celled.structured.table {
   width: 108%;
   margin-left: -3%;
 }
 
 thead {
   color: dimgray;
-}
+} */
 
 button.ui.circular.icon.primary.button {
   position: relative;

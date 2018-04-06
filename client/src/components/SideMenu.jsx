@@ -17,6 +17,7 @@ class SideMenu extends Component {
           <Menu.Menu>
             {this.props.accomplishments.map(goal => (
               <Menu.Item
+                key={goal._id}
                 as={Link}
                 to={{
                   pathname: `/goal/${goal._id}`,

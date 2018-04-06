@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom'
 const Accomplishments = ({ accomplishments }) => (
   <div>
     {accomplishments.map(accomplishment => (
-      <Card className="trophy">
+      <Card
+        className="trophy"
+        key={accomplishment._id}
+      >
         <div className="ui tiny image" >
           <Image src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Twemoji2_1f3c6.svg" title="First Place" size="small" />
         </div>
