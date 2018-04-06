@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Input } from 'semantic-ui-react'
+import { Menu, Input, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class MenuBar extends Component {
@@ -11,7 +11,8 @@ class MenuBar extends Component {
     const { activeItem } = this.state || {}
     return (
       <div>
-        <Menu secondary>
+
+        <Menu inverted>
           <Menu.Item
             as={Link}
             to="/userhome"
@@ -27,6 +28,7 @@ class MenuBar extends Component {
             </Link>
           </Menu.Menu>
         </Menu>
+
       </div>
     )
   }
