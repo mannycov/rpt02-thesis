@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Table, Modal, Button, Icon } from 'semantic-ui-react'
+import { table, Modal, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-class GoalTable extends Component {
+class Goaltable extends Component {
   constructor () {
     super()
     this.renderGoalName = this.renderGoalName.bind(this)
@@ -93,31 +93,30 @@ class GoalTable extends Component {
     const { goals, handleRemoveGoal } = this.props
     return (
       <div>
-        <Table celled structured>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell rowSpan="2">Goal</Table.HeaderCell>
-              <Table.HeaderCell rowSpan="2">Target</Table.HeaderCell>
-              <Table.HeaderCell rowSpan="2">Category</Table.HeaderCell>
-              <Table.HeaderCell rowSpan="2">Start Date</Table.HeaderCell>
-              <Table.HeaderCell rowSpan="2">End Date</Table.HeaderCell>
-              <Table.HeaderCell rowSpan="2">Notes</Table.HeaderCell>
-              <Table.HeaderCell>Remove</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+        <table className="goaltable">
+          <thead>
+            <tr>
+              <th>Goal</th>
+              <th>Target</th>
+              <th>Category</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
 
-          <Table.Body>
+          <tbody>
             {goals.map((goal) => {
               if (!goal.complete) {
                 return (
-                  <Table.Row key={goal._id}>
-                    <Table.Cell>
+                  <tr key={goal._id}>
+                    <td>
                       {this.renderGoalName(goal)}
-                    </Table.Cell>
-                    <Table.Cell textAlign="left">
+                    </td>
+                    <td>
                       {this.renderGoalTarget(goal)}
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <Link to={{
                         pathname: `/goal/${goal._id}`,
                         state: { goal }
@@ -125,8 +124,8 @@ class GoalTable extends Component {
                       >
                         {goal.category}
                       </Link>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <Link to={{
                         pathname: `/goal/${goal._id}`,
                         state: { goal }
@@ -134,8 +133,8 @@ class GoalTable extends Component {
                       >
                         {goal.start_date ? goal.start_date.slice(0, 10) : ''}
                       </Link>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <Link to={{
                         pathname: `/goal/${goal._id}`,
                         state: { goal }
@@ -143,8 +142,8 @@ class GoalTable extends Component {
                       >
                         {goal.end_date ? goal.end_date.slice(0, 10) : ''}
                       </Link>
-                    </Table.Cell>
-                    <Table.Cell>
+                    </td>
+                    <td>
                       <Link to={{
                         pathname: `/goal/${goal._id}`,
                         state: { goal }
@@ -152,8 +151,8 @@ class GoalTable extends Component {
                       >
                         {goal.notes}
                       </Link>
-                    </Table.Cell>
-                    <td><input type="button" onClick={() => { this.props.show('large', goal._id) }} value="&times;" /></td>
+                    </td>
+                    {/* <button className="remove-goal" onClick={() => { this.props.show('large', goal._id) }} value="&times;" /> */}
                     <Modal
                       open={this.props.openConfirm}
                       onClose={this.props.closeCancel}
@@ -173,16 +172,16 @@ class GoalTable extends Component {
                         </Button>
                       </Modal.Actions>
                     </Modal>
-                  </Table.Row>
+                  </tr>
                 )
               }
             })}
-          </Table.Body>
-        </Table>
+          </tbody>
+        </table>
         <br /><br /><br />
       </div>
     )
   }
 }
 
-export default GoalTable
+export default Goaltable
