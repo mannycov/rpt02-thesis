@@ -152,7 +152,9 @@ class Goaltable extends Component {
                         {goal.notes}
                       </Link>
                     </td>
-                    {/* <button className="remove-goal" onClick={() => { this.props.show('large', goal._id) }} value="&times;" /> */}
+                    <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.props.show('large', goal._id) }} />
+                    <Icon className="editgoal" link name="pencil" size="large" />
+                    {/* <td className="remove-goal" onClick={() => { this.props.show('large', goal._id) }}> value="&times;" </td> */}
                     <Modal
                       open={this.props.openConfirm}
                       onClose={this.props.closeCancel}
