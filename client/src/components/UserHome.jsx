@@ -209,7 +209,7 @@ class UserHome extends Component {
               </Grid.Row>
             </Grid.Column>
             <Grid.Column width={7}>
-              <h1 style={{ textAlign: 'center' }}>Goals</h1>
+              <h1 style={{ textAlign: 'center' }}>Active Goals</h1>
               <Grid.Row>
                 <Goal />
               </Grid.Row>

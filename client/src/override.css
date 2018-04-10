@@ -60,17 +60,24 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: #dddddd;
+} */
+
+.removegoal {
+  color: rgb(226, 221, 221);
 }
 
-.remove-goal {
-  background: none;
-  border: 0;
-  line-height: 1;
-  opacity: 0;
-  /* &:hover
-    color red */
+.removegoal:hover {
+  color: red;
+}
+
+.editgoal {
+  color: rgb(226, 221, 221);
+}
+
+.editgoal:hover {
+  color: #1678c2;
 }
 
 /* table.ui.celled.structured.table {
