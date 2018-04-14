@@ -3,7 +3,6 @@ import { Form, Button, Dropdown, TextArea, Icon, Header, Modal, Statistic, Popup
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import InputMoment from 'input-moment'
-// import 'react-datepicker/dist/react-datepicker.css'
 
 // data
 import categoryData from '../data/categories'

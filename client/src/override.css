@@ -80,6 +80,14 @@ td, th {
   color: #1678c2;
 }
 
+.savegoal {
+  color: rgb(226, 221, 221);
+}
+
+.savegoal:hover {
+  color: green;
+}
+
 /* table.ui.celled.structured.table {
   width: 108%;
   margin-left: -3%;
