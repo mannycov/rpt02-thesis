@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import { table, Modal, Button, Icon } from 'semantic-ui-react'
+import { Modal, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class Goaltable extends Component {
   constructor () {
     super()
+
+    this.state = {
+      editMode: false
+    }
     this.renderGoalName = this.renderGoalName.bind(this)
     this.renderWeightGoalTarget = this.renderWeightGoalTarget.bind(this)
     this.renderCardioGoalTarget = this.renderCardioGoalTarget.bind(this)
@@ -91,6 +95,7 @@ class Goaltable extends Component {
 
   render () {
     const { goals, handleRemoveGoal } = this.props
+    const { editMode } = this.state
     return (
       <div>
         <table className="goaltable">
@@ -109,72 +114,94 @@ class Goaltable extends Component {
             {goals.map((goal) => {
               if (!goal.complete) {
                 return (
-                  <tr key={goal._id}>
-                    <td>
-                      {this.renderGoalName(goal)}
-                    </td>
-                    <td>
-                      {this.renderGoalTarget(goal)}
-                    </td>
-                    <td>
-                      <Link to={{
-                        pathname: `/goal/${goal._id}`,
-                        state: { goal }
-                      }}
+                  editMode
+                    ? <tr>
+                      <td>
+                        <input value={goal.goals_name} size="10" />
+                      </td>
+                      <td>
+                        <input value={this.renderGoalTarget(goal)} size="10" />
+                      </td>
+                      <td>
+                        <input value={goal.category} size="10" />
+                      </td>
+                      <td>
+                        <input value={goal.start_date ? goal.start_date.slice(0, 10) : ''} size="10" />
+                      </td>
+                      <td>
+                        <input value={goal.end_date ? goal.end_date.slice(0, 10) : ''} size="10" />
+                      </td>
+                      <td>
+                        <input value={goal.notes} size="10" />
+                      </td>
+                      <Icon className="savegoal" link name="checkmark" size="large" onClick={() => this.setState({ editMode: false })} />
+                      <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.props.show('large', goal._id) }} />
+                    </tr>
+                    : <tr key={goal._id}>
+                      <td>
+                        {this.renderGoalName(goal)}
+                      </td>
+                      <td>
+                        {this.renderGoalTarget(goal)}
+                      </td>
+                      <td>
+                        <Link to={{
+                          pathname: `/goal/${goal._id}`,
+                          state: { goal }
+                        }}
+                        >
+                          {goal.category}
+                        </Link>
+                      </td>
+                      <td>
+                        <Link to={{
+                          pathname: `/goal/${goal._id}`,
+                          state: { goal }
+                        }}
+                        >
+                          {goal.start_date ? goal.start_date.slice(0, 10) : ''}
+                        </Link>
+                      </td>
+                      <td>
+                        <Link to={{
+                          pathname: `/goal/${goal._id}`,
+                          state: { goal }
+                        }}
+                        >
+                          {goal.end_date ? goal.end_date.slice(0, 10) : ''}
+                        </Link>
+                      </td>
+                      <td>
+                        <Link to={{
+                          pathname: `/goal/${goal._id}`,
+                          state: { goal }
+                        }}
+                        >
+                          {goal.notes}
+                        </Link>
+                      </td>
+                      <Icon className="editgoal" link name="pencil" size="large" onClick={() => this.setState({ editMode: true })}/>
+                      <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.props.show('large', goal._id) }} />
+                      <Modal
+                        open={this.props.openConfirm}
+                        onClose={this.props.closeCancel}
                       >
-                        {goal.category}
-                      </Link>
-                    </td>
-                    <td>
-                      <Link to={{
-                        pathname: `/goal/${goal._id}`,
-                        state: { goal }
-                      }}
-                      >
-                        {goal.start_date ? goal.start_date.slice(0, 10) : ''}
-                      </Link>
-                    </td>
-                    <td>
-                      <Link to={{
-                        pathname: `/goal/${goal._id}`,
-                        state: { goal }
-                      }}
-                      >
-                        {goal.end_date ? goal.end_date.slice(0, 10) : ''}
-                      </Link>
-                    </td>
-                    <td>
-                      <Link to={{
-                        pathname: `/goal/${goal._id}`,
-                        state: { goal }
-                      }}
-                      >
-                        {goal.notes}
-                      </Link>
-                    </td>
-                    <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.props.show('large', goal._id) }} />
-                    <Icon className="editgoal" link name="pencil" size="large" />
-                    {/* <td className="remove-goal" onClick={() => { this.props.show('large', goal._id) }}> value="&times;" </td> */}
-                    <Modal
-                      open={this.props.openConfirm}
-                      onClose={this.props.closeCancel}
-                    >
-                      <Modal.Header>
+                        <Modal.Header>
                     Delete Your Goal
-                      </Modal.Header>
-                      <Modal.Content>
-                        <div>Are you sure you want to delete your goal?</div>
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Button onClick={() => { this.props.closeCancel() }} color="red" inverted>
-                          <Icon name="remove" /> No
-                        </Button>
-                        <Button onClick={() => { this.props.closeConfirm() }} color="green" inverted>
-                          <Icon name="checkmark" /> Yes
-                        </Button>
-                      </Modal.Actions>
-                    </Modal>
-                  </tr>
+                        </Modal.Header>
+                        <Modal.Content>
+                          <div>Are you sure you want to delete your goal?</div>
+                        </Modal.Content>
+                        <Modal.Actions>
+                          <Button onClick={() => { this.props.closeCancel() }} color="red" inverted>
+                            <Icon name="remove" /> No
+                          </Button>
+                          <Button onClick={() => { this.props.closeConfirm() }} color="green" inverted>
+                            <Icon name="checkmark" /> Yes
+                          </Button>
+                        </Modal.Actions>
+                      </Modal>
+                    </tr>
                 )
               }
             })}
