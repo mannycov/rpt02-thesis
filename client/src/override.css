@@ -1,3 +1,13 @@
+body {
+  background-color:#f4f4f4;
+  height: 100%;
+}
+
+.main-grid {
+  width: 100%;
+  height: 100%
+}
+
 /* creat competitions form */
 .ui.green.button {
   margin-top: 20px;
@@ -8,11 +18,11 @@
   padding-right: 0;
 }
 
-.ui.grid {
+/* .ui.grid {
   margin-right: 4%;
   margin-left: 4%;
   margin-top: 1%;
-}
+} */
 
 h1 {
   color: #1678c2;
@@ -30,7 +40,7 @@ h1 {
 }
 
 .ui.button.logout {
-  background: black;
+  background: #1b1c1d;
   color: white;
 }
 
@@ -88,6 +98,28 @@ td, th {
   color: green;
 }
 
+#side-menu {
+  height: 100%;
+  width: 300px;
+  background-color: #1b1c1d;
+  position: fixed;
+  overflow-x: hidden;
+  padding-top: 60px;
+}
+
+#side-menu a {
+  padding: 10px 10px 10px 30px;
+  text-decoration: none;
+  font-size: 22px;
+  color: #ccc;
+  display: block;
+  transition: 0.3s;
+}
+
+#side-menu a:hover {
+  color: #fff;
+}
+
 /* table.ui.celled.structured.table {
   width: 108%;
   margin-left: -3%;
@@ -97,11 +129,15 @@ thead {
   color: dimgray;
 } */
 
-button.ui.circular.icon.primary.button {
+/* .editstartdate {
+  height: 500px;
+} */
+
+/* button.ui.circular.icon.primary.button {
   position: relative;
   top: 80px;
   right: 12%;
-}
+} */
 
 .seven.wide.column {
   position: relative;

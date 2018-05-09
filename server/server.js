@@ -318,6 +318,148 @@ app.patch('/api/goal/:id', (req, res) => {
   })
 })
 
+app.patch('/api/editgoaltitle/:id', (req, res) => {
+  const updatedGoalTitle = req.body.updatedGoalTitle
+
+  if (updatedGoalTitle) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { goals_name: updatedGoalTitle } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+
+})
+
+app.patch('/api/editgoaldate/:id', (req, res) => {
+  const updatedStartDate = req.body.updatedStartDate
+
+  if (updatedStartDate) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { start_date: updatedStartDate } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalnotes/:id', (req, res) => {
+  const updatedNotes = req.body.updatedNotes
+
+  if (updatedNotes) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { notes: updatedNotes } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalweighttarget/:id', (req, res) => {
+  const updatedWeightTarget = req.body.updatedWeightTarget
+
+  if (updatedWeightTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { weightTarget: updatedWeightTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalreptarget/:id', (req, res) => {
+  const updatedRepTarget = req.body.updatedRepTarget
+
+  if (updatedRepTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { repTarget: updatedRepTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalmintarget/:id', (req, res) => {
+  const updatedMinTarget = req.body.updatedMinTarget
+
+  if (updatedMinTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { minTarget: updatedMinTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalsecstarget/:id', (req, res) => {
+  const updatedSecsTarget = req.body.updatedSecsTarget
+
+  if (updatedSecsTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { secsTarget: updatedSecsTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoaldaystarget/:id', (req, res) => {
+  const updatedDaysTarget = req.body.updatedDaysTarget
+
+  if (updatedDaysTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { daysTarget: updatedDaysTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalstartdate/:id', (req, res) => {
+  const updatedStartDate = req.body.updatedStartDate
+
+  if (updatedStartDate) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { start_date: updatedStartDate } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalenddate/:id', (req, res) => {
+  const updatedEndDate = req.body.updatedEndDate
+  console.log('edited end date: ', updatedEndDate)
+
+  if (updatedEndDate) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { end_date: updatedEndDate } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
 app.delete('/api/goal/:id', (req, res) => {
   GoalsModel.remove({ _id: req.params.id }, (err) => {
     if (err) {
