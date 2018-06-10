@@ -11,7 +11,6 @@ class Goal extends Component {
     super(props)
 
     this.state = {
-      userId: null,
       goal: '',
       goalIDtoDelete: '',
       goalIDtoEdit: '',
@@ -136,9 +135,9 @@ class Goal extends Component {
       startDate,
       endDate,
       notes,
-      complete,
-      userId
+      complete
     } = this.state
+    const { userId } = this.props
 
     axios
       .post('/api/goal', {
@@ -357,8 +356,9 @@ class Goal extends Component {
   }
 
   fetchGoals () {
+    const { userId } = this.props
     axios
-      .get('/api/goal')
+      .get(`/api/goal/${userId}`)
       .then((response) => {
         this.setState({
           goals: response.data

@@ -1,14 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import HomePageHeader from "./HomePageHeader.jsx";
-import { Button, Image } from "semantic-ui-react";
+import HomePageHeader from './HomePageHeader.jsx';
+import { Button, Image } from 'semantic-ui-react';
 
 const Home = () => (
   <div >
     <HomePageHeader />
     <div className="ui masthead masthead-main segment ">
       <div className="ui fluid image">
-        <Image id="home-squat" src="https://static.pexels.com/photos/17840/pexels-photo.jpg" />
+        <video id="background-video" loop autoPlay>
+          {/* <source src="http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" /> */}
+          {/* <source src="http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/ogg" /> */}
+                Your browser does not support the video tag.
+        </video>
+        {/* <Image id="home-squat" src="https://static.pexels.com/photos/17840/pexels-photo.jpg" /> */}
       </div>
     </div>
 
@@ -21,7 +26,7 @@ const Home = () => (
           </div>
           <div className="column">
             <h3 className="ui header">Compete with friends and locals
-            <span className="sub header">Login with Facebook to start competing with your friends. Or find locals who have similar goals that want to compete!
+              <span className="sub header">Login with Facebook to start competing with your friends. Or find locals who have similar goals that want to compete!
             </span>
             </h3>
             <a className="ui big primary fluid button" href="/signupform">
@@ -29,8 +34,7 @@ const Home = () => (
             </a>
           </div>
         </div>
-        <div className="ui section divider">
-        </div>
+        <div className="ui section divider" />
         <div className="ui middle aligned equal width stackable mobile vertically reversed grid ">
           <div className="column">
             <h3 className="ui header">
@@ -44,7 +48,7 @@ const Home = () => (
             </a>
           </div>
           <div className="nine wide computer ten wide tablet column">
-            <img  src="http://balleralert.com/wp-content/uploads/2017/01/fitness-768x340.jpg" />
+            <img src="http://balleralert.com/wp-content/uploads/2017/01/fitness-768x340.jpg" />
           </div>
         </div>
       </div>
@@ -90,7 +94,6 @@ const Home = () => (
             <div className="ui inverted list">
               <div className="item">We're all trying to get better. Compete and have fun along the way.
               </div>
-
             </div>
           </div>
         </div>
@@ -103,7 +106,8 @@ const Home = () => (
               <div className="column">
                 <div className="ui small inverted horizontal divided link list">
                   <a className="item" href="https://www.hackreactor.com" target="_blank" rel="noopener noreferrer">
-                Hack Reactor</a>
+                Hack Reactor
+                  </a>
                   <a className="item" href="fake@fake.com">Contact Us
                   </a>
                 </div>
@@ -113,13 +117,7 @@ const Home = () => (
         </div>
       </div>
     </footer>
-
-
-
-
   </div>
-
-
-);
+)
 
 export default Home

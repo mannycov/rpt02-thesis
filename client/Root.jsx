@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Match } from 'react-router-dom'
 import Home from './src/components/Home.jsx'
 import UserHome from './src/components/UserHome.jsx'
 import Friends from './src/components/Friends.jsx'
@@ -16,7 +16,7 @@ import CheckIn from './src/components/CheckIn.jsx'
 const Root = () => (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route path="/userhome" component={UserHome} />
+    <Route path="/userhome/:id" component={UserHome} />
     <Route path="/login" component={LoginForm} />
     <Route path="/friends" component={Friends} />
     <Route path="/competitionsfullpage" component={CompetitionsFullPage} />

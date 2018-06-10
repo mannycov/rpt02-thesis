@@ -12,12 +12,12 @@ class Accomplishments extends Component {
 
   render () {
     const { goals } = this.props
-      return (
-        <div>
-          {goals.map(goal => {
-            if (goal.complete) {
-              return (
-                <Card
+    return (
+      <div>
+        {goals.map((goal) => {
+          if (goal.complete) {
+            return (
+              <Card
                 className="trophy"
                 key={goal._id}
               >
@@ -37,12 +37,11 @@ class Accomplishments extends Component {
                   <DeleteAccomplishments open={this.props.open} closeDeleteAccomplishmentModal={this.props.closeDeleteAccomplishmentModal} handleDeleteAccomplishment={this.props.handleDeleteAccomplishment} closeModalAndDelete={this.props.closeModalAndDelete} />
                 </div>
               </Card>
-              )
-            }
-
-          })}
-        </div>
-      )
+            )
+          }
+        })}
+      </div>
+    )
   }
 }
 
