@@ -10,22 +10,23 @@ import { StaticRouter } from 'react-router-dom'
 // import fs from 'fs'
 // import multer from 'multer'
 import Root from '../client/Root.jsx'
+import User from '../database/models/users'
 import GoalsModel from '../database/models/goals'
 import CheckInModel from '../database/models/checkin'
 import CompetitionsModel from '../database/models/competitions'
 import CategoriesModel from '../database/models/categories'
 
-import userAccess from '../database/models/users'
+// import userAccess from '../database/models/users'
 
-// import path from 'path'
-// import expressValidator from 'express-validator'
-// import flash from 'connect-flash'
-// import passport from 'passport'
-// import LocalStrategy from 'passport-local'
+import path from 'path'
+import expressValidator from 'express-validator'
+import flash from 'connect-flash'
+import passport from 'passport'
+import LocalStrategy from 'passport-local'
 
-// const db = require('../database/index.js')
-// const routes = require('../routes/index');
-// const users = require('../routes/users');
+const db = require('../database/index.js')
+const routes = require('../routes/index');
+const users = require('../routes/users');
 
 import usersRouter from '../routes/users'
 // import Goal from '../client/src/components/Goal';
@@ -34,9 +35,9 @@ import usersRouter from '../routes/users'
 const app = express()
 
 // BodyParser Middleware
-app.use(expressLogging(logger));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(expressLogging(logger))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // Express Session
@@ -47,31 +48,31 @@ app.use(session({
 }))
 
 // Passport init
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.use(passport.initialize())
+app.use(passport.session())
 // console.log('useraccess in server', userAccess())
 
 // Express Validator
 
-// app.use(expressValidator({
-//   errorFormatter: function(param, msg, value){
-//     var namespace = param.split('.')
-//     , root = namespace.shift()
-//     , formParam = root;
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value){
+    var namespace = param.split('.')
+    , root = namespace.shift()
+    , formParam = root;
 
-//     while(namespace.length) {
-//       formParam += '[' + namespace.shift() + ']';
-//     }
-//     return{
-//       param : formParam,
-//       msg : msg,
-//       value : value
-//     };
-//   }
-// }))
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg : msg,
+      value : value
+    };
+  }
+}))
 
 // Connect Flash
-// app.use(flash())
+app.use(flash())
 
 // Global Vars
 // app.use(function (req, res, next) {
@@ -84,8 +85,8 @@ app.use(session({
 
 app.use('/users', usersRouter)
 
-app.get('/api/goal', (req, res) => {
-  GoalsModel.find({}, (err, data) => {
+app.get('/api/user/:id', (req, res) => {
+  User.find({ _id: req.params.id }, (err, data) => {
     if (err) {
       console.log(err)
     } else {
@@ -94,11 +95,15 @@ app.get('/api/goal', (req, res) => {
   })
 })
 
-// app.use(multer({ dest: './uploads/',
-//  rename: function (fieldname, filename) {
-//    return filename;
-//  },
-// }))
+app.get('/api/goal/:id', (req, res) => {
+  GoalsModel.find({ user: req.params.id }, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
 
 // app.post('/api/photo',function(req,res){
 //  var newProfilePic = new userSchema()
@@ -224,7 +229,7 @@ app.post('/api/goal', (req, res) => {
   const goalEndDate = req.body.endDate
   const goalNotes = req.body.notes
   const goalComplete = req.body.complete
-  let userId = req.body.userId
+  const userId = req.body.userId
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
@@ -238,7 +243,7 @@ app.post('/api/goal', (req, res) => {
     end_date: goalEndDate,
     notes: goalNotes,
     complete: goalComplete,
-    goals_user: userId
+    user: userId
   })
 
   goalModelInstance.save((err) => {

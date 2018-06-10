@@ -8,7 +8,6 @@ body {
   height: 100%
 }
 
-/* creat competitions form */
 .ui.green.button {
   margin-top: 20px;
   height: 41px;
@@ -17,12 +16,6 @@ body {
 .ui.form .fields>.field {
   padding-right: 0;
 }
-
-/* .ui.grid {
-  margin-right: 4%;
-  margin-left: 4%;
-  margin-top: 1%;
-} */
 
 h1 {
   color: #1678c2;
@@ -58,7 +51,7 @@ button.ui.button {
   margin-left: 50% !important;
 }
 
-table.goaltable {
+table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
@@ -70,9 +63,9 @@ td, th {
   padding: 8px;
 }
 
-/* tr:nth-child(even) {
+th {
   background-color: #dddddd;
-} */
+}
 
 .removegoal {
   color: rgb(226, 221, 221);
@@ -98,6 +91,26 @@ td, th {
   color: green;
 }
 
+.profile {
+  background-color: #1b1c1d;
+  width: 300px;
+}
+
+.photo {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  width:165px;
+  height: 165px;
+}
+
+.emoji {
+  display: block;
+  margin: auto;
+  width:165px;
+  height: 165px;
+}
+
 #side-menu {
   height: 100%;
   width: 300px;
@@ -120,24 +133,15 @@ td, th {
   color: #fff;
 }
 
-/* table.ui.celled.structured.table {
-  width: 108%;
-  margin-left: -3%;
+#profile-name {
+  text-align: center;
+  color: #ccc;
 }
 
-thead {
-  color: dimgray;
-} */
-
-/* .editstartdate {
-  height: 500px;
-} */
-
-/* button.ui.circular.icon.primary.button {
-  position: relative;
-  top: 80px;
-  right: 12%;
-} */
+.add-photo {
+  padding: 0px 10px 10px 30px;
+  color: white;
+}
 
 .seven.wide.column {
   position: relative;
@@ -165,7 +169,6 @@ element.style {
 }
 
 .ui.card.trophy {
-  width: 43%;
   padding-left: 25px;
   padding-top: 27px;
   margin-left: 41%;

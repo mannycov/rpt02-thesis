@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Grid, Menu, Segment } from 'semantic-ui-react'
+import { Card, Icon, Image, Grid, Menu, Segment, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import moment from 'moment'
 import InputMoment from 'input-moment'
@@ -16,8 +16,8 @@ class UserHome extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeItem: 'active',
-      userId: null,
+      active: true,
+      userId: this.props.match.params.id,
       competitionData: [],
       goals: [],
       accomplishments: [],
@@ -30,25 +30,30 @@ class UserHome extends Component {
       compEndClick: true,
       size: '',
       open: false,
-      goalIDtoDelete: ''
+      goalIDtoDelete: '',
+      userName: ''
     }
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
+    this.fetchUser = this.fetchUser.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
-    this.handleMenuItemClick = this.handleMenuItemClick.bind(this)
+    this.handleActiveClick = this.handleActiveClick.bind(this)
+    this.handleAccomplishmentsClick = this.handleAccomplishmentsClick.bind(this)
     this.handleStartChange = this.handleStartChange.bind(this)
     this.handleEndChange = this.handleEndChange.bind(this)
     this.handleCompStartSave = this.handleCompStartSave.bind(this)
     this.handleCompEndSave = this.handleCompEndSave.bind(this)
+    this.handleChangePhoto = this.handleChangePhoto.bind(this)
     this.handleDeleteAccomplishment = this.handleDeleteAccomplishment.bind(this)
     this.showDeleteAccomplishmentModal = this.showDeleteAccomplishmentModal.bind(this)
     this.closeDeleteAccomplishmentModal = this.closeDeleteAccomplishmentModal.bind(this)
     this.closeModalAndDelete = this.closeModalAndDelete.bind(this)
   }
-  
+
   componentDidMount () {
+    this.fetchUser()
     this.fetchGoals()
   }
 
@@ -62,8 +67,12 @@ class UserHome extends Component {
     })
   }
 
-  handleMenuItemClick (e, { name }) {
-    this.setState({ activeItem: name })
+  handleActiveClick () {
+    this.setState({ active: true })
+  }
+
+  handleAccomplishmentsClick () {
+    this.setState({ active: false })
   }
 
   handleCompName (compName) {
@@ -102,9 +111,26 @@ class UserHome extends Component {
     })
   }
 
-  fetchGoals () {
+  handleChangePhoto () {
+    console.log('handle change photo clicked')
+  }
+
+  fetchUser () {
+    const { userId } = this.state
     axios
-      .get('/api/goal')
+      .get(`/api/user/${userId}`)
+      .then((response) => {
+        this.setState({ userName: response.data[0].name })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  fetchGoals () {
+    const { userId } = this.state
+    axios
+      .get(`/api/goal/${userId}`)
       .then((response) => {
         this.setState({
           goals: response.data
@@ -176,7 +202,7 @@ class UserHome extends Component {
         competitionStart: compsStart,
         competitionEnd: compsEnd,
         competitionPic: '',
-        userIdComp: userIdComp
+        userIdComp
       })
       .then((response) => {
         console.log('in userHome file data back from server', response.data)
@@ -191,12 +217,13 @@ class UserHome extends Component {
 
   render (props) {
     const {
-      activeItem,
-      accomplishments,
+      active,
       goals,
       size,
       open,
-      goalIDtoDelete
+      goalIDtoDelete,
+      userId,
+      userName
     } = this.state || {}
     if (this.state.isHidden) {
       return (
@@ -206,119 +233,22 @@ class UserHome extends Component {
           <Grid className="main-grid" columns={2} inverted>
             <Grid.Column className="menucolumn" width={3}>
               {/* <Image className="profileimage" src='https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png' size='small' circular /> */}
-              <div id="side-menu">
-                <a href="#">Active</a>
-                <a href="#">Accomplishments</a>
+              <div className="profile">
+                <h1 id="profile-name">{userName}</h1>
+                <img className="photo" src="https://d1ejxu6vysztl5.cloudfront.net/lasagna/lasagna2-sm.jpg" alt="Avatar" />
+                <Icon className="add-photo" link name="plus" size="large" onClick={() => { this.handleChangePhoto() }} />
               </div>
-              {/* <Menu fluid vertical tabular>
-                <Menu.Item name='active' active={activeItem === 'active'} onClick={this.handleMenuItemClick} />
-                <Menu.Item name='accomplishments' active={activeItem === 'accomplishments'} onClick={this.handleMenuItemClick} />
-              </Menu> */}
+
+              <div id="side-menu">
+                <a href="#" name="active" onClick={this.handleActiveClick} >Active</a>
+                <a href="#" name="accomplishments" onClick={this.handleAccomplishmentsClick} >Accomplishments</a>
+              </div>
             </Grid.Column>
             <Grid.Column className="goalscolumn" stretched width={12}>
-              {activeItem === 'active' ? <h1 style={{ textAlign: 'center' }}>Active Goals</h1> : <h1 style={{ textAlign: 'center' }}>Accomplishments</h1>}
-              {activeItem === 'active' ? <Goal /> : <Accomplishments goals={goals} size={size} open={open} goalIDtoDelete={goalIDtoDelete} showDeleteAccomplishmentModal={this.showDeleteAccomplishmentModal} closeDeleteAccomplishmentModal={this.closeDeleteAccomplishmentModal} handleDeleteAccomplishment={this.handleDeleteAccomplishment} closeModalAndDelete={this.closeModalAndDelete} />}
+              {active ? <h1 style={{ textAlign: 'center' }}>Active Goals</h1> : <h1 style={{ textAlign: 'center' }}>Accomplishments</h1>}
+              {active ? <Goal userId={userId} /> : <Accomplishments goals={goals} size={size} open={open} goalIDtoDelete={goalIDtoDelete} showDeleteAccomplishmentModal={this.showDeleteAccomplishmentModal} closeDeleteAccomplishmentModal={this.closeDeleteAccomplishmentModal} handleDeleteAccomplishment={this.handleDeleteAccomplishment} closeModalAndDelete={this.closeModalAndDelete} />}
             </Grid.Column>
           </Grid>
-
-          {/* <footer className="ui inverted vertical segment">
-            <div className="ui container">
-              <div className="ui equal width stackable grid">
-                <div className="column">
-                  <h4 className="ui inverted header">Compete today
-                  </h4>
-                  <p>Set goals for yourself and compete with friends who may have similar goals!
-                  </p>
-                </div>
-                <div className="column">
-                  <h4 className="ui inverted header">
-            Get Fit
-                  </h4>
-                  <div className="ui inverted list">
-                    <div className="item">
-              Run a marathon
-                    </div>
-                    <div className="item">
-              Lift more
-                    </div>
-                  </div>
-                </div>
-                <div className="column">
-                  <h4 className="ui header">
-            Make Friends
-                  </h4>
-                  <div className="ui inverted list">
-                    <div className="item">Help each other get better
-                    </div>
-                    <div className="item">Find locals that want to compete
-                    </div>
-                  </div>
-                </div>
-                <div className="column">
-                  <h4 className="ui inverted header">
-            Have Fun
-                  </h4>
-                  <div className="ui inverted list">
-                    <div className="item">We're all trying to get better. Compete and have fun along the way.
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-              <div className="ui equal width stackable grid">
-                <div className="eight wide column">
-            Copyright ©2018 BCM Inc.
-                </div>
-                <div className="column">
-                  <div className="ui equal width grid">
-                    <div className="column">
-                      <div className="ui small inverted horizontal divided link list">
-                        <a className="item" href="https://www.hackreactor.com" target="_blank" rel="noopener noreferrer">
-                Hack Reactor</a>
-                        <a className="item" href="fake@fake.com">Contact Us
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </footer> */}
-
-          {/* <Grid>
-            <Grid.Column width={5}>
-              <h1>Bio</h1>
-              <Grid.Row style={{ width: 290 }}>
-                <Card>
-                  <Card.Content>
-                    <Card.Header>Bobby</Card.Header>
-                    <Card.Meta>
-                      <span className="date">Joined in 2018</span>
-                    </Card.Meta>
-                    <Card.Description>
-											Bobby's in the Bay Area getting healthier
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Row>
-
-              <br />
-
-              <Grid.Row style={{ width: 290 }}>
-                <SideMenu Data={this.state.competitionData} goals={this.state.goals} accomplishments={this.state.accomplishments} competitionsHandleClick={this.competitionsHandleClick} isHidden={this.state.isHidden} />
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <h1 style={{ textAlign: 'center' }}>Active Goals</h1>
-              <Grid.Row>
-                <Goal />
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <h1 style={{ textAlign: 'right' }}>Accomplishments</h1>
-              <Accomplishments accomplishments={this.state.accomplishments} />
-            </Grid.Column>
-          </Grid> */}
         </div>
       )
     }

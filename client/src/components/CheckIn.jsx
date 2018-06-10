@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Table, Grid, Icon, Statistic } from 'semantic-ui-react'
+import { table, Grid, Icon, Statistic } from 'semantic-ui-react'
 import axios from 'axios'
-import { VictoryChart, VictoryLine, VictoryTheme } from 'victory'
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis, VictoryScatter } from 'victory'
 import moment from 'moment'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 // Components
 import MenuBar from './MenuBar.jsx'
@@ -45,12 +46,11 @@ class CheckIn extends Component {
     this.renderCardioCheckinTimes = this.renderCardioCheckinTimes.bind(this)
     this.renderGoalTarget = this.renderGoalTarget.bind(this)
     this.renderCompleteMessage = this.renderCompleteMessage.bind(this)
-    this.renderIcon = this.renderIcon.bind(this)
     this.renderYAxis = this.renderYAxis.bind(this)
     this.renderVictoryChart = this.renderVictoryChart.bind(this)
     this.renderDayStatistic = this.renderDayStatistic.bind(this)
     this.renderHeaderRow = this.renderHeaderRow.bind(this)
-    this.renderTableRow = this.renderTableRow.bind(this)
+    this.rendertableRow = this.rendertableRow.bind(this)
   }
 
   componentDidMount () {
@@ -225,8 +225,6 @@ class CheckIn extends Component {
       }
     } else if (goal.category === 'Habit') {
       for (let i = 0; i < checkins.length; i += 1) {
-        // console.log('checkin =>', checkins[i].date.slice(0, 10), 'today =>', this.state.today.format().slice(0, 10))
-        // console.log(checkins[i].date.slice(0, 10) === this.state.today.format().slice(0, 10))
         if (checkins[i].date) {
           days += 1
           if (days >= goal.daysTarget) {
@@ -319,34 +317,43 @@ class CheckIn extends Component {
       return (
         `${checkin.min}:00`
       )
-    } else {
-      return (
-        `${checkin.min}:${checkin.secs}`
-      )
     }
+    return (
+      `${checkin.min}:${checkin.secs}`
+    )
   }
 
   renderCompleteMessage () {
     const { goal } = this.state
     if (goal.complete) {
       return (
-        <h1 style={{ textAlign: 'center' }}>Congratulations! You've reached your goal!</h1>
+        <div>
+          <h1 style={{ textAlign: 'center' }}>Congratulations! You've reached your goal!</h1>
+          <img className="emoji" src="http://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-11/256/party-popper.png" alt="Party" />
+        </div>
       )
     }
   }
 
-  renderIcon () {
-    return (
-      <Icon color="green" name="checkmark" size="large" />
-    )
-  }
-
   renderYAxis (goal, checkins) {
+    const { goals } = this.state
     if (goal.weightTarget) {
       return (
         <VictoryChart
           theme={VictoryTheme.material}
+          domain={{ y: [0, goal.weightTarget + 50] }}
         >
+          <VictoryAxis
+            dependentAxis
+            tickFormat={x => (`${x}lbs.`)}
+          />
+          <VictoryAxis
+            tickFormat={x => (x)}
+          />
+          {/* <VictoryScatter
+            data={checkins}
+            style={{ data: { fill: "tomato" } }}
+          /> */}
           <VictoryLine
             style={{
               data: { stroke: '#c43a31' },
@@ -362,7 +369,15 @@ class CheckIn extends Component {
       return (
         <VictoryChart
           theme={VictoryTheme.material}
+          domain={{ y: [0, goal.repTarget] }}
         >
+          <VictoryAxis
+            dependentAxis
+            tickFormat={x => (`${x}reps`)}
+          />
+          <VictoryAxis
+            tickFormat={x => (x)}
+          />
           <VictoryLine
             style={{
               data: { stroke: '#c43a31' },
@@ -375,7 +390,6 @@ class CheckIn extends Component {
         </VictoryChart>
       )
     }
-
   }
 
   renderVictoryChart () {
@@ -403,8 +417,6 @@ class CheckIn extends Component {
         return (
           this.renderYAxis(goal, checkins)
         )
-      } else if (goal.category === 'Habit') {
-        console.log('render counter')
       }
     }
   }
@@ -421,39 +433,36 @@ class CheckIn extends Component {
     }
   }
 
-  renderHeaderRow() {
+  renderHeaderRow () {
     const { goal } = this.state
 
     if (goal.category === 'Habit') {
       return (
-        <Table.Row>
-          <Table.HeaderCell rowSpan="2">Date</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Check In</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Remove</Table.HeaderCell>
-        </Table.Row>
+        <tr>
+          <th>Date</th>
+          <th>Check In</th>
+        </tr>
       )
     } else if (goal.category === 'Cardio') {
       return (
-        <Table.Row>
-          <Table.HeaderCell rowSpan="2">Date</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Time</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Remove</Table.HeaderCell>
-        </Table.Row>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
       )
     } else if (goal.category === 'Strength') {
       return (
-        <Table.Row>
-          <Table.HeaderCell rowSpan="2">Date</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Weight</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Reps</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Sets</Table.HeaderCell>
-          <Table.HeaderCell rowSpan="2">Remove</Table.HeaderCell>
-        </Table.Row>
+        <tr>
+          <th>Date</th>
+          <th>Weight</th>
+          <th>Reps</th>
+          <th>Sets</th>
+        </tr>
       )
     }
   }
 
-  renderTableRow () {
+  rendertableRow () {
     const {
       today,
       goal,
@@ -462,41 +471,41 @@ class CheckIn extends Component {
 
     if (goal.category === 'Habit') {
       return (
-        <Table.Body>
+        <tbody>
           {checkins.map(checkin => (
-            <Table.Row key={checkin._id}>
-              <Table.Cell>{checkin.date ? checkin.date.slice(0, 10) : ''}</Table.Cell>
-              <Table.Cell>{this.renderIcon()}</Table.Cell>
-              <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
-            </Table.Row>
+            <tr key={checkin._id}>
+              <td>{checkin.date ? checkin.date.slice(0, 10) : ''}</td>
+              <td><Icon color="green" name="checkmark" size="large" /></td>
+              <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" />
+            </tr>
           ))}
-        </Table.Body>
+        </tbody>
       )
     } else if (goal.category === 'Cardio') {
       return (
-        <Table.Body>
+        <tbody>
           {checkins.map(checkin => (
-            <Table.Row key={checkin._id}>
-              <Table.Cell>{checkin.date ? checkin.date.slice(0, 10) : ''}</Table.Cell>
-              <Table.Cell>{this.renderCardioCheckinTimes(checkin)}</Table.Cell>
-              <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
-            </Table.Row>
+            <tr key={checkin._id}>
+              <td>{checkin.date ? checkin.date.slice(0, 10) : ''}</td>
+              <td>{this.renderCardioCheckinTimes(checkin)}</td>
+              <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" />
+            </tr>
           ))}
-        </Table.Body>
+        </tbody>
       )
     } else if (goal.category === 'Strength') {
       return (
-        <Table.Body>
+        <tbody>
           {checkins.map(checkin => (
-            <Table.Row key={checkin._id}>
-              <Table.Cell>{checkin.date ? checkin.date.slice(0, 10) : ''}</Table.Cell>
-              <Table.Cell>{checkin.weight ? `${checkin.weight} lbs.` : ''}</Table.Cell>
-              <Table.Cell>{checkin.reps ? `${checkin.reps} reps` : ''}</Table.Cell>
-              <Table.Cell>{checkin.sets}</Table.Cell>
-              <td><input type="button" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" /></td>
-            </Table.Row>
+            <tr key={checkin._id}>
+              <td>{checkin.date ? checkin.date.slice(0, 10) : ''}</td>
+              <td>{checkin.weight ? `${checkin.weight} lbs.` : ''}</td>
+              <td>{checkin.reps ? `${checkin.reps} reps` : ''}</td>
+              <td>{checkin.sets}</td>
+              <Icon className="removegoal" link name="remove" size="large" onClick={() => { this.handleRemoveCheckIn(checkin._id) }} value="&times;" />
+            </tr>
           ))}
-        </Table.Body>
+        </tbody>
       )
     }
   }
@@ -506,7 +515,6 @@ class CheckIn extends Component {
       today,
       goal,
       goalId,
-      checkins,
       date,
       weight,
       reps,
@@ -568,12 +576,10 @@ class CheckIn extends Component {
 
               <br /><br />
 
-              <Table>
-                <Table.Header>
-                  {this.renderHeaderRow()}
-                </Table.Header>
-                {this.renderTableRow()}
-              </Table>
+              <table>
+                {this.renderHeaderRow()}
+                {this.rendertableRow()}
+              </table>
             </Grid.Column>
           </Grid.Row>
         </Grid>

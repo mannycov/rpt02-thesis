@@ -18,6 +18,7 @@ const goalsSchema = new Schema({
   notes: String,
   complete: Boolean,
   description: String,
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
   checkIns: [{ type: Schema.Types.ObjectId, ref: 'CheckInModel' }]
 })
 

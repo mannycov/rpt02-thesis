@@ -25,7 +25,7 @@ const HomePageHeader = () => (
         </Link>
       </div>
       <div className="item">
-        <Link to="/userhome">
+        <Link to="/login">
           <Button className="ui button login" role="button">
           Log in
           </Button>
