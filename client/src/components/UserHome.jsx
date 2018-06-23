@@ -18,6 +18,7 @@ class UserHome extends Component {
     this.state = {
       active: true,
       userId: this.props.match.params.id,
+      userImg: 'https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png',
       competitionData: [],
       goals: [],
       accomplishments: [],
@@ -36,6 +37,7 @@ class UserHome extends Component {
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
     this.fetchUser = this.fetchUser.bind(this)
     this.fetchGoals = this.fetchGoals.bind(this)
+    this.fetchPhoto = this.fetchPhoto.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
@@ -45,7 +47,8 @@ class UserHome extends Component {
     this.handleEndChange = this.handleEndChange.bind(this)
     this.handleCompStartSave = this.handleCompStartSave.bind(this)
     this.handleCompEndSave = this.handleCompEndSave.bind(this)
-    this.handleChangePhoto = this.handleChangePhoto.bind(this)
+    this.handleSelectPhoto = this.handleSelectPhoto.bind(this)
+    this.handleUploadPhoto = this.handleUploadPhoto.bind(this)
     this.handleDeleteAccomplishment = this.handleDeleteAccomplishment.bind(this)
     this.showDeleteAccomplishmentModal = this.showDeleteAccomplishmentModal.bind(this)
     this.closeDeleteAccomplishmentModal = this.closeDeleteAccomplishmentModal.bind(this)
@@ -55,6 +58,7 @@ class UserHome extends Component {
   componentDidMount () {
     this.fetchUser()
     this.fetchGoals()
+    this.fetchPhoto()
   }
 
   handleItemClick (name) {
@@ -111,8 +115,36 @@ class UserHome extends Component {
     })
   }
 
-  handleChangePhoto () {
-    console.log('handle change photo clicked')
+  handleSelectPhoto (e) {
+    this.setState({
+      userImg: e.target.files[0]
+    })
+  }
+
+  handleUploadPhoto () {
+    const { userImg, userId } = this.state
+    const fd = new FormData()
+    fd.append('image', userImg, userImg.name)
+    axios
+      .post(`/photo/${userId}`, fd)
+      .then((response) => {
+        this.fetchPhoto()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  fetchPhoto () {
+    const { userId } = this.state
+    axios
+      .get(`/photo/${userId}`)
+      .then((response) => {
+        this.setState({ userImg: 'http://localhost:3000/' + response.data[0].photo })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   fetchUser () {
@@ -223,7 +255,8 @@ class UserHome extends Component {
       open,
       goalIDtoDelete,
       userId,
-      userName
+      userName,
+      userImg
     } = this.state || {}
     if (this.state.isHidden) {
       return (
@@ -232,17 +265,21 @@ class UserHome extends Component {
 
           <Grid className="main-grid" columns={2} inverted>
             <Grid.Column className="menucolumn" width={3}>
-              {/* <Image className="profileimage" src='https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png' size='small' circular /> */}
+
               <div className="profile">
                 <h1 id="profile-name">{userName}</h1>
-                <img className="photo" src="https://d1ejxu6vysztl5.cloudfront.net/lasagna/lasagna2-sm.jpg" alt="Avatar" />
-                <Icon className="add-photo" link name="plus" size="large" onClick={() => { this.handleChangePhoto() }} />
+                <img className="photo" src={userImg} alt="Avatar" />
+                <input ref={fileInput => this.fileInput = fileInput } style={{ display: 'none' }} type="file" onChange={this.handleSelectPhoto} />
+                <Icon className="add-photo" link name="plus" size="large" onClick={() => { this.fileInput.click() }} />
+                <h3 className="add-photo">Add Photo</h3>
+                <Icon id="save-checkmark" link name="checkmark" size="large" onClick={() => { this.handleUploadPhoto() }} />
+                <h3 className="save-photo">Save Photo</h3>
               </div>
-
               <div id="side-menu">
                 <a href="#" name="active" onClick={this.handleActiveClick} >Active</a>
                 <a href="#" name="accomplishments" onClick={this.handleAccomplishmentsClick} >Accomplishments</a>
               </div>
+
             </Grid.Column>
             <Grid.Column className="goalscolumn" stretched width={12}>
               {active ? <h1 style={{ textAlign: 'center' }}>Active Goals</h1> : <h1 style={{ textAlign: 'center' }}>Accomplishments</h1>}

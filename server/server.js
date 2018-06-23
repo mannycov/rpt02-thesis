@@ -7,8 +7,9 @@ import bodyParser from 'body-parser'
 import expressLogging from 'express-logging'
 import logger from 'logops'
 import { StaticRouter } from 'react-router-dom'
-// import fs from 'fs'
-// import multer from 'multer'
+import fs from 'fs'
+import multer from 'multer'
+
 import Root from '../client/Root.jsx'
 import User from '../database/models/users'
 import GoalsModel from '../database/models/goals'
@@ -24,9 +25,20 @@ import flash from 'connect-flash'
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+// const upload = multer({ dest: 'uploads/' })
+const upload = multer({ storage: storage })
 const db = require('../database/index.js')
-const routes = require('../routes/index');
-const users = require('../routes/users');
+const routes = require('../routes/index')
+const users = require('../routes/users')
 
 import usersRouter from '../routes/users'
 // import Goal from '../client/src/components/Goal';
@@ -37,6 +49,7 @@ const app = express()
 // BodyParser Middleware
 app.use(expressLogging(logger))
 app.use(bodyParser.json())
+app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
@@ -84,6 +97,26 @@ app.use(flash())
 // });
 
 app.use('/users', usersRouter)
+
+app.post('/photo/:id', upload.single('image'), (req, res, next) => {
+  User.update({ _id: req.params.id }, { $set: { photo: req.file.path } }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(200)
+    }
+  })
+})
+
+app.get('/photo/:id', (req, res) => {
+  User.find({ _id: req.params.id }, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
 
 app.get('/api/user/:id', (req, res) => {
   User.find({ _id: req.params.id }, (err, data) => {
@@ -452,7 +485,6 @@ app.patch('/api/editgoalstartdate/:id', (req, res) => {
 
 app.patch('/api/editgoalenddate/:id', (req, res) => {
   const updatedEndDate = req.body.updatedEndDate
-  console.log('edited end date: ', updatedEndDate)
 
   if (updatedEndDate) {
     GoalsModel.update({ _id: req.params.id }, { $set: { end_date: updatedEndDate } }, (err) => {
