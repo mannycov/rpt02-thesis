@@ -36,6 +36,9 @@ const userSchema = mongoose.Schema({
   name: {
     type: String
   },
+  photo: {
+    type: String
+  },
   salt: {
     type: String
   },
@@ -71,22 +74,14 @@ module.exports.createUser = function (userProps, res, callback) {
 }
 
 module.exports.getUserByEmail = function (email, callback) {
-  console.log(`getusername${ email }`)
-
   User.find({ email: req.body.email }, (err, user) => {
     if (err) throw err
     let newHash = user[0].hash
 
     User.checkUser(req.body.password, newHash, (result) => {
-      console.log("reaching the checkuser function in users models file:" + result)
-      //import userAccess then pass unique id into func
-      // User.userAccess(user[0].id, function(data) {
-      //   res.send(data)
-      // })
+      
     })
   })
-
-  // return User.findOne(query)
 }
 
 module.exports.checkUser = function (userCredentials, hash, callback) {

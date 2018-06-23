@@ -11,13 +11,6 @@ const HomePageHeader = () => (
         </a>
       </div>
       <div className="item">
-        <Link to="/userhome">
-          <Button className="ui button" role="button">
-          Guest
-          </Button>
-        </Link>
-      </div>
-      <div className="item">
         <Link to="/signupform">
           <Button className="ui button signup" role="button">
           Sign up

@@ -1,8 +1,8 @@
-const express = require('express')
+// import fs from 'fs'
+// import multer from 'multer'
+// cant mix import and module exports
 
-const router = express.Router()
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+const express = require('express')
 
 const User = require('../database/models/users')
 
@@ -39,6 +39,7 @@ userRouter.post('/register', (req, res) => {
   }
 })
 
+// User Login
 userRouter.post('/login', (req, res) => {
   // find the user by their email
   User.find({ email: req.body.email }, (err, user) => {
