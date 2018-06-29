@@ -117,7 +117,7 @@ th {
   height: 100%;
   width: 300px;
   background-color: #1b1c1d;
-  position: absolute;
+  position: fixed;
   overflow-x: hidden;
   padding-top: 60px;
 }

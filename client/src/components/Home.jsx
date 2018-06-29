@@ -72,7 +72,7 @@ const Home = () => (
             </div>
           </div>
           <div className="column">
-            <h4 className="ui header">
+            <h4 className="ui inverted header">
             Make Friends
             </h4>
             <div className="ui inverted list">

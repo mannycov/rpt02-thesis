@@ -18,7 +18,7 @@ class UserHome extends Component {
     this.state = {
       active: true,
       userId: this.props.match.params.id,
-      userImg: 'https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png',
+      userImg: '',
       competitionData: [],
       goals: [],
       accomplishments: [],
@@ -136,11 +136,11 @@ class UserHome extends Component {
   }
 
   fetchPhoto () {
-    const { userId } = this.state
+    const { userId, userImg } = this.state
     axios
       .get(`/photo/${userId}`)
       .then((response) => {
-        this.setState({ userImg: 'http://localhost:3000/' + response.data[0].photo })
+        this.setState({ userImg: response.data[0].photo })
       })
       .catch((error) => {
         console.log(error)
@@ -261,7 +261,7 @@ class UserHome extends Component {
     if (this.state.isHidden) {
       return (
         <div>
-          <MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} />
+          <MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} userId={userId} />
 
           <Grid className="main-grid" columns={2} inverted>
             <Grid.Column className="menucolumn" width={3}>

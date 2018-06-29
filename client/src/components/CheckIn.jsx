@@ -17,6 +17,7 @@ class CheckIn extends Component {
       checked: false,
       today: moment(),
       goal: this.props.location.state.goal,
+      userId: this.props.location.state.userId,
       goalId: this.props.match.params.id,
       checkins: [],
       date: moment(),
@@ -522,7 +523,8 @@ class CheckIn extends Component {
       min,
       secs,
       size,
-      open
+      open,
+      userId
     } = this.state
 
     const textStyle = { textAlign: 'center' }
@@ -530,7 +532,7 @@ class CheckIn extends Component {
     return (
 
       <div>
-        <MenuBar />
+        <MenuBar userId={userId} />
 
         <br /><br />
 

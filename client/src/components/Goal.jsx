@@ -522,6 +522,7 @@ class Goal extends Component {
           goalIDtoEdit={this.goalIDtoEdit}
           goalToEdit={this.state.goalToEdit}
           renderDates={this.renderDates}
+          userId={this.props.userId}
         />
 
       </div>
