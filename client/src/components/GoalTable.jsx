@@ -80,7 +80,7 @@ class Goaltable extends Component {
   }
 
   render () {
-    const { goals } = this.props
+    const { goals, userId } = this.props
     return (
       <div>
         <Grid>
@@ -95,7 +95,7 @@ class Goaltable extends Component {
                       <Card.Header>
                         <Link to={{
                           pathname: `/goal/${goal._id}`,
-                          state: { goal }
+                          state: { goal, userId }
                         }}
                         >
                           {goal.goals_name}

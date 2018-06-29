@@ -9,13 +9,13 @@ class MenuBar extends Component {
 
   render (props) {
     const { activeItem } = this.state || {}
+    const userhomeLink = `/userhome/${this.props.userId}`
     return (
       <div>
-
         <Menu inverted>
           <Menu.Item
             as={Link}
-            to="/userhome"
+            to={userhomeLink}
             name="home"
             active={activeItem === 'home'}
             onClick={this.handleItemClick}

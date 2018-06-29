@@ -64,7 +64,8 @@ module.exports.createUser = function (userProps, res, callback) {
         email: userProps.email,
         username: userProps.username,
         salt,
-        hash
+        hash,
+        photo: 'https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png'
       })
       newUser.save()
       const id = newUser._id

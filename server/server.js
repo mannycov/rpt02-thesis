@@ -98,16 +98,6 @@ app.use(flash())
 
 app.use('/users', usersRouter)
 
-app.post('/photo/:id', upload.single('image'), (req, res, next) => {
-  User.update({ _id: req.params.id }, { $set: { photo: req.file.path } }, (err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.sendStatus(200)
-    }
-  })
-})
-
 app.get('/photo/:id', (req, res) => {
   User.find({ _id: req.params.id }, (err, data) => {
     if (err) {
@@ -204,6 +194,18 @@ app.get('/api/checkin/:id', (req, res) => {
       console.log(err)
     } else {
       res.send(data)
+    }
+  })
+})
+
+app.post('/photo/:id', upload.single('image'), (req, res, next) => {
+  const image = `http://localhost:3000/${req.file.path}`
+
+  User.update({ _id: req.params.id }, { $set: { photo: image } }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(200)
     }
   })
 })
@@ -554,7 +556,7 @@ app.get('*', (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Compete.ly</title>
+        <title>Active</title>
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">

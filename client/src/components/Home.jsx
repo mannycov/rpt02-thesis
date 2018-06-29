@@ -8,12 +8,7 @@ const Home = () => (
     <HomePageHeader />
     <div className="ui masthead masthead-main segment ">
       <div className="ui fluid image">
-        <video id="background-video" loop autoPlay>
-          {/* <source src="http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" /> */}
-          {/* <source src="http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/ogg" /> */}
-                Your browser does not support the video tag.
-        </video>
-        {/* <Image id="home-squat" src="https://static.pexels.com/photos/17840/pexels-photo.jpg" /> */}
+        <Image id="home-squat" src="https://thejugglife.com/wp-content/uploads/2018/03/thumbnail-2.jpeg" />
       </div>
     </div>
 
@@ -77,7 +72,7 @@ const Home = () => (
             </div>
           </div>
           <div className="column">
-            <h4 className="ui header">
+            <h4 className="ui inverted header">
             Make Friends
             </h4>
             <div className="ui inverted list">
