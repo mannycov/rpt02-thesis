@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, Modal, Form } from 'semantic-ui-react'
 
@@ -68,16 +69,21 @@ class LoginForm extends Component {
 
       <div className="ui text container">
         {this.handleRedirect()}
+        <h1>Log In</h1>
+        <hr />
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group>
-            <Form.Input placeholder="email" name="email" value={email} onChange={this.handleChange} />
-            <Form.Input type="password" placeholder="password" name="password" value={password} onChange={this.handleChange} />
-            <Form.Button content="Submit" />
-          </Form.Group>
+          <label for="email"><b>Email</b></label>
+          <Form.Input placeholder="Email" name="email" value={email} onChange={this.handleChange} />
+          <label for="password"><b>Password</b></label>
+          <Form.Input type="password" placeholder="Password" name="password" value={password} onChange={this.handleChange} />
+          <Button primary>Log In</Button>
+          <Link to="/">
+            <button className="ui button logout" type="submit">Cancel</button>
+          </Link>
         </Form>
         <Modal size="mini" open={open} onClose={this.close}>
           <Modal.Header>
-                Enter Fields
+            Enter Fields
           </Modal.Header>
           <Modal.Content>
             <p>Make sure to fill out all the fields!</p>
