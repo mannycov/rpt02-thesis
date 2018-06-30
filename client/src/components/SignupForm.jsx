@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Button, Modal, Form } from 'semantic-ui-react'
 
@@ -81,28 +82,38 @@ class SignupForm extends Component {
     return (
       <div className="ui text container">
         {this.handleRedirect()}
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group>
-            <Form.Input placeholder="Name" name="name" value={name} onChange={this.handleChange} />
-            <Form.Input placeholder="Email" name="email" value={email} onChange={this.handleChange} />
-            <Form.Input placeholder="Username" name="username" value={username} onChange={this.handleChange} />
-            <Form.Input type="password" placeholder="Password" name="password" value={password} onChange={this.handleChange} />
-            <Form.Input type="password" placeholder="Confirm Password" name="password2" value={password2} onChange={this.handleChange} />
+        <Form onSubmit={this.handleSubmit} >
+          <h1>Sign Up</h1>
+          <p>Please fill in this form to create an account.</p>
+          <hr />
 
-            <Modal size="mini" open={open} onClose={this.close}>
-              <Modal.Header>
+          <label for="name"><b>Name</b></label>
+          <Form.Input placeholder="Name" name="name" value={name} onChange={this.handleChange} />
+          <label for="email"><b>Email</b></label>
+          <Form.Input placeholder="Email" name="email" value={email} onChange={this.handleChange} />
+          <label for="username"><b>Username</b></label>
+          <Form.Input placeholder="Username" name="username" value={username} onChange={this.handleChange} />
+          <label for="password"><b>Password</b></label>
+          <Form.Input type="password" placeholder="Password" name="password" value={password} onChange={this.handleChange} />
+          <label for="password2"><b>Confirm Password</b></label>
+          <Form.Input type="password" placeholder="Confirm Password" name="password2" value={password2} onChange={this.handleChange} />
+
+          <Modal size="mini" open={open} onClose={this.close}>
+            <Modal.Header>
                 Enter Fields
-              </Modal.Header>
-              <Modal.Content>
-                <p>Make sure to fill out all the fields!</p>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button onClick={this.close} positive icon="checkmark" labelPosition="right" content="Got It" />
-              </Modal.Actions>
-            </Modal>
+            </Modal.Header>
+            <Modal.Content>
+              <p>Make sure to fill out all the fields!</p>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button onClick={this.close} positive icon="checkmark" labelPosition="right" content="Got It" />
+            </Modal.Actions>
+          </Modal>
 
-            <Form.Button content="Submit" />
-          </Form.Group>
+          <Button primary>Sign Up</Button>
+          <Link to="/">
+            <button className="ui button logout" type="submit">Cancel</button>
+          </Link>
         </Form>
 
       </div>

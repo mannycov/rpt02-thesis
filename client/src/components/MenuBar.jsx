@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Input, Segment } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class MenuBar extends Component {
