@@ -1,5 +1,5 @@
 import http from 'http'
-import app from './server'
+import app from '../index'
 
 const server = http.createServer(app)
 let currentApp = app

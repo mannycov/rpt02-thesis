@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const db = mongoose.connection
 
 mongoose.connect(
-  'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely',
+  process.env.MONGODB_URI || 'mongodb://competely:Youcandoit@ds133796.mlab.com:33796/competely',
   { server: { reconnectTries: Number.MAX_VALUE } }
 )
 
