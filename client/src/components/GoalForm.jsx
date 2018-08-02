@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Button, Dropdown, TextArea, Icon, Header, Modal, Statistic, Popup } from 'semantic-ui-react'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
+import { Form, Button, Dropdown, TextArea, Popup } from 'semantic-ui-react'
 import InputMoment from 'input-moment'
-// import 'react-datepicker/dist/react-datepicker.css'
 
 // data
 import categoryData from '../data/categories'
@@ -83,7 +80,7 @@ class GoalForm extends Component {
           {/* Input Fields */}
           <Form.Group inline>
             <Form.Input
-              width="3"
+              width="5"
               fluid
               label="Goal"
               name="goal"
@@ -109,7 +106,6 @@ class GoalForm extends Component {
 
           {/* Dates */}
           <Form.Group inline>
-            {/* <Icon name="calendar" color="blue" size="large" /> */}
             <Popup
               on="click"
               trigger={
@@ -129,7 +125,7 @@ class GoalForm extends Component {
                   minStep={5}
                 />
               }
-              position="bottom center"
+              position="right center"
             />
             <Popup
               on="click"
@@ -150,7 +146,7 @@ class GoalForm extends Component {
                   minStep={5}
                 />
               }
-              position="top left"
+              position="right center"
             />
           </Form.Group>
           {/* Notes */}

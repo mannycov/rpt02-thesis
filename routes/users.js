@@ -1,100 +1,66 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+// import fs from 'fs'
+// import multer from 'multer'
+// cant mix import and module exports
 
-var User = require('../database/models/users')
+const express = require('express')
 
-var userRouter = express.Router();
+const User = require('../database/models/users')
 
+const userRouter = express.Router()
 
 // Register
-userRouter.get('/', function(req, res){
-	console.log("😀");
-});
-
-// // Login
-userRouter.get('/login', function(req, res){
-	res.render('login');
-});
+userRouter.get('/', (req, res) => {
+  console.log('😀')
+})
 
 // Register User
-userRouter.post('/register', function(req, res, err){
-	console.log("🤪🤪:" + req +" , " + res);
-  var name = req.body.name;
-	var email = req.body.email;
-	var username = req.body.username;
-	var password = req.body.password;
-	var password2 = req.body.password2;
+userRouter.post('/register', (req, res) => {
+  const name = req.body.name
+  const email = req.body.email
+  const username = req.body.username
+  const password = req.body.password
+  const password2 = req.body.password2
 
-	// Validation
-	// req.checkBody('name', 'Name is required').notEmpty();
-	// req.checkBody('email', 'Email is required').notEmpty();
-	// req.checkBody('email', 'Email is not valid').isEmail();
-	// req.checkBody('username', 'Username is required').notEmpty();
-	// req.checkBody('password', 'Password is required').notEmpty();
-	// req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+  if (!req.body.name) {
+    console.log('error')
+  } else {
+    const userProps = {
+      name,
+      email,
+      username,
+      password
+    }
 
-  console.log("Register User Name:" + name,password,email,username);
-
-	// var errors = req.validationErrors();
-
-	if(!req.body.name){
-		res.render('register',
-			"Error in user router post"
-		);
-	} else {
-		var userProps = {
-			name: name,
-			email: email,
-			username: username,
-			password: password
-		};
-
-		User.createUser(userProps, function(err, user){
-			if(err) throw err;
-			console.log(user);
-		});
-
-		// req.flash('success_msg', 'You are registered and can now login');
-
-		// res.redirect('/users/login');
-	}
-});
-
-
-userRouter.post('/login',
-  // passport.authenticate('local', {successRedirect:'/userhome', failureRedirect:'/users/login'})
-  function(req, res) {
-    console.log("REACHING THE LOGIN");
-
-    User.find({username:req.body.username}, function(err, user){
-      if(err) throw err;
-      var newHash = user[0].hash
-      console.log("Hash from Routes file: " + newHash)
-
-      User.checkUser(req.body.password, newHash,  function(result) {
-        console.log("reaching the final redirect step?:" + result)
-        //import userAccess then pass unique id into func
-        User.userAccess(user[0].id, function(data) {
-          res.send(data)
-        })
-      })
+    User.createUser(userProps, res, (err, user) => {
+      if (err) {
+        console.log(err)
+      }
     })
   }
-  // ,
-  // function(req, res) {
-  //   console.log("reaching the final redirect step?:" + res)
-  //   res.redirect('/userhome');
-  // }
-);
+})
 
+// User Login
+userRouter.post('/login', (req, res) => {
+  // find the user by their email
+  User.find({ email: req.body.email }, (err, user) => {
+    if (err) throw err
+    const id = user[0]._id
+    const newHash = user[0].hash
 
+    // check the user's password
+    User.checkUser(req.body.password, newHash, (result) => {
+      if (result) {
+        res.redirect(`http://localhost:3000/userhome/${id}`)
+      } else {
+        res.redirect('/login')
+      }
+    })
+  })
+})
 
-userRouter.get('/logout', function(req, res){
-	req.logout();
-	// req.flash('success_msg', 'You are logged out');
-	res.redirect('/users/login');
-});
+userRouter.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/users/login')
+})
 
-module.exports = userRouter;
+module.exports = userRouter

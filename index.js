@@ -1,9 +1,9 @@
 import http from 'http'
-import app from './server'
+import app from '../index'
 
 const server = http.createServer(app)
 let currentApp = app
-server.listen(3000)
+server.listen(process.env.PORT, '0.0.0.0' || 8081)
 
 if (module.hot) {
   module.hot.accept('./server', () => {

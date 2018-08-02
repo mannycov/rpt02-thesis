@@ -1,110 +1,124 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
-
-
+import { Button, Modal, Form } from 'semantic-ui-react'
 
 class SignupForm extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-    	name: '',
-    	email: '',
-    	username: '',
-    	password: '',
-    	password2:''
+      name: '',
+      email: '',
+      username: '',
+      password: '',
+      password2: '',
+      url: '',
+      open: false
     }
-  this.handleChange = this.handleChange.bind(this);
-  this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-  handleChange (e, { name, value }) {
-   this.setState({
-     [name]: value
-   })
- 	}
-
-  handleSubmit () {
-    const { name, email, username, password } = this.state
-    axios
-    	.post('/users/register', {
-    		name,
-    		email,
-        username,
-        password
-    	})
-    	.then((response)=> {
-    		console.log(response)
-    	})
-    	.catch((err)=> {
-    		console.log(err)
-    	})
-    this.setState({ name: '', email: '', username: '', password: '', password2:'' })
+    this.handleChange = this.handleChange.bind(this)
+    this.close = this.close.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleRedirect = this.handleRedirect.bind(this)
   }
 
-  // fetchUser () {
-  //   .get('/')
-  // }
+  handleChange (e, { name, value }) {
+    this.setState({
+      [name]: value
+    })
+  }
 
+  close () {
+    this.setState({ open: false })
+  }
 
-	render(){
-		const { name, email, username, password, password2 } = this.state
+  handleRedirect () {
+    const { url } = this.state
+    const id = url.slice(31)
+    const newUrl = `/userhome/${id}`
+    if (url !== '') {
+      return (
+        <Redirect to={newUrl} />
+      )
+    }
+  }
 
-		return(
+  handleSubmit () {
+    const {
+      name, email, username, password, password2
+    } = this.state
 
-		<div className="ui text container">
-				<Form onSubmit={this.handleSubmit}>
-          <Form.Group>
-            <Form.Input placeholder='Name' name='name' value={name} onChange={this.handleChange} />
-            <Form.Input placeholder='Email' name='email' value={email} onChange={this.handleChange} />
-            <Form.Input placeholder='Username' name='username' value={username} onChange={this.handleChange} />
-            <Form.Input placeholder='Password' name='password' value={password} onChange={this.handleChange} />
-            <Form.Input placeholder='Confirm Password' name='password2' value={password2} onChange={this.handleChange} />
+    if (name === '' || email === '' || username === '' || password === '' || password2 === '') {
+      this.setState({ open: true })
+    } else if (name !== '' && email !== '' && username !== '' && password !== '' && password2 !== '') {
+      axios
+        .post('/users/register', {
+          name,
+          email,
+          username,
+          password,
+          password2
+        })
+        .then((response) => {
+          this.setState({
+            url: response.request.responseURL
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      this.setState({
+        name: '', email: '', username: '', password: '', password2: ''
+      })
+    }
+  }
 
-            <Form.Button content='Submit' />
-          </Form.Group>
+  render () {
+    const {
+      name, email, username, password, password2, open
+    } = this.state
+
+    return (
+      <div className="ui text container">
+        {this.handleRedirect()}
+        <Form onSubmit={this.handleSubmit} >
+          <h1>Sign Up</h1>
+          <p>Please fill in this form to create an account.</p>
+          <hr />
+
+          <label for="name"><b>Name</b></label>
+          <Form.Input placeholder="Name" name="name" value={name} onChange={this.handleChange} />
+          <label for="email"><b>Email</b></label>
+          <Form.Input placeholder="Email" name="email" value={email} onChange={this.handleChange} />
+          <label for="username"><b>Username</b></label>
+          <Form.Input placeholder="Username" name="username" value={username} onChange={this.handleChange} />
+          <label for="password"><b>Password</b></label>
+          <Form.Input type="password" placeholder="Password" name="password" value={password} onChange={this.handleChange} />
+          <label for="password2"><b>Confirm Password</b></label>
+          <Form.Input type="password" placeholder="Confirm Password" name="password2" value={password2} onChange={this.handleChange} />
+
+          <Modal size="mini" open={open} onClose={this.close}>
+            <Modal.Header>
+                Enter Fields
+            </Modal.Header>
+            <Modal.Content>
+              <p>Make sure to fill out all the fields!</p>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button onClick={this.close} positive icon="checkmark" labelPosition="right" content="Got It" />
+            </Modal.Actions>
+          </Modal>
+
+          <Button primary>Sign Up</Button>
+          <Link to="/">
+            <button className="ui button logout" type="submit">Cancel</button>
+          </Link>
         </Form>
 
-		</div>
-		)
-	}
-};
+      </div>
+    )
+  }
+}
 
-export default SignupForm;
-
-// <form className="ui form">
-// 				<div className="field">
-// 					<label>User Name</label>
-// 					<input placeholder="User Name" />
-// 				</div>
-// 				<div className="field">
-// 					<label>First Name</label>
-// 					<input onChange={this.handleChange} placeholder="First Name" />
-// 				</div>
-// 				<div className="field">
-// 					<label>Last Name</label>
-// 					<input onChange={this.handleChange}  placeholder="Last Name" />
-// 				</div>
-// 				<div className="field">
-// 					<label>Email</label>
-// 					<div className="ui input">
-// 						<input onChange={this.handleChange}  type="text" placeholder="Email" />
-// 					</div>
-// 				</div>
-// 				<div className="field">
-// 					<label>Password</label>
-// 					<div className="ui input">
-// 						<input onChange={this.handleChange}  type="text" placeholder="Enter Your Password" />
-// 					</div>
-// 				</div>
-// 				<div className="field">
-// 					<label>Verify Password</label>
-// 					<div className="ui input">
-// 						<input onChange={this.handleChange}  type="text" placeholder="Re-Enter Your Password" />
-// 					</div>
-// 				</div>
-// 				<button type="submit" className="ui button" role="button">
-// 					Sign Up Now
-// 				</button>
-// 			</form>
+export default SignupForm

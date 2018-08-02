@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Grid } from 'semantic-ui-react'
+import { Card, Icon, Image, Grid, Menu, Segment, Button } from 'semantic-ui-react'
 import axios from 'axios'
 import moment from 'moment'
 import InputMoment from 'input-moment'
-
 import CompetitionsFullPage from './CompetitionsFullPage.jsx'
+
 // Components
 import MenuBar from './MenuBar.jsx'
 import SideMenu from './SideMenu.jsx'
 import Goal from './Goal.jsx'
 import Accomplishments from './Accomplishments.jsx'
+import CardComponent from './CardComponent.jsx'
 
 class UserHome extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      userId: null,
+      active: true,
+      userId: this.props.match.params.id,
+      userImg: '',
       competitionData: [],
       goals: [],
       accomplishments: [],
@@ -25,20 +28,37 @@ class UserHome extends Component {
       compStart: moment(),
       compStartClick: false,
       compEnd: moment(),
-      compEndClick: true
+      compEndClick: true,
+      size: '',
+      open: false,
+      goalIDtoDelete: '',
+      userName: ''
     }
     this.competitionsHandleClick = this.competitionsHandleClick.bind(this)
+    this.fetchUser = this.fetchUser.bind(this)
+    this.fetchGoals = this.fetchGoals.bind(this)
+    this.fetchPhoto = this.fetchPhoto.bind(this)
     this.handleCompName = this.handleCompName.bind(this)
     this.handleCompCat = this.handleCompCat.bind(this)
     this.competitionsSubmit = this.competitionsSubmit.bind(this)
+    this.handleActiveClick = this.handleActiveClick.bind(this)
+    this.handleAccomplishmentsClick = this.handleAccomplishmentsClick.bind(this)
     this.handleStartChange = this.handleStartChange.bind(this)
     this.handleEndChange = this.handleEndChange.bind(this)
-    this.handleAccomplishments = this.handleAccomplishments.bind(this)
     this.handleCompStartSave = this.handleCompStartSave.bind(this)
     this.handleCompEndSave = this.handleCompEndSave.bind(this)
+    this.handleSelectPhoto = this.handleSelectPhoto.bind(this)
+    this.handleUploadPhoto = this.handleUploadPhoto.bind(this)
+    this.handleDeleteAccomplishment = this.handleDeleteAccomplishment.bind(this)
+    this.showDeleteAccomplishmentModal = this.showDeleteAccomplishmentModal.bind(this)
+    this.closeDeleteAccomplishmentModal = this.closeDeleteAccomplishmentModal.bind(this)
+    this.closeModalAndDelete = this.closeModalAndDelete.bind(this)
   }
+
   componentDidMount () {
-    this.fetchGoalsCompetitionsUserId()
+    this.fetchUser()
+    this.fetchGoals()
+    this.fetchPhoto()
   }
 
   handleItemClick (name) {
@@ -51,8 +71,15 @@ class UserHome extends Component {
     })
   }
 
+  handleActiveClick () {
+    this.setState({ active: true })
+  }
+
+  handleAccomplishmentsClick () {
+    this.setState({ active: false })
+  }
+
   handleCompName (compName) {
-    console.log(compName)
     this.setState({
       compName: compName.target.value
     })
@@ -65,74 +92,116 @@ class UserHome extends Component {
   }
 
   handleStartChange (m) {
-    console.log('handle startchange in userhome m coming back', m)
     this.setState({
-      compStart: m // date:  moment(selectedDate).format('DD/MM/YYYY')
+      compStart: m
     })
   }
 
   handleEndChange (m) {
-    console.log('end change in userhome', m)
     this.setState({
       compEnd: m
     })
   }
 
   handleCompStartSave () {
-    console.log('saving clicking changes components start date')
     this.setState({
       compStartSaveClick: true
     })
   }
 
   handleCompEndSave (falsey) {
-    console.log('saving clicking changes components end date')
     this.setState({
       compEndClick: !falsey
     })
   }
 
-  // fetchGoals() {
-  // 	axios
-  // 		.get("/api/goal")
-  // 		.then(response => {
-  // 			this.setState({
-  // 				goals: response.data
-  // 			});
-  // 		})
-  // 		.catch(error => {
-  // 			console.log(error);
-  // 		});
-  // }
+  handleSelectPhoto (e) {
+    this.setState({
+      userImg: e.target.files[0]
+    })
+  }
 
-  fetchGoalsCompetitionsUserId () {
+  handleUploadPhoto () {
+    const { userImg, userId } = this.state
+    const fd = new FormData()
+    fd.append('image', userImg, userImg.name)
     axios
-      .get('/api/getGoalsCompetitionsUserId')
+      .post(`/photo/${userId}`, fd)
       .then((response) => {
-        this.setState({
-          userId: response.data[0],
-          competitionData: response.data[1],
-          goals: response.data[2]
-        }, () => { this.handleAccomplishments() })
-        console.log('🙄', response)
+        this.fetchPhoto()
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
-  handleAccomplishments () {
-    const { goals, accomplishments } = this.state
+  fetchPhoto () {
+    const { userId, userImg } = this.state
+    axios
+      .get(`/photo/${userId}`)
+      .then((response) => {
+        this.setState({ userImg: response.data[0].photo })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-    const copyOfAccomplishments = accomplishments.slice()
+  fetchUser () {
+    const { userId } = this.state
+    axios
+      .get(`/api/user/${userId}`)
+      .then((response) => {
+        this.setState({ userName: response.data[0].name })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-    for (let i = 0; i < goals.length; i += 1) {
-      if (goals[i].complete) {
-        copyOfAccomplishments.push(goals[i])
-      }
-    }
+  fetchGoals () {
+    const { userId } = this.state
+    axios
+      .get(`/api/goal/${userId}`)
+      .then((response) => {
+        this.setState({
+          goals: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-    this.setState({ accomplishments: copyOfAccomplishments })
+  handleDeleteAccomplishment (id) {
+    axios
+      .delete(`/api/goal/${id}`)
+      .then((response) => {
+        this.fetchGoals()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  showDeleteAccomplishmentModal (size, id) {
+    this.setState({
+      size,
+      open: true,
+      goalIDtoDelete: id
+    })
+  }
+
+  closeDeleteAccomplishmentModal () {
+    this.setState({
+      open: false
+    })
+  }
+
+  closeModalAndDelete () {
+    const { goalIDtoDelete } = this.state
+    this.handleDeleteAccomplishment(goalIDtoDelete)
+    this.setState({ open: false })
   }
 
   competitionsSubmit (
@@ -150,15 +219,6 @@ class UserHome extends Component {
     } else {
       compsCat = compsCat
     }
-    console.log(
-      'what im submitting in the user component',
-      compsName,
-      compsCat,
-      compsStart,
-      compsEnd,
-      hiddenUserPage,
-      userIdComp
-    )
     this.setState({
       isHidden: !hiddenUserPage,
       compStart: moment(),
@@ -174,7 +234,7 @@ class UserHome extends Component {
         competitionStart: compsStart,
         competitionEnd: compsEnd,
         competitionPic: '',
-        userIdComp: userIdComp
+        userIdComp
       })
       .then((response) => {
         console.log('in userHome file data back from server', response.data)
@@ -188,45 +248,42 @@ class UserHome extends Component {
   }
 
   render (props) {
-    console.log('ishidden value on start of app', this.state.isHidden)
-    const { activeItem } = this.state || {}
+    const {
+      active,
+      goals,
+      size,
+      open,
+      goalIDtoDelete,
+      userId,
+      userName,
+      userImg
+    } = this.state || {}
     if (this.state.isHidden) {
       return (
         <div>
-          <MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} />
-          <Grid>
-            <Grid.Column width={5}>
-              <h1>Bio</h1>
-              <Grid.Row style={{ width: 290 }}>
-                <Card>
-                  <Image src="https://s3-us-west-1.amazonaws.com/co-directory-images/bobbymathew1.jpg" />
-                  <Card.Content>
-                    <Card.Header>Bobby</Card.Header>
-                    <Card.Meta>
-                      <span className="date">Joined in 2018</span>
-                    </Card.Meta>
-                    <Card.Description>
-											Bobby's in the Bay Area getting healthier
-                    </Card.Description>
-                  </Card.Content>
-                </Card>
-              </Grid.Row>
+          <MenuBar isHidden={this.state.isHidden} competitionsHandleClick={this.competitionsHandleClick} userId={userId} />
 
-              <br />
+          <Grid className="main-grid" columns={2} inverted>
+            <Grid.Column className="menucolumn" width={3}>
 
-              <Grid.Row style={{ width: 290 }}>
-                <SideMenu Data={this.state.competitionData} goals={this.state.goals} accomplishments={this.state.accomplishments} competitionsHandleClick={this.competitionsHandleClick} isHidden={this.state.isHidden} />
-              </Grid.Row>
+              <div className="profile">
+                <h1 id="profile-name">{userName}</h1>
+                <img className="photo" src={userImg} alt="Avatar" />
+                <input ref={fileInput => this.fileInput = fileInput } style={{ display: 'none' }} type="file" onChange={this.handleSelectPhoto} />
+                <Icon className="add-photo" link name="plus" size="large" onClick={() => { this.fileInput.click() }} />
+                <h3 className="add-photo">Add Photo</h3>
+                <Icon id="save-checkmark" link name="checkmark" size="large" onClick={() => { this.handleUploadPhoto() }} />
+                <h3 className="save-photo">Save Photo</h3>
+              </div>
+              <div id="side-menu">
+                <a href="#" name="active" onClick={this.handleActiveClick} >Active</a>
+                <a href="#" name="accomplishments" onClick={this.handleAccomplishmentsClick} >Accomplishments</a>
+              </div>
+
             </Grid.Column>
-            <Grid.Column width={7}>
-              <h1 style={{ textAlign: 'center' }}>Goals</h1>
-              <Grid.Row>
-                <Goal />
-              </Grid.Row>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <h1 style={{ textAlign: 'right' }}>Accomplishments</h1>
-              <Accomplishments accomplishments={this.state.accomplishments} />
+            <Grid.Column className="goalscolumn" stretched width={12}>
+              {active ? <h1 style={{ textAlign: 'center' }}>Active Goals</h1> : <h1 style={{ textAlign: 'center' }}>Accomplishments</h1>}
+              {active ? <Goal userId={userId} /> : <Accomplishments goals={goals} size={size} open={open} goalIDtoDelete={goalIDtoDelete} showDeleteAccomplishmentModal={this.showDeleteAccomplishmentModal} closeDeleteAccomplishmentModal={this.closeDeleteAccomplishmentModal} handleDeleteAccomplishment={this.handleDeleteAccomplishment} closeModalAndDelete={this.closeModalAndDelete} />}
             </Grid.Column>
           </Grid>
         </div>
@@ -243,10 +300,10 @@ class UserHome extends Component {
         compEnd={this.state.compEnd}
         handleCompName={this.handleCompName}
         handleCompCat={this.handleCompCat}
-        handleCompStartSave={this.handleCompStartSave} // this 1
-        compStartClick={this.state.compStartClick} // this 1
-        handleCompEndSave={this.handleCompEndSave} // this 1
-        compEndClick={this.state.compEndClick} // this 1
+        handleCompStartSave={this.handleCompStartSave}
+        compStartClick={this.state.compStartClick}
+        handleCompEndSave={this.handleCompEndSave}
+        compEndClick={this.state.compEndClick}
         handleStartChange={this.handleStartChange}
         handleEndChange={this.handleEndChange}
         competitionsSubmit={this.competitionsSubmit}

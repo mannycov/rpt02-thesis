@@ -1,7 +1,10 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose')
 
-const categorySchema = new Schema({
+const Schema = mongoose.Schema
+
+const categoriesSchema = new Schema({
   category_id: Number,
-  category_name: String
+  competitions_pictures: Array
 })
+
+const CategoriesModel = module.exports = mongoose.model('CategoriesModel', categoriesSchema)

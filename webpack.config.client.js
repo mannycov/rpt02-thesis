@@ -9,7 +9,7 @@ module.exports = {
     dns: 'empty',
     tls: 'empty'
   },
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   entry: [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:3001/',

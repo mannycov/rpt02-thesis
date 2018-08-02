@@ -34,3 +34,8 @@ node_modules
 # AWS stuff for publishing static files
 .aws-credentials.json
 .awspublish*
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

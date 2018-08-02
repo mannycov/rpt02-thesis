@@ -1,22 +1,42 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs')
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
- var dB = require('../../database/index.js')
+const dB = require('../../database/index.js')
+const Schema = mongoose.Schema
 
+// const userSchema = new Schema({
+//   user_id: Number,
+//   first_name: String,
+//   last_name: String,
+//   username: String,
+//   email: String,
+//   // comments: [{ body: String, date: Date }],
+//   date_of_birth: { type: Date },
+//   about_me: String,
+//   password: String,
+//   friends_id: Array,
+//   goals_id: Array,
+//   competitions_id: Array,
+//   public_profile: Boolean,
+//   country: String,
+//   state: String,
+//   city: String,
+//   postal: Number,
+//   trophies: Number
+// })
 
-// User Schema
-var userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   username: {
     type: String,
-    index:true
+    index: true
   },
-  // password: {
-  //   type: String
-  // },
   email: {
     type: String
   },
   name: {
+    type: String
+  },
+  photo: {
     type: String
   },
   salt: {
@@ -24,91 +44,75 @@ var userSchema = mongoose.Schema({
   },
   hash: {
     type: String
-  }
+  },
+  goals: [{ type: Schema.Types.ObjectId, ref: 'GoalsModel' }]
+})
 
-});
+const User = module.exports = mongoose.model('User', userSchema)
 
-var User = module.exports = mongoose.model('User', userSchema);
-
-
-module.exports.createUser = function(userProps, callback){
-  console.log("newuser:"  + userProps)
-  bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(userProps.password, salt, function(err, hash) {
-          // newUser.password = hash;
-          var newUser = new User({
-              name: userProps.name,
-              email: userProps.email,
-              username: userProps.username,
-              salt: salt,
-              hash: hash
-          })
-
-          newUser.save()
-
-      });
-  });
-}
-
-module.exports.getUserByUsername = function(username, callback){
-  console.log("getusername"  + username)
-  var query = {username: username};
-
-  // console.log(User.find(query))
-
-  return User.findOne(query);
-}
-
-module.exports.checkUser = function(userCredentials, hash, callback){
-  console.log("Req Body from post:" +  userCredentials + hash)
-      // User.getUserByUsername(userCredentials)
-
-  bcrypt.compare(userCredentials, hash, function(err, result) {
-      // res === true
-      if (result) {
-        callback(result)
-      } else {
-        console.log("Incorrect login")
+module.exports.createUser = function (userProps, res, callback) {
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      console.log('error after gensalt: ', err)
+    }
+    bcrypt.hash(userProps.password, salt, (err, hash) => {
+      if (err) {
+        console.log('error in hash: ', err)
       }
-    console.log("userCredentials: " + userCredentials)
-    console.log("hash: " + hash)
-    console.log("Res: " + result)
-    // callback(res)
-  }
-
-  );
-// }
-
-// module.exports.getUserById = function(id, callback){
-//   User.findById(id, callback);
-//   console.log(id)
-
-// }
-
-// module.exports.comparePassword = function(candidatePassword, hash, callback){
-//   bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-//       if(err) throw err;
-//       callback(null, isMatch);
-//   });
+      const newUser = new User({
+        name: userProps.name,
+        email: userProps.email,
+        username: userProps.username,
+        salt,
+        hash,
+        photo: 'https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png'
+      })
+      newUser.save()
+      const id = newUser._id
+      res.redirect(`http://localhost:3000/userhome/${id}`)
+    })
+  })
 }
 
-module.exports.userAccess = function(userId, cb) {
-  console.log('in the userjs file useraccess', userId)
-	let dataCompUserGoals = [];
-	let userIdInDB = userId;
+module.exports.getUserByEmail = function (email, callback) {
+  User.find({ email: req.body.email }, (err, user) => {
+    if (err) throw err
+    let newHash = user[0].hash
 
-	dataCompUserGoals.push(userIdInDB);
+    User.checkUser(req.body.password, newHash, (result) => {
+      
+    })
+  })
+}
 
-	dB.CompetitionsModel.find({ competitions_user: userIdInDB })
-		.then(function(data) {
-			dataCompUserGoals.push(data);
-			return dB.GoalsModel.find({ goals_user: userIdInDB })
-		})
-		.then(function(data) {
-			dataCompUserGoals.push(data);
-			cb(dataCompUserGoals);
-		})
-		.catch(function(err) {
-			console.log(err, "this is the promise error");
-		})
-};
+module.exports.checkUser = function (userCredentials, hash, callback) {
+
+  bcrypt.compare(userCredentials, hash, (err, result) => {
+    if (result) {
+      callback(result)
+    } else {
+      console.log('Incorrect login')
+    }
+  })
+}
+
+// module.exports.userAccess = function (userId, cb) {
+//   console.log('in the userjs file useraccess', userId)
+//   const dataCompUserGoals = []
+//   const userIdInDB = userId
+
+//   dataCompUserGoals.push(userIdInDB)
+
+//   dB.CompetitionsModel.find({ competitions_user: userIdInDB })
+//     .then((data) => {
+//       dataCompUserGoals.push(data)
+//       return dB.GoalsModel.find({ goals_user: userIdInDB })
+//     })
+//     .then((data) => {
+//       dataCompUserGoals.push(data)
+//       cb(dataCompUserGoals)
+//     })
+//     .catch((err) => {
+//       console.log(err, 'this is the promise error')
+//     })
+// }

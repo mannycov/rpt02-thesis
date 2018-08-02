@@ -17,18 +17,18 @@ const CompetitionsPopUp =
       hoverable
     >
       <Grid
+        columns={1}
         onClick={() => competitionsHandleClick(isHidden)}
         centered
         divided
-        columns={Data.length}
       >
-        {Data.map((competition) => {
+        {/* {Data.map((competition) => {
           return (
             <CompetitionsList
               key={competition._id}
               competitionName={competition}
             />)
-        })}
+        })} */}
       </Grid>
     </Popup>
   )

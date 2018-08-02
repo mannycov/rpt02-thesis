@@ -6,10 +6,9 @@ import CompetitionsFullPage  from './CompetitionsPopUp.jsx'
 
 class SideMenu extends Component {
   handleItemClick (name) {
-    this.setState({ activeItem: name });
+    this.setState({ activeItem: name })
   }
   render (props) {
-    console.log("is sidemenu component?", this.props.isHidden)
     const { activeItem } = this.state || {}
     return (
       <Menu style={{ width: 290 }} vertical>
@@ -18,11 +17,13 @@ class SideMenu extends Component {
           <Menu.Menu>
             {this.props.accomplishments.map(goal => (
               <Menu.Item
+                key={goal._id}
                 as={Link}
-                to={`/goal/${goal._id}`}
+                to={{
+                  pathname: `/goal/${goal._id}`,
+                  state: { goal }
+                }}
                 name={goal.goals_name}
-                active={activeItem === goal}
-                onClick={this.handleItemClick}
               >
                 {goal.goals_name}
               </Menu.Item>

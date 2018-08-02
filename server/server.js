@@ -1,4 +1,6 @@
 import express from 'express'
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import bodyParser from 'body-parser'
@@ -8,85 +10,82 @@ import { StaticRouter } from 'react-router-dom'
 import fs from 'fs'
 import multer from 'multer'
 
-// import App from '../client/src/components/App.jsx'
-
 import Root from '../client/Root.jsx'
-import {
-  GoalsModel,
-  CheckInModel,
-  CompetitionsModel,
-  CategoriesModel
-} from '../database/index.js'
+import User from '../database/models/users'
+import GoalsModel from '../database/models/goals'
+import CheckInModel from '../database/models/checkin'
+import CompetitionsModel from '../database/models/competitions'
+import CategoriesModel from '../database/models/categories'
 
-import userAccess from '../database/models/users.js'
-import path from 'path';
-import cookieParser from 'cookie-parser'
-import expressValidator from 'express-validator';
-import flash from 'connect-flash';
-import session from 'express-session';
-import passport from 'passport';
-import LocalStrategy from 'passport-local';
+// import userAccess from '../database/models/users'
 
-// import GoalsModel from '../database/models/goals'
-// import CompetitionsModel from '../database/models/competitions.js'
+import path from 'path'
+import expressValidator from 'express-validator'
+import flash from 'connect-flash'
+import passport from 'passport'
+import LocalStrategy from 'passport-local'
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+// const upload = multer({ dest: 'uploads/' })
+const upload = multer({ storage: storage })
 const db = require('../database/index.js')
-// const routes = require('../routes/index');
-// const users = require('../routes/users');
+const routes = require('../routes/index')
+const users = require('../routes/users')
 
-import usersRouter from '../routes/users';
+import usersRouter from '../routes/users'
 // import Goal from '../client/src/components/Goal';
 
+// initialize app
+const app = express()
 
-//Init App
-const app = express();
-
-//BodyParser Middlewar
-app.use(expressLogging(logger));
-app.use(bodyParser.urlencoded({ extended: false }))
+// BodyParser Middleware
+app.use(expressLogging(logger))
 app.use(bodyParser.json())
+app.use('/uploads', express.static('uploads'))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-//View Engine
-// app.set('views', path.join(__dirname, 'views'));
-// app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-// app.set('view engine', 'handlebars');
-
-//Set Public Folder
-// app.use(express.static(path.join(__dirname, 'public')));
-
-//Express Session
+// Express Session
 app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
 }))
 
 // Passport init
 app.use(passport.initialize())
 app.use(passport.session())
-console.log("useraccess in server 😪", userAccess())
+// console.log('useraccess in server', userAccess())
 
-//Express Validator
+// Express Validator
 
-// app.use(expressValidator({
-//   errorFormatter: function(param, msg, value){
-//     var namespace = param.split('.')
-//     , root = namespace.shift()
-//     , formParam = root;
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value){
+    var namespace = param.split('.')
+    , root = namespace.shift()
+    , formParam = root;
 
-//     while(namespace.length) {
-//       formParam += '[' + namespace.shift() + ']';
-//     }
-//     return{
-//       param : formParam,
-//       msg : msg,
-//       value : value
-//     };
-//   }
-// }))
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg : msg,
+      value : value
+    };
+  }
+}))
 
 // Connect Flash
-// app.use(flash())
+app.use(flash())
 
 // Global Vars
 // app.use(function (req, res, next) {
@@ -98,15 +97,9 @@ console.log("useraccess in server 😪", userAccess())
 // });
 
 app.use('/users', usersRouter)
-// app.use('/', Root);
-// app.use('/users', (req, res) => {
-//   res.send('Hello homeboy g money')
-// });
 
-const emptyObj = []
-
-app.get('/api/goal', (req, res) => {
-  GoalsModel.find({}, (err, data) => {
+app.get('/photo/:id', (req, res) => {
+  User.find({ _id: req.params.id }, (err, data) => {
     if (err) {
       console.log(err)
     } else {
@@ -115,11 +108,25 @@ app.get('/api/goal', (req, res) => {
   })
 })
 
-// app.use(multer({ dest: './uploads/',
-//  rename: function (fieldname, filename) {
-//    return filename;
-//  },
-// }))
+app.get('/api/user/:id', (req, res) => {
+  User.find({ _id: req.params.id }, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
+
+app.get('/api/goal/:id', (req, res) => {
+  GoalsModel.find({ user: req.params.id }, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(data)
+    }
+  })
+})
 
 // app.post('/api/photo',function(req,res){
 //  var newProfilePic = new userSchema()
@@ -138,8 +145,6 @@ app.get('/api/goal', (req, res) => {
 //         competitions_pictures: matchingCategory
 //       })
 
-
-
 app.get('/api/getcompetitions', (req, res) => {
   CompetitionsModel.find({}, (err, data) => {
     if (err) {
@@ -150,38 +155,38 @@ app.get('/api/getcompetitions', (req, res) => {
   })
 })
 
-app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
-  let dataCompUserGoals = []
-  let userIdInDB = "5a989cc204ac7563fae85f68"
+// app.get("/api/getGoalsCompetitionsUserId", (req, res, next) => {
+//   let dataCompUserGoals = []
+//   let userIdInDB = "5a989cc204ac7563fae85f68"
 
-  dataCompUserGoals.push(userIdInDB)
+//   dataCompUserGoals.push(userIdInDB)
 
-  CompetitionsModel.find({ competitions_user: userIdInDB })
-    .then(function(data) {
-    dataCompUserGoals.push(data)
-    return GoalsModel.find({goals_user: userIdInDB})
-   })
-   .then(function(data) {
-     dataCompUserGoals.push(data)
-     res.send(dataCompUserGoals)
-   })
-  .catch(function(err) {
-    console.log(err, 'this is the promise error')
-    res.send(err)
-  })
+//   CompetitionsModel.find({ competitions_user: userIdInDB })
+//     .then(function(data) {
+//     dataCompUserGoals.push(data)
+//     return GoalsModel.find({goals_user: userIdInDB})
+//    })
+//    .then(function(data) {
+//      dataCompUserGoals.push(data)
+//      res.send(dataCompUserGoals)
+//    })
+//   .catch(function(err) {
+//     console.log(err, 'this is the promise error')
+//     res.send(err)
+//   })
 
 
-  // , (err, data) => {
-	// 	if (err) {
-	// 		console.log(err)
-	// 	} else {
-  //     //
-  //     console.log('newest data from sercer', data)
-  //     dataCompUserGoals.push(data)
-	// 	}
-  // }).
-  // res.send(dataCompUserGoals)
-})
+// , (err, data) => {
+// 	if (err) {
+// 		console.log(err)
+// 	} else {
+//     //
+//     console.log('newest data from sercer', data)
+//     dataCompUserGoals.push(data)
+// 	}
+// }).
+// res.send(dataCompUserGoals)
+// })
 
 app.get('/api/checkin/:id', (req, res) => {
   CheckInModel.find({ goal: req.params.id }, (err, data) => {
@@ -189,6 +194,18 @@ app.get('/api/checkin/:id', (req, res) => {
       console.log(err)
     } else {
       res.send(data)
+    }
+  })
+})
+
+app.post('/photo/:id', upload.single('image'), (req, res, next) => {
+  const image = `http://localhost:3000/${req.file.path}`
+
+  User.update({ _id: req.params.id }, { $set: { photo: image } }, (err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.sendStatus(200)
     }
   })
 })
@@ -210,13 +227,13 @@ app.post('/api/competitions', (req, res) => {
       console.log(err)
     } else {
       const competitionsModelInstance = new CompetitionsModel({
-				competitions_name: competitionBody.comptetionName,
-				competitions_category: competitionBody.competitionCategory,
-				competitions_start_date: competitionBody.competitionStart,
-				competitions_end_date: competitionBody.competitionEnd,
-				competitions_pictures: matchingCategory,
-				competitions_user: competitionBody.userIdComp
-			});
+        competitions_name: competitionBody.comptetionName,
+        competitions_category: competitionBody.competitionCategory,
+        competitions_start_date: competitionBody.competitionStart,
+        competitions_end_date: competitionBody.competitionEnd,
+        competitions_pictures: matchingCategory,
+        competitions_user: competitionBody.userIdComp
+      });
       competitionsModelInstance.save((err) => {
         if (err) {
           console.log('competitions not saved', err)
@@ -247,7 +264,7 @@ app.post('/api/goal', (req, res) => {
   const goalEndDate = req.body.endDate
   const goalNotes = req.body.notes
   const goalComplete = req.body.complete
-  let userId = req.body.userId
+  const userId = req.body.userId
 
   const goalModelInstance = new GoalsModel({
     goals_name: goalTitle,
@@ -261,7 +278,7 @@ app.post('/api/goal', (req, res) => {
     end_date: goalEndDate,
     notes: goalNotes,
     complete: goalComplete,
-    goals_user: userId
+    user: userId
   })
 
   goalModelInstance.save((err) => {
@@ -341,6 +358,147 @@ app.patch('/api/goal/:id', (req, res) => {
   })
 })
 
+app.patch('/api/editgoaltitle/:id', (req, res) => {
+  const updatedGoalTitle = req.body.updatedGoalTitle
+
+  if (updatedGoalTitle) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { goals_name: updatedGoalTitle } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+
+})
+
+app.patch('/api/editgoaldate/:id', (req, res) => {
+  const updatedStartDate = req.body.updatedStartDate
+
+  if (updatedStartDate) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { start_date: updatedStartDate } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalnotes/:id', (req, res) => {
+  const updatedNotes = req.body.updatedNotes
+
+  if (updatedNotes) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { notes: updatedNotes } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalweighttarget/:id', (req, res) => {
+  const updatedWeightTarget = req.body.updatedWeightTarget
+
+  if (updatedWeightTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { weightTarget: updatedWeightTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalreptarget/:id', (req, res) => {
+  const updatedRepTarget = req.body.updatedRepTarget
+
+  if (updatedRepTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { repTarget: updatedRepTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalmintarget/:id', (req, res) => {
+  const updatedMinTarget = req.body.updatedMinTarget
+
+  if (updatedMinTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { minTarget: updatedMinTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalsecstarget/:id', (req, res) => {
+  const updatedSecsTarget = req.body.updatedSecsTarget
+
+  if (updatedSecsTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { secsTarget: updatedSecsTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoaldaystarget/:id', (req, res) => {
+  const updatedDaysTarget = req.body.updatedDaysTarget
+
+  if (updatedDaysTarget) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { daysTarget: updatedDaysTarget } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalstartdate/:id', (req, res) => {
+  const updatedStartDate = req.body.updatedStartDate
+
+  if (updatedStartDate) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { start_date: updatedStartDate } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
+app.patch('/api/editgoalenddate/:id', (req, res) => {
+  const updatedEndDate = req.body.updatedEndDate
+
+  if (updatedEndDate) {
+    GoalsModel.update({ _id: req.params.id }, { $set: { end_date: updatedEndDate } }, (err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.sendStatus(202)
+      }
+    })
+  }
+})
+
 app.delete('/api/goal/:id', (req, res) => {
   GoalsModel.remove({ _id: req.params.id }, (err) => {
     if (err) {
@@ -386,9 +544,9 @@ app.delete('/api/checkin/:id', (req, res) => {
 app.get('*', (req, res) => {
   const context = {}
   const application = renderToString(
-    <StaticRouter 
-      location={req.url} 
-      context={context} 
+    <StaticRouter
+      location={req.url}
+      context={context}
     >
       <Root />
     </StaticRouter>
@@ -398,7 +556,7 @@ app.get('*', (req, res) => {
       <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Compete.ly</title>
+        <title>Active</title>
         <meta name="description" content="">
         <meta name="viewport"
         content="width=device-width,  initial-scale=1">

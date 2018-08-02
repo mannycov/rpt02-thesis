@@ -1,4 +1,13 @@
-/* creat competitions form */
+body {
+  background-color:#f4f4f4;
+  height: 100%;
+}
+
+.main-grid {
+  width: 100%;
+  height: 100%
+}
+
 .ui.green.button {
   margin-top: 20px;
   height: 41px;
@@ -8,15 +17,24 @@
   padding-right: 0;
 }
 
-.ui.grid {
-  margin-right: 4%;
-  margin-left: 4%;
-  margin-top: 1%;
+h1 {
+  color: #1678c2;
+  margin-bottom: 45px;
 }
 
-h1 {
-  color: dimgray;
-  margin-bottom: 45px;
+.ui.button.login {
+  background: #1678c2;
+  color: #fff;
+}
+
+.ui.button.signup {
+  background: #21ba45;
+  color: #fff;
+}
+
+.ui.button.logout {
+  background: #1b1c1d;
+  color: white;
 }
 
 .ui.secondary.menu {
@@ -33,19 +51,113 @@ button.ui.button {
   margin-left: 50% !important;
 }
 
-table.ui.celled.structured.table {
-  width: 108%;
-  margin-left: -3%;
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-thead {
-  color: dimgray;
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
 
-button.ui.circular.icon.primary.button {
+th {
+  background-color: #dddddd;
+}
+
+.removegoal {
+  color: rgb(226, 221, 221);
+}
+
+.removegoal:hover {
+  color: red;
+}
+
+.editgoal {
+  color: rgb(226, 221, 221);
+}
+
+.editgoal:hover {
+  color: #1678c2;
+}
+
+.savegoal {
+  color: rgb(226, 221, 221);
+}
+
+.savegoal:hover {
+  color: green;
+}
+
+.profile {
+  background-color: #1b1c1d;
+  width: 300px;
+  height: 326px;
   position: relative;
-  top: 81px;
-  right: 11%;
+}
+
+.photo {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  width:165px;
+  height: 165px;
+}
+
+.emoji {
+  display: block;
+  margin: auto;
+  width:165px;
+  height: 165px;
+}
+
+#side-menu {
+  height: 100%;
+  width: 300px;
+  background-color: #1b1c1d;
+  position: fixed;
+  overflow-x: hidden;
+  padding-top: 60px;
+}
+
+#side-menu a {
+  padding: 10px 10px 10px 30px;
+  text-decoration: none;
+  font-size: 22px;
+  color: #ccc;
+  display: block;
+  transition: 0.3s;
+}
+
+#side-menu a:hover {
+  color: #fff;
+}
+
+#profile-name {
+  text-align: center;
+  color: #ccc;
+}
+
+.add-photo {
+  padding: 0px 10px 10px 30px;
+  color: white;
+}
+
+#save-checkmark {
+  color: white;
+  position: absolute;
+  bottom: 57px;
+  right: 20px;
+}
+
+.save-photo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0px 30px 10px 10px;
+  color: white;
 }
 
 .seven.wide.column {
@@ -74,7 +186,6 @@ element.style {
 }
 
 .ui.card.trophy {
-  width: 43%;
   padding-left: 25px;
   padding-top: 27px;
   margin-left: 41%;

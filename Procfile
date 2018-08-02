@@ -1,0 +1,1 @@
+worker: rm -rf ./client/.dist && npm-run-all --parallel start:server start:client
